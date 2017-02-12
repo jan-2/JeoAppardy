@@ -16,4 +16,4 @@
 
 ## Spieler 1 hat leider falsch geantwortet
 
-![](concept_antwort_view_buzzer.jpg)
+![](concept_antwort_view_falsch.jpg)
