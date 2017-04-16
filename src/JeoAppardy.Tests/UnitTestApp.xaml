@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="JeoAPPardy.App"
+    x:Class="JeoAppardy.Tests.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:JeoAPPardy"
+    xmlns:local="using:JeoAppardy.Tests"
     RequestedTheme="Light">
 
 </Application>
