@@ -95,6 +95,8 @@
     <Compile Include="Api\Answer.cs" />
     <Compile Include="Api\Answers.cs" />
     <Compile Include="Api\Category.cs" />
+    <Compile Include="Api\Board.cs" />
+    <Compile Include="Api\Game.cs" />
     <Compile Include="Api\Round.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

@@ -99,7 +99,9 @@
     <Compile Include="UnitTestApp.xaml.cs">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="When_get_a_round.cs" />
+    <Compile Include="When_get_a_Board.cs" />
+    <Compile Include="When_setup_the_Game.cs" />
+    <Compile Include="When_start_the_Game.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml">
@@ -139,6 +141,9 @@
       <Project>{0c184fea-dd7d-42c6-8907-04817babe01d}</Project>
       <Name>JeoAppardy.Client</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

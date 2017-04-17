@@ -7,14 +7,14 @@ using JeoAppardy.Client.Api;
 namespace JeoAppardy.Tests
 {
     [TestClass]
-    public class When_get_a_round
+    public class When_get_a_Board
     {
-        private Round _sut;
+        private Board _sut;
 
         [TestInitialize]
         public void Setup()
         {
-            _sut = new Round();
+            _sut = Board.FromJson("");
         }
 
         [TestMethod]

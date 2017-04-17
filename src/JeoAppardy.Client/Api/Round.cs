@@ -1,32 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
 namespace JeoAppardy.Client.Api
 {
   public class Round
   {
+    private IList<string> playerNames;
 
-    public static Round FromJson(string json)
+    public Round(Board board)
     {
-
+      playerNames = new List<string>();
+      Board = board;
     }
 
-    protected Round()
+    public Board Board
     {
-      this.Categories = new List<Category>();
+      get; private set;
     }
 
-    public IEnumerable<Category> Categories
-    {
-      get; set;
-    }
-
-    public Category FirstCategory
-    {
-
-      get {
-        return Categories.First();
-      }
-    }
+    public int Players => playerNames.Count;
   }
 }
