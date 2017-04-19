@@ -1,8 +1,15 @@
-﻿namespace JeoAppardy.Client.Api
+﻿using Newtonsoft.Json;
+
+namespace JeoAppardy.Client.Api
 {
   public class Answer
   {
-    public string Question
+    public string Description
+    {
+      get; set;
+    }
+    [JsonProperty(PropertyName = "related_question")]
+    public string RelatedQuestion
     {
       get; set;
     }

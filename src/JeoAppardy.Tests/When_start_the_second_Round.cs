@@ -1,15 +1,10 @@
 ﻿using JeoAppardy.Client.Api;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JeoAppardy.Tests
 {
   [TestClass]
-  public class When_start_the_Game
+  public class When_start_the_second_Round
   {
     private Round _sut;
     private Board firstBoard;
@@ -31,13 +26,23 @@ namespace JeoAppardy.Tests
           firstBoard, secondBoard, thirdBoard, fourthBoard, finalBoard
         );
 
-      _sut = game.StartFirstRound();
+      game.StartFirstRound();
+      _sut = game.StartSecondRound();
     }
 
     [TestMethod]
-    public void It_should_return_the_first_Round()
+    public void It_should_return_the_second_Round()
     {
-      Assert.AreEqual(firstBoard, _sut.Board);
+      Assert.AreEqual(secondBoard, _sut.Board);
+    }
+
+    [TestMethod]
+    public void It_does_not_contain_a_player()
+    {
+      Assert.AreEqual(string.Empty, _sut.FirstPlayer.Name);
+      Assert.AreEqual(string.Empty, _sut.SecondPlayer.Name);
+      Assert.AreEqual(string.Empty, _sut.ThirdPlayer.Name);
+      Assert.AreEqual(string.Empty, _sut.FourthPlayer.Name);
     }
   }
 }

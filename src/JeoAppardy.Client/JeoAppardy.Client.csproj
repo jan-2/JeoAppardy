@@ -97,6 +97,7 @@
     <Compile Include="Api\Category.cs" />
     <Compile Include="Api\Board.cs" />
     <Compile Include="Api\Game.cs" />
+    <Compile Include="Api\Player.cs" />
     <Compile Include="Api\Round.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -135,6 +136,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>10.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

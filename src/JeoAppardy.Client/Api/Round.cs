@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JeoAppardy.Client.Api
 {
   public class Round
   {
-    private IList<string> playerNames;
-
     public Round(Board board)
     {
-      playerNames = new List<string>();
       Board = board;
+
+      FirstPlayer = new Player();
+      SecondPlayer = new Player();
+      ThirdPlayer = new Player();
+      FourthPlayer = new Player();
     }
 
     public Board Board
@@ -18,6 +21,48 @@ namespace JeoAppardy.Client.Api
       get; private set;
     }
 
-    public int Players => playerNames.Count;
+    public Player FirstPlayer
+    {
+      get;
+      private set;
+    }
+
+    public Player SecondPlayer
+    {
+      get;
+      private set;
+    }
+
+    public Player ThirdPlayer
+    {
+      get;
+      private set;
+    }
+
+    public Player FourthPlayer
+    {
+      get;
+      private set;
+    }
+
+    public void SetFirstPlayerName(string playerName)
+    {
+      FirstPlayer.Name = playerName;
+    }
+
+    public void SetSecondPlayerName(string playerName)
+    {
+      SecondPlayer.Name = playerName;
+    }
+
+    public void SetThirdPlayerName(string playerName)
+    {
+      ThirdPlayer.Name = playerName;
+    }
+
+    public void SetFourthPlayerName(string playerName)
+    {
+      FourthPlayer.Name = playerName;
+    }
   }
 }
