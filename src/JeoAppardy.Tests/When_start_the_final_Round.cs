@@ -26,11 +26,64 @@ namespace JeoAppardy.Tests
           firstBoard, secondBoard, thirdBoard, fourthBoard, finalBoard
         );
 
-      game.StartFirstRound();
-      game.StartSecondRound();
-      game.StartThirdRound();
-      game.StartFourthRound();
+      game = SetupFirstRound(game);
+      game = SetupSecondRound(game);
+      game = SetupThirdRound(game);
+      game = SetupFourthRound(game);
+
       _sut = game.StartFinalRound();
+    }
+
+    private Game SetupFirstRound(Game game)
+    {
+      var round = game.StartFirstRound();
+      round.SetFirstPlayerName("Winner 1");
+      round.SetSecondPlayerName("Winner 2");
+      round.SetThirdPlayerName("Winner 3");
+      round.SetFourthPlayerName("Winner 4");
+
+      game.CurrentRound.PlayerOneWins();
+
+      return game;
+    }
+
+    private Game SetupSecondRound(Game game)
+    {
+      var round = game.StartSecondRound();
+      round.SetFirstPlayerName("Winner 1");
+      round.SetSecondPlayerName("Winner 2");
+      round.SetThirdPlayerName("Winner 3");
+      round.SetFourthPlayerName("Winner 4");
+
+      game.CurrentRound.PlayerTwoWins();
+
+      return game;
+    }
+
+    private Game SetupThirdRound(Game game)
+    {
+      var round = game.StartThirdRound();
+      round.SetFirstPlayerName("Winner 1");
+      round.SetSecondPlayerName("Winner 2");
+      round.SetThirdPlayerName("Winner 3");
+      round.SetFourthPlayerName("Winner 4");
+
+      game.CurrentRound.PlayerThreeWins();
+
+      return game;
+    }
+
+    private Game SetupFourthRound(Game game)
+    {
+      var round = game.StartFourthRound();
+      round.SetFirstPlayerName("Winner 1");
+      round.SetSecondPlayerName("Winner 2");
+      round.SetThirdPlayerName("Winner 3");
+      round.SetFourthPlayerName("Winner 4");
+
+      game.CurrentRound.PlayerFourWins();
+
+      return game;
     }
 
     [TestMethod]

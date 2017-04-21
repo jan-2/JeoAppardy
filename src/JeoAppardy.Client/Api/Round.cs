@@ -45,6 +45,12 @@ namespace JeoAppardy.Client.Api
       private set;
     }
 
+    public Player Winner
+    {
+      get;
+      private set;
+    }
+
     public void SetFirstPlayerName(string playerName)
     {
       FirstPlayer.Name = playerName;
@@ -63,6 +69,26 @@ namespace JeoAppardy.Client.Api
     public void SetFourthPlayerName(string playerName)
     {
       FourthPlayer.Name = playerName;
+    }
+
+    public void PlayerOneWins()
+    {
+      Winner = FirstPlayer;
+    }
+
+    public void PlayerTwoWins()
+    {
+      Winner = SecondPlayer;
+    }
+
+    public void PlayerThreeWins()
+    {
+      Winner = ThirdPlayer;
+    }
+
+    public void PlayerFourWins()
+    {
+      Winner = FourthPlayer;
     }
   }
 }

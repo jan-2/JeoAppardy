@@ -39,10 +39,10 @@ namespace JeoAppardy.Tests
     [TestMethod]
     public void It_does_not_contain_a_player()
     {
-      Assert.AreEqual(string.Empty, _sut.FirstPlayer.Name);
-      Assert.AreEqual(string.Empty, _sut.SecondPlayer.Name);
-      Assert.AreEqual(string.Empty, _sut.ThirdPlayer.Name);
-      Assert.AreEqual(string.Empty, _sut.FourthPlayer.Name);
+      Assert.IsNull(_sut.FirstPlayer.Name);
+      Assert.IsNull(_sut.SecondPlayer.Name);
+      Assert.IsNull(_sut.ThirdPlayer.Name);
+      Assert.IsNull(_sut.FourthPlayer.Name);
     }
   }
 }
