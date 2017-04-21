@@ -35,9 +35,12 @@ namespace JeoAppardy.Tests
     }
 
     [TestMethod]
-    public void It_should_return_the_first_Round()
+    public void It_should_return_the_first_GameWall()
     {
-      Assert.AreEqual(firstBoard, _sut.Board);
+      Assert.AreEqual(firstBoard.Categories[0].Title, _sut.GameWall.Categories[0].Title);
+      Assert.AreEqual(firstBoard.Categories[1].Title, _sut.GameWall.Categories[1].Title);
+      Assert.AreEqual(firstBoard.Categories[2].Title, _sut.GameWall.Categories[2].Title);
+      Assert.AreEqual(firstBoard.Categories[3].Title, _sut.GameWall.Categories[3].Title);
     }
   }
 }

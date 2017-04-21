@@ -15,7 +15,7 @@ namespace JeoAppardy.Tests
       oneBoard = Board.FromJson(TestData.OneBoard);
 
       var game = Game.SetupWithBoards(
-          oneBoard, null, null, null, null
+          oneBoard, oneBoard, oneBoard, oneBoard, oneBoard
         );
 
       _sut = game.StartFirstRound();

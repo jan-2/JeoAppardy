@@ -6,6 +6,7 @@ namespace JeoAppardy.Tests
   [TestClass]
   public class When_start_the_final_Round
   {
+    private Game _game;
     private Round _sut;
     private Board firstBoard;
     private Board secondBoard;
@@ -22,16 +23,16 @@ namespace JeoAppardy.Tests
       fourthBoard = Board.FromJson(TestData.FourthBoard);
       finalBoard = Board.FromJson(TestData.FinalBoard);
 
-      var game = Game.SetupWithBoards(
+      _game = Game.SetupWithBoards(
           firstBoard, secondBoard, thirdBoard, fourthBoard, finalBoard
         );
 
-      game = SetupFirstRound(game);
-      game = SetupSecondRound(game);
-      game = SetupThirdRound(game);
-      game = SetupFourthRound(game);
+      _game = SetupFirstRound(_game);
+      _game = SetupSecondRound(_game);
+      _game = SetupThirdRound(_game);
+      _game = SetupFourthRound(_game);
 
-      _sut = game.StartFinalRound();
+      _sut = _game.StartFinalRound();
     }
 
     private Game SetupFirstRound(Game game)
@@ -84,12 +85,6 @@ namespace JeoAppardy.Tests
       game.CurrentRound.PlayerFourWins();
 
       return game;
-    }
-
-    [TestMethod]
-    public void It_should_return_the_final_Round()
-    {
-      Assert.AreEqual(finalBoard, _sut.Board);
     }
 
     [TestMethod]

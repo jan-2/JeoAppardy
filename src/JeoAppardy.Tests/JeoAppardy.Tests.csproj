@@ -101,7 +101,6 @@
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </Compile>
     <Compile Include="When_get_a_Board.cs" />
-    <Compile Include="When_setup_the_Game.cs" />
     <Compile Include="When_setup_the_Player.cs" />
     <Compile Include="When_start_the_final_Round.cs" />
     <Compile Include="When_start_the_Game.cs" />

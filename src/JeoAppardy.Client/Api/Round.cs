@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace JeoAppardy.Client.Api
 {
   public class Round
   {
+    private Board _board;
+
     public Round(Board board)
     {
-      Board = board;
+      _board = board;
+
+      GameWall = new GameWall(board.Categories);
 
       FirstPlayer = new Player();
       SecondPlayer = new Player();
@@ -16,7 +19,7 @@ namespace JeoAppardy.Client.Api
       FourthPlayer = new Player();
     }
 
-    public Board Board
+    public GameWall GameWall
     {
       get; private set;
     }

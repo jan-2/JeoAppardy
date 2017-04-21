@@ -97,6 +97,9 @@
     <Compile Include="Api\Category.cs" />
     <Compile Include="Api\Board.cs" />
     <Compile Include="Api\Game.cs" />
+    <Compile Include="Api\GameCategory.cs" />
+    <Compile Include="Api\GameLevel.cs" />
+    <Compile Include="Api\GameWall.cs" />
     <Compile Include="Api\Player.cs" />
     <Compile Include="Api\Round.cs" />
     <Compile Include="App.xaml.cs">

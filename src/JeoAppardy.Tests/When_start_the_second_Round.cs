@@ -6,6 +6,7 @@ namespace JeoAppardy.Tests
   [TestClass]
   public class When_start_the_second_Round
   {
+    private Game _game;
     private Round _sut;
     private Board firstBoard;
     private Board secondBoard;
@@ -22,18 +23,12 @@ namespace JeoAppardy.Tests
       fourthBoard = Board.FromJson(TestData.FourthBoard);
       finalBoard = Board.FromJson(TestData.FinalBoard);
 
-      var game = Game.SetupWithBoards(
+      _game = Game.SetupWithBoards(
           firstBoard, secondBoard, thirdBoard, fourthBoard, finalBoard
         );
 
-      game.StartFirstRound();
-      _sut = game.StartSecondRound();
-    }
-
-    [TestMethod]
-    public void It_should_return_the_second_Round()
-    {
-      Assert.AreEqual(secondBoard, _sut.Board);
+      _game.StartFirstRound();
+      _sut = _game.StartSecondRound();
     }
 
     [TestMethod]
