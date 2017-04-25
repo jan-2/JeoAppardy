@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JeoAppardy.Client.Api
@@ -17,11 +18,6 @@ namespace JeoAppardy.Client.Api
       SecondPlayer = new Player();
       ThirdPlayer = new Player();
       FourthPlayer = new Player();
-    }
-
-    public GameWall GameWall
-    {
-      get; private set;
     }
 
     public Player FirstPlayer
@@ -85,136 +81,161 @@ namespace JeoAppardy.Client.Api
     {
       FourthPlayer.Name = playerName;
 
-      GameWall.ThirdPlayer = FourthPlayer;
+      GameWall.FourthPlayer = FourthPlayer;
 
       return GameWall;
     }
 
-    public void PlayerOneWins()
+    public DiscoveredLevel PlayerChoosed(int category, int level)
     {
-      Winner = FirstPlayer;
-    }
-
-    public void PlayerTwoWins()
-    {
-      Winner = SecondPlayer;
-    }
-
-    public void PlayerThreeWins()
-    {
-      Winner = ThirdPlayer;
-    }
-
-    public void PlayerFourWins()
-    {
-      Winner = FourthPlayer;
-    }
-
-    public string PlayerChoosed(int category, int level)
-    {
-      var ids = new Ids(category, level);
+      var categoryId = Id.AsCategoryId(category);
+      var answerId = Id.AsAnswerId(level);
+      var asset = _board.Categories[categoryId].Answers[answerId].Description;
 
       GameWall
-        .Categories[ids.CategoryId]
-        .Level[ids.AnswerId].HasBeenAsked = true;
+        .Categories[categoryId]
+        .Level[answerId].HasBeenAsked = true;
 
-      return _board
-        .Categories[ids.CategoryId]
-        .Answers[ids.AnswerId]
-        .Description;
+      return new DiscoveredLevel(category, level, "text", asset);
     }
 
-    public GameWall FirstPlayerAnsweredCorrect(int category, int level)
+    public GameWall FirstPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
     {
-      var ids = new Ids(category, level);
+      SetLevelAsAnwered(discoveredLevel);
 
-      GameWall
-        .Categories[ids.CategoryId]
-        .Level[ids.AnswerId].Solved = true;
-
-      FirstPlayer.Points += level;
+      FirstPlayer.Points += discoveredLevel.Level;
       GameWall.FirstPlayer.Points = FirstPlayer.Points;
 
+      if (AllAnswersHaveBeenAsked())
+        FindTheWinner();
+
       return GameWall;
     }
 
-    public GameWall SecondPlayerAnsweredCorrect(int category, int level)
+    public GameWall FirstPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
     {
-      var ids = new Ids(category, level);
+      SetLevelAsNotAnwered(discoveredLevel);
 
-      GameWall
-        .Categories[ids.CategoryId]
-        .Level[ids.AnswerId].Solved = true;
+      return GameWall;
+    }
 
-      SecondPlayer.Points += level;
+    public GameWall SecondPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
+    {
+      SetLevelAsAnwered(discoveredLevel);
+
+      SecondPlayer.Points += discoveredLevel.Level;
       GameWall.SecondPlayer.Points = SecondPlayer.Points;
 
+      if (AllAnswersHaveBeenAsked())
+        FindTheWinner();
+
       return GameWall;
     }
 
-    public GameWall ThirdPlayerAnsweredCorrect(int category, int level)
+    public GameWall SecondPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
     {
-      var ids = new Ids(category, level);
+      SetLevelAsNotAnwered(discoveredLevel);
 
-      GameWall
-        .Categories[ids.CategoryId]
-        .Level[ids.AnswerId].Solved = true;
+      return GameWall;
+    }
 
-      ThirdPlayer.Points += level;
+    public GameWall ThirdPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
+    {
+      SetLevelAsAnwered(discoveredLevel);
+
+      ThirdPlayer.Points += discoveredLevel.Level;
       GameWall.ThirdPlayer.Points = ThirdPlayer.Points;
 
+      if (AllAnswersHaveBeenAsked())
+        FindTheWinner();
+
       return GameWall;
     }
 
-    public GameWall FourthPlayerAnsweredCorrect(int category, int level)
+    public GameWall ThirdPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
     {
-      var ids = new Ids(category, level);
+      SetLevelAsNotAnwered(discoveredLevel);
 
-      GameWall
-        .Categories[ids.CategoryId]
-        .Level[ids.AnswerId].Solved = true;
+      return GameWall;
+    }
 
-      FourthPlayer.Points += level;
+    public GameWall FourthPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
+    {
+      SetLevelAsAnwered(discoveredLevel);
+
+      FourthPlayer.Points += discoveredLevel.Level;
       GameWall.FourthPlayer.Points = FourthPlayer.Points;
 
+      if (AllAnswersHaveBeenAsked())
+        FindTheWinner();
+
       return GameWall;
     }
 
-    class Ids
+    public GameWall FourthPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
     {
-      private int categoryId;
-      private int answerId;
+      SetLevelAsNotAnwered(discoveredLevel);
 
-      public Ids(int category, int level)
-      {
-        SetCategoryId(category);
-        SetAnswerId(level);
-      }
+      return GameWall;
+    }
 
-      private void SetCategoryId(int category)
+    public GameWall GameWall
+    {
+      get; set;
+    }
+
+    private GameWall SetLevelAsAnwered(DiscoveredLevel discoveredLevel)
+    {
+      GameWall
+        .Categories[Id.AsCategoryId(discoveredLevel.Category)]
+        .Level[Id.AsAnswerId(discoveredLevel.Level)].Solved = true;
+
+      return GameWall;
+    }
+
+    private GameWall SetLevelAsNotAnwered(DiscoveredLevel discoveredLevel)
+    {
+      GameWall
+        .Categories[Id.AsCategoryId(discoveredLevel.Category)]
+        .Level[Id.AsAnswerId(discoveredLevel.Level)].Solved = false;
+
+      return GameWall;
+    }
+
+    private bool AllAnswersHaveBeenAsked()
+    {
+      return GameWall.Categories.Any(cat => cat.Level.Any(level => level.HasBeenAsked));
+    }
+
+    private void FindTheWinner()
+    {
+      var allPlayer = new List<Player>() { FirstPlayer, SecondPlayer, ThirdPlayer, FourthPlayer };
+
+      var winner = allPlayer.Aggregate((p1, p2) => p1.Points > p2.Points ? p1 : p2);
+
+      Winner = winner;
+    }
+
+    class Id
+    {
+
+      public static int AsCategoryId(int category)
       {
-        categoryId = category - 1;
+        var categoryId = category - 1;
+
         if (categoryId < 0 || categoryId > 3)
           throw new IndexOutOfRangeException("Categorie darf nur 1, 2, 3 oder 4 sein");
-      }
-      public int CategoryId
-      {
-        get {
-          return categoryId;
-        }
+
+        return categoryId;
       }
 
-      private void SetAnswerId(int level)
+      public static int AsAnswerId(int level)
       {
-        answerId = level / 100 - 1;
+        var answerId = level / 100 - 1;
         if (answerId < 0 || answerId > 3)
           throw new IndexOutOfRangeException("Level darf nur 100, 200, 300 oder 400 sein.");
-      }
-      public int AnswerId
-      {
-        get {
-          return answerId;
-        }
+
+        return answerId;
       }
     }
   }

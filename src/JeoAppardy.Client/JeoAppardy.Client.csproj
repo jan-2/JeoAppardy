@@ -96,6 +96,7 @@
     <Compile Include="Api\Answers.cs" />
     <Compile Include="Api\Category.cs" />
     <Compile Include="Api\Board.cs" />
+    <Compile Include="Api\DiscoveredLevel.cs" />
     <Compile Include="Api\Game.cs" />
     <Compile Include="Api\GameCategory.cs" />
     <Compile Include="Api\GameLevel.cs" />
