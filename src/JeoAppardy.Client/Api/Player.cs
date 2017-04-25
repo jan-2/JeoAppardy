@@ -8,5 +8,10 @@ namespace JeoAppardy.Client.Api
     {
       get; set;
     }
+
+    public int Points
+    {
+      get; set;
+    }
   }
 }

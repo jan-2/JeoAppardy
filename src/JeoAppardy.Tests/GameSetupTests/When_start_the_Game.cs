@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JeoAppardy.Tests
+namespace JeoAppardy.Tests.GameSetupTests
 {
   [TestClass]
   public class When_start_the_Game

@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using JeoAppardy.Client.Api;
 
-namespace JeoAppardy.Tests
+namespace JeoAppardy.Tests.GameSetupTests
 {
   [TestClass]
   public class When_get_a_Board

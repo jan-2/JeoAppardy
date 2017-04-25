@@ -11,7 +11,7 @@ namespace JeoAppardy.Client.Api
       get; set;
     }
 
-    public IEnumerable<Answer> Answers
+    public IList<Answer> Answers
     {
       get; set;
     }

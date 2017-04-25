@@ -1,7 +1,7 @@
 ﻿using JeoAppardy.Client.Api;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace JeoAppardy.Tests
+namespace JeoAppardy.Tests.GameSetupTests
 {
   [TestClass]
   public class When_setup_the_Player

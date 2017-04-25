@@ -15,8 +15,31 @@ namespace JeoAppardy.Client.Api
 
     public IList<GameCategory> Categories
     {
+      get; private set;
+    }
+
+    public Player FirstPlayer
+    {
       get;
-      private set;
+      set;
+    }
+
+    public Player SecondPlayer
+    {
+      get;
+      set;
+    }
+
+    public Player ThirdPlayer
+    {
+      get;
+      set;
+    }
+
+    public Player FourthPlayer
+    {
+      get;
+      set;
     }
   }
 }
