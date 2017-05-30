@@ -31,5 +31,7 @@ namespace JeoAppardy.Client.Api
         return Categories.First();
       }
     }
+
+    public string Title { get; set; }
   }
 }

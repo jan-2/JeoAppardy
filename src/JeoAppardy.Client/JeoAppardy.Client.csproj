@@ -111,16 +111,21 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Game.cs" />
-    <Compile Include="UI\Name.cs" />
-    <Compile Include="UI\StartPage.xaml.cs">
-      <DependentUpon>StartPage.xaml</DependentUpon>
+    <Compile Include="UI\GameWall.xaml.cs">
+      <DependentUpon>GameWall.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Name.cs" />
     <Compile Include="UI\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\boardOne.json" />
+    <Content Include="Assets\boardTwo.json" />
+    <Content Include="Assets\boardFinal.json" />
+    <Content Include="Assets\boardFour.json" />
+    <Content Include="Assets\boardThree.json" />
     <None Include="JeoAppardy.Client_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +147,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\StartPage.xaml">
+    <Page Include="UI\GameWall.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

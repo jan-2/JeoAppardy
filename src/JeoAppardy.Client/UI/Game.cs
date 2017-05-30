@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace JeoAppardy.Client.UI
 {
-  class Game : ViewModel
+  public class Game : ViewModel
   {
+    private string _title;
     private Api.Game _gameApi;
     private Api.Round _currentRoundApi;
     private Api.GameWall _currentGameWall;
@@ -17,6 +18,11 @@ namespace JeoAppardy.Client.UI
       _gameApi = gameApi;
     }
 
+    public string Title
+    {
+      get { return _title; }
+      set { this.Set(ref _title, value); }
+    }
     public Api.Round CurrentRound
     {
       get { return _currentRoundApi;  }
@@ -51,6 +57,7 @@ namespace JeoAppardy.Client.UI
 
     private void SetupCurrentRound(Api.Round currentRound)
     {
+      Title = currentRound.GameWall.Title;
       CurrentRound = currentRound;
       CurrentGameWall = CurrentRound.GameWall;
     }

@@ -6,12 +6,13 @@ namespace JeoAppardy.Client.Api
   public class GameWall
   {
 
-    public GameWall(IList<Category> categories)
+    public GameWall(string title, IList<Category> categories)
     {
+      Title = title;
       Categories = categories.Select(cat => new GameCategory(cat.Title)).ToList();
     }
 
-    public string Title => "Round";
+    public string Title { get; private set; }
 
     public IList<GameCategory> Categories
     {

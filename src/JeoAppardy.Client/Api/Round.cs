@@ -12,7 +12,7 @@ namespace JeoAppardy.Client.Api
     {
       _board = board;
 
-      GameWall = new GameWall(board.Categories);
+      GameWall = new GameWall(board.Title, board.Categories);
 
       FirstPlayer = new Player();
       SecondPlayer = new Player();
