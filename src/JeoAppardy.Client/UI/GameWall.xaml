@@ -6,10 +6,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:api="using:JeoAppardy.Client.Api"
       xmlns:iconPacks="using:MahApps.Metro.IconPacks"
+      xmlns:controls="using:JeoAppardy.Client.Controls"
       mc:Ignorable="d">
 
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid.Resources>
+      <Style x:Key="ListViewItemStyle"
+             TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+      </Style>
+
       <DataTemplate x:Key="PlayerTemplate"
                     x:DataType="api:Player">
         <Grid>
@@ -52,10 +61,81 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Top" />
 
-    <ListBox Grid.Row="1"
-             ItemsSource="{x:Bind ViewModel.CurrentGameWall.Categories}"
-             Margin="10 5">
-    </ListBox>
+    <ListView Grid.Row="1"
+              SelectionMode="None"
+              FontFamily="Consolas"
+              HorizontalContentAlignment="Stretch"
+              VerticalContentAlignment="Stretch"
+              ItemContainerStyle="{StaticResource ListViewItemStyle}"
+              ItemsSource="{x:Bind ViewModel.CurrentGameWall.Categories}"
+              Margin="10 5">
+      <ListView.ItemTemplate>
+        <DataTemplate x:DataType="api:GameCategory">
+          <Border BorderBrush="LightGray"
+                  BorderThickness="1 1 1 1"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+
+              <TextBlock Grid.Row="0"
+                         Margin="20"
+                         FontSize="28"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Text="{x:Bind Title}"
+                         TextWrapping="Wrap"
+                         TextTrimming="WordEllipsis" />
+
+              <ListView Grid.Row="1"
+                        SelectionMode="None"
+                        IsItemClickEnabled="True"
+                        FontFamily="Consolas"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                        ItemsSource="{x:Bind Level}"
+                        Margin="10 5">
+
+                <ListView.ItemTemplate>
+                  <DataTemplate x:DataType="api:GameLevel">
+                    <Border HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                      <TextBlock Text="{x:Bind Title}"
+                                 Margin="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 FontSize="24"
+                                 TextWrapping="Wrap"
+                                 TextTrimming="WordEllipsis" />
+                    </Border>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <ListView.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <controls:UniformGrid Columns="1"
+                                          Rows="4" />
+                  </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+              </ListView>
+            </Grid>
+
+          </Border>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+
+      <ListView.ItemsPanel>
+        <ItemsPanelTemplate>
+          <controls:UniformGrid Columns="4"
+                                Rows="1" />
+        </ItemsPanelTemplate>
+      </ListView.ItemsPanel>
+    </ListView>
 
     <Grid Grid.Row="2"
           Margin="10 5">
