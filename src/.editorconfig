@@ -1,0 +1,13 @@
+; Top-most http://editorconfig.org/ file
+root = true
+
+[*]
+end_of_line = crlf
+
+[*.cs]
+indent_style = space
+indent_size = 2
+
+[*.{xaml,xml}]
+indent_style = space
+indent_size = 2
