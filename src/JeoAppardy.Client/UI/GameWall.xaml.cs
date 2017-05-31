@@ -18,7 +18,6 @@ namespace JeoAppardy.Client.UI
 {
   public sealed partial class GameWall : Page
   {
-
     public GameWall()
     {
       this.InitializeComponent();

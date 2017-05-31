@@ -126,6 +126,7 @@
     <Content Include="Assets\boardFinal.json" />
     <Content Include="Assets\boardFour.json" />
     <Content Include="Assets\boardThree.json" />
+    <Content Include="Assets\Some Time Later.otf" />
     <None Include="JeoAppardy.Client_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
