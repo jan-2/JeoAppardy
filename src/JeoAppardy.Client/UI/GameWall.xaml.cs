@@ -30,6 +30,10 @@ namespace JeoAppardy.Client.UI
     {
       this.ViewModel = new Game(e.Parameter as Api.Game);
       this.ViewModel.StartFirstRound();
+      if (!this.ViewModel.CurrentGameWall.AllPlayersSet)
+      {
+        // navigate to Player Eingabe
+      }
 
       base.OnNavigatedTo(e);
     }

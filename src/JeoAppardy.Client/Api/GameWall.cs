@@ -19,6 +19,8 @@ namespace JeoAppardy.Client.Api
       get; private set;
     }
 
+    public bool AllPlayersSet => FirstPlayer != null && SecondPlayer != null && ThirdPlayer != null && FourthPlayer != null;
+
     public Player FirstPlayer
     {
       get;

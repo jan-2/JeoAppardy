@@ -5,9 +5,42 @@
     xmlns:local="using:JeoAppardy.Client.UI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:api="using:JeoAppardy.Client.Api"
+    xmlns:iconPacks="using:MahApps.Metro.IconPacks"
     mc:Ignorable="d">
 
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <TextBox IsReadOnly="True" Text="{x:Bind ViewModel.CurrentGameWall.Title}" FontSize="48" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" BorderThickness="0"/>
+    <Grid.Resources>
+      <DataTemplate x:Key="PlayerTemplate" x:DataType="api:Player">
+        <Grid>
+          <Border Background="WhiteSmoke" CornerRadius="2" Margin="0 50 0 0" VerticalAlignment="Stretch" />
+          <iconPacks:PackIconMaterial Kind="AccountCircle" Width="80" Height="80" Foreground="LightGray" Margin="10 0" HorizontalAlignment="Center" />
+          <StackPanel Orientation="Vertical" Margin="5 85 5 5">
+            <TextBlock HorizontalAlignment="Center" Text="{x:Bind Name, TargetNullValue=PlayerName}" FontSize="28" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Bind Points}" FontSize="16" />
+          </StackPanel>
+        </Grid>
+      </DataTemplate>
+    </Grid.Resources>
+    
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    
+    <TextBox Grid.Row="0" IsReadOnly="True" Text="{x:Bind ViewModel.CurrentGameWall.Title}" FontSize="48" Margin="0 50 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" BorderThickness="0"/>
+
+    <ListBox Grid.Row="1" ItemsSource="{x:Bind ViewModel.CurrentGameWall.Categories}" Margin="10 5">
+    </ListBox>
+    
+    <Grid Grid.Row="2" Margin="10 5">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <ContentControl Content="{x:Bind ViewModel.CurrentRound.FirstPlayer}" ContentTemplate="{StaticResource PlayerTemplate}" Margin="10" />
+        <ContentControl Content="{x:Bind ViewModel.CurrentRound.SecondPlayer}" ContentTemplate="{StaticResource PlayerTemplate}" Margin="10" />
+        <ContentControl Content="{x:Bind ViewModel.CurrentRound.ThirdPlayer}" ContentTemplate="{StaticResource PlayerTemplate}" Margin="10" />
+        <ContentControl Content="{x:Bind ViewModel.CurrentRound.FourthPlayer}" ContentTemplate="{StaticResource PlayerTemplate}" Margin="10" />
+      </StackPanel>
+    </Grid>
   </Grid>
 </Page>
