@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <TextBox Margin="0,200,0,0" Text="JeoAPPardy" FontFamily="Showcard Gothic" FontSize="250" 
+    <TextBox Margin="0,200,0,0" Text="JeoAPPardy" FontFamily="Showcard Gothic" FontSize="160" 
              BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#FF8B0A0A" IsReadOnly="True"/>
 
     <Button x:Name="startGame" Content="Start" HorizontalAlignment="Center" Margin="0,800,0,0" VerticalAlignment="Top" FontSize="48" Width="400" Height="100" Click="startGame_Click" />
