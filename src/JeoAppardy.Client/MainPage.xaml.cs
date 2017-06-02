@@ -9,7 +9,6 @@ using System.Text;
 
 namespace JeoAppardy.Client
 {
-
   public sealed partial class MainPage : Page
   {
     public MainPage()
@@ -29,11 +28,11 @@ namespace JeoAppardy.Client
       // Laden der Boards vom Dateipfad
       var installedLocation = Package.Current.InstalledLocation;
 
-      var firstBoardDefinition = await GetDefinitionOf($"{ installedLocation.Path }\\Assets\\boardOne.json");
-      var secondBoardDefinition = await GetDefinitionOf($"{ installedLocation.Path }\\Assets\\boardTwo.json");
-      var thirdBoardDefinition = await GetDefinitionOf($"{ installedLocation.Path }\\Assets\\boardThree.json");
-      var fourthBoardDefinition = await GetDefinitionOf($"{ installedLocation.Path }\\Assets\\boardFour.json");
-      var finalBoardDefinition = await GetDefinitionOf($"{ installedLocation.Path }\\Assets\\boardFinal.json");
+      var firstBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardOne.json");
+      var secondBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardTwo.json");
+      var thirdBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardThree.json");
+      var fourthBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardFour.json");
+      var finalBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardFinal.json");
 
       var boardOne = Api.Board.FromJson(firstBoardDefinition);
       var boardTwo = Api.Board.FromJson(secondBoardDefinition);

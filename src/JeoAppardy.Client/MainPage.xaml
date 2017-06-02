@@ -1,16 +1,28 @@
-﻿<Page
-    x:Class="JeoAppardy.Client.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:JeoAppardy.Client"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+﻿<Page x:Class="JeoAppardy.Client.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:JeoAppardy.Client"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <TextBox Margin="0,200,0,0" Text="JeoAPPardy" FontFamily="Showcard Gothic" FontSize="160" 
-             BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#FF8B0A0A" IsReadOnly="True"/>
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <TextBlock Margin="0,200,0,0"
+               Text="JeoAPPardy"
+               FontFamily="Assets/Some Time Later.otf#Some Time Later"
+               FontSize="300"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"
+               Foreground="#FF8B0A0A" />
 
-    <Button x:Name="startGame" Content="Start" HorizontalAlignment="Center" Margin="0,800,0,0" VerticalAlignment="Top" FontSize="48" Width="400" Height="100" Click="startGame_Click" />
+    <Button x:Name="startGame"
+            Content="Start"
+            HorizontalAlignment="Center"
+            Margin="0,800,0,0"
+            VerticalAlignment="Top"
+            FontSize="48"
+            Width="400"
+            Height="100"
+            Click="startGame_Click" />
   </Grid>
 </Page>

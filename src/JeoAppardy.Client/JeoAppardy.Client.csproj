@@ -106,6 +106,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UniformGrid.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -126,6 +127,7 @@
     <Content Include="Assets\boardFinal.json" />
     <Content Include="Assets\boardFour.json" />
     <Content Include="Assets\boardThree.json" />
+    <Content Include="Assets\Some Time Later.otf" />
     <None Include="JeoAppardy.Client_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +155,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MahApps.Metro.IconPacks">
+      <Version>1.9.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.2.3</Version>
     </PackageReference>
