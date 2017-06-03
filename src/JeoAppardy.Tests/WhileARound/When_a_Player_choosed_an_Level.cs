@@ -59,7 +59,7 @@ namespace JeoAppardy.Tests.WhileARound
     public void And_answered_correct_It_should_return_a_new_GameWall_with_answered_Level()
     {
       var discoveredLevel = _sut.PlayerChoosed(category: 1, level: 100);
-      var nextGameWall = _sut.FirstPlayerAnsweredCorrect(discoveredLevel);
+      var nextGameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel);
 
       Assert.IsTrue(nextGameWall.Categories[0].Level[0].Solved);
 
@@ -69,7 +69,7 @@ namespace JeoAppardy.Tests.WhileARound
     public void And_answered_correct_It_should_return_a_new_GameWall_with_marked_as_asked_Level()
     {
       var discoveredLevel = _sut.PlayerChoosed(category: 1, level: 100);
-      var nextGameWall = _sut.FirstPlayerAnsweredCorrect(discoveredLevel);
+      var nextGameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel);
 
       Assert.IsTrue(nextGameWall.Categories[0].Level[0].HasBeenAsked);
 
@@ -79,7 +79,7 @@ namespace JeoAppardy.Tests.WhileARound
     public void And_answered_correct_It_should_return_a_new_GameWall_with_won_points()
     {
       var discoveredLevel = _sut.PlayerChoosed(category: 1, level: 100);
-      var nextGameWall = _sut.FirstPlayerAnsweredCorrect(discoveredLevel);
+      var nextGameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel);
 
       Assert.AreEqual(100, nextGameWall.FirstPlayer.Points);
 
@@ -89,10 +89,10 @@ namespace JeoAppardy.Tests.WhileARound
     public void And_answered_correct_two_times_It_should_return_a_new_GameWall_with_won_points()
     {
       var discoveredLevel1 = _sut.PlayerChoosed(category: 1, level: 100);
-      var nextGameWall = _sut.FirstPlayerAnsweredCorrect(discoveredLevel1);
+      var nextGameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel1);
 
       var discoveredLevel2 = _sut.PlayerChoosed(category: 1, level: 200);
-      nextGameWall = _sut.FirstPlayerAnsweredCorrect(discoveredLevel2);
+      nextGameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel2);
 
       Assert.AreEqual(300, nextGameWall.FirstPlayer.Points);
 
@@ -102,13 +102,13 @@ namespace JeoAppardy.Tests.WhileARound
     public void Answered_correct_choosed_an_other_anser_but_an_other_player_answers_correct_It_should_return_a_new_GameWall_with_Players_won_points()
     {
       var discoveredLevel1 = _sut.PlayerChoosed(category: 1, level: 100);
-      var gameWall = _sut.FirstPlayerAnsweredCorrect(discoveredLevel1);
+      var gameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel1);
 
       var discoveredLevel2 = _sut.PlayerChoosed(category: 2, level: 300);
-      gameWall = _sut.FirstPlayerAnsweredNotCorrect(discoveredLevel2);
+      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel2);
 
       var discoveredLevel3 = _sut.PlayerChoosed(category: 2, level: 300);
-      gameWall = _sut.SecondPlayerAnsweredCorrect(discoveredLevel3);
+      gameWall = _sut.PlayerAnsweredCorrect(_sut.SecondPlayer, discoveredLevel3);
 
       Assert.AreEqual(100, gameWall.FirstPlayer.Points);
       Assert.AreEqual(300, gameWall.SecondPlayer.Points);
@@ -116,10 +116,40 @@ namespace JeoAppardy.Tests.WhileARound
     }
 
     [TestMethod]
+    public void And_three_players_play_the_game()
+    {
+      var discoveredLevel1 = _sut.PlayerChoosed(category: 1, level: 100);
+      var gameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel1);
+
+      var discoveredLevel2 = _sut.PlayerChoosed(category: 2, level: 300);
+      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel2);
+
+      gameWall = _sut.PlayerAnsweredCorrect(_sut.SecondPlayer, discoveredLevel2);
+
+      var discoveredLevel3 = _sut.PlayerChoosed(category: 3, level: 200);
+      gameWall = _sut.PlayerAnsweredCorrect(_sut.SecondPlayer, discoveredLevel3);
+
+      var discoveredLevel4 = _sut.PlayerChoosed(category: 4, level: 400);
+      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel4);
+
+      gameWall = _sut.PlayerAnsweredCorrect(_sut.ThirdPlayer, discoveredLevel4);
+
+      var discoveredLevel5 = _sut.PlayerChoosed(category: 4, level: 300);
+      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel5);
+
+      gameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel5);
+
+      Assert.AreEqual(400, gameWall.FirstPlayer.Points);
+      Assert.AreEqual(500, gameWall.SecondPlayer.Points);
+      Assert.AreEqual(400, gameWall.ThirdPlayer.Points);
+
+    }
+
+    [TestMethod]
     public void And_answered_not_correct_It_should_return_a_new_GameWall_with_marked_as_asked_Level()
     {
       var discoveredLevel = _sut.PlayerChoosed(category: 1, level: 100);
-      var gameWall = _sut.FirstPlayerAnsweredCorrect(discoveredLevel);
+      var gameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel);
 
       Assert.IsTrue(gameWall.Categories[0].Level[0].HasBeenAsked);
 

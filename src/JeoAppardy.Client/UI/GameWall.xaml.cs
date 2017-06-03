@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using JeoAppardy.Client.Api;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace JeoAppardy.Client.UI
 {
   public sealed partial class GameWall : Page
   {
+    private Api.Player _activePlayer;
+
     public GameWall()
     {
       this.InitializeComponent();
@@ -35,6 +25,35 @@ namespace JeoAppardy.Client.UI
       }
 
       base.OnNavigatedTo(e);
+    }
+
+    private void firstPlayer_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      // Player fokussieren z.B. Highlight, GameWall aktivieren
+      // und "korrekt" "Nicht korrekt" Buttons anzeigen
+
+      // Aktiven Player merken, er wird bei der Beantwortung eine Levels benötigt
+      _activePlayer = ViewModel.CurrentRound.FirstPlayer;
+    }
+
+    private void secondPlayer_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      _activePlayer = ViewModel.CurrentRound.SecondPlayer;
+    }
+
+    private void thirdPlayer_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      _activePlayer = ViewModel.CurrentRound.ThirdPlayer;
+    }
+
+    private void fourthPlayer_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      _activePlayer = ViewModel.CurrentRound.FourthPlayer;
+    }
+
+    private void gameLevels_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+
     }
   }
 }

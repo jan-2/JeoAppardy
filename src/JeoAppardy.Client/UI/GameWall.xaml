@@ -131,8 +131,8 @@
 
       <ListView.ItemsPanel>
         <ItemsPanelTemplate>
-          <controls:UniformGrid Columns="4"
-                                Rows="1" />
+          <controls:UniformGrid x:Name="gameLevels" Columns="4"
+                                Rows="1" Tapped="gameLevels_Tapped"/>
         </ItemsPanelTemplate>
       </ListView.ItemsPanel>
     </ListView>
@@ -141,34 +141,34 @@
           Margin="10 5">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Center">
-        <ContentControl Width="200"
+        <ContentControl x:Name="firstPlayer" Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Content="{x:Bind ViewModel.CurrentRound.FirstPlayer}"
                         ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" />
-        <ContentControl Width="200"
+                        Margin="10" Tapped="firstPlayer_Tapped" />
+        <ContentControl x:Name="secondPlayer" Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Content="{x:Bind ViewModel.CurrentRound.SecondPlayer}"
                         ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" />
-        <ContentControl Width="200"
+                        Margin="10" Tapped="secondPlayer_Tapped"/>
+        <ContentControl x:Name="thirdPlayer" Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Content="{x:Bind ViewModel.CurrentRound.ThirdPlayer}"
                         ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" />
-        <ContentControl Width="200"
+                        Margin="10" Tapped="thirdPlayer_Tapped"/>
+        <ContentControl x:Name="fourthPlayer" Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Content="{x:Bind ViewModel.CurrentRound.FourthPlayer}"
                         ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" />
+                        Margin="10" Tapped="fourthPlayer_Tapped"/>
       </StackPanel>
     </Grid>
   </Grid>

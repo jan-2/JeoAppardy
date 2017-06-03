@@ -44,5 +44,6 @@ namespace JeoAppardy.Client.Api
       get;
       set;
     }
+    public Player ActivePlayer { get; internal set; }
   }
 }

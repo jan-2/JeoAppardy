@@ -99,12 +99,14 @@ namespace JeoAppardy.Client.Api
       return new DiscoveredLevel(category, level, "text", asset);
     }
 
-    public GameWall FirstPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
+    public GameWall PlayerAnsweredCorrect(Player currentPlayer, DiscoveredLevel discoveredLevel)
     {
       SetLevelAsAnwered(discoveredLevel);
 
-      FirstPlayer.Points += discoveredLevel.Level;
-      GameWall.FirstPlayer.Points = FirstPlayer.Points;
+      GameWall.ActivePlayer = currentPlayer;
+
+      currentPlayer.Points += discoveredLevel.Level;
+      GameWall.ActivePlayer.Points = currentPlayer.Points;
 
       if (AllAnswersHaveBeenAsked())
         FindTheWinner();
@@ -112,67 +114,7 @@ namespace JeoAppardy.Client.Api
       return GameWall;
     }
 
-    public GameWall FirstPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
-    {
-      SetLevelAsNotAnwered(discoveredLevel);
-
-      return GameWall;
-    }
-
-    public GameWall SecondPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
-    {
-      SetLevelAsAnwered(discoveredLevel);
-
-      SecondPlayer.Points += discoveredLevel.Level;
-      GameWall.SecondPlayer.Points = SecondPlayer.Points;
-
-      if (AllAnswersHaveBeenAsked())
-        FindTheWinner();
-
-      return GameWall;
-    }
-
-    public GameWall SecondPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
-    {
-      SetLevelAsNotAnwered(discoveredLevel);
-
-      return GameWall;
-    }
-
-    public GameWall ThirdPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
-    {
-      SetLevelAsAnwered(discoveredLevel);
-
-      ThirdPlayer.Points += discoveredLevel.Level;
-      GameWall.ThirdPlayer.Points = ThirdPlayer.Points;
-
-      if (AllAnswersHaveBeenAsked())
-        FindTheWinner();
-
-      return GameWall;
-    }
-
-    public GameWall ThirdPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
-    {
-      SetLevelAsNotAnwered(discoveredLevel);
-
-      return GameWall;
-    }
-
-    public GameWall FourthPlayerAnsweredCorrect(DiscoveredLevel discoveredLevel)
-    {
-      SetLevelAsAnwered(discoveredLevel);
-
-      FourthPlayer.Points += discoveredLevel.Level;
-      GameWall.FourthPlayer.Points = FourthPlayer.Points;
-
-      if (AllAnswersHaveBeenAsked())
-        FindTheWinner();
-
-      return GameWall;
-    }
-
-    public GameWall FourthPlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
+    public GameWall PlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
     {
       SetLevelAsNotAnwered(discoveredLevel);
 

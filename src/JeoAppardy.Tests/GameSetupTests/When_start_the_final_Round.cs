@@ -93,55 +93,55 @@ namespace JeoAppardy.Tests.GameSetupTests
 
       //FirstPlayer spielt nur Level 400
       discoveredLevel = round.PlayerChoosed(1, 400);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 400);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 400);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 400);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       //SecondPlayer spielt nur Level 200
       discoveredLevel = round.PlayerChoosed(1, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       //ThirdPlayer speilt nur Level 300
       discoveredLevel = round.PlayerChoosed(1, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       //FourthPlayer spielt nur Level 100
       discoveredLevel = round.PlayerChoosed(1, 100);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 100);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 100);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 100);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       return round;
     }
@@ -152,55 +152,55 @@ namespace JeoAppardy.Tests.GameSetupTests
 
       //FirstPlayer spielt nur Level 100
       discoveredLevel = round.PlayerChoosed(1, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       //SecondPlayer spielt nur Level 400
       discoveredLevel = round.PlayerChoosed(1, 400);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 400);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 400);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 400);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       //ThirdPlayer speilt nur Level 300
       discoveredLevel = round.PlayerChoosed(1, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       //FourthPlayer spielt nur Level 200
       discoveredLevel = round.PlayerChoosed(1, 200);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 200);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 200);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 200);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       return round;
     }
@@ -211,55 +211,55 @@ namespace JeoAppardy.Tests.GameSetupTests
 
       //FirstPlayer spielt nur Level 100
       discoveredLevel = round.PlayerChoosed(1, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       //SecondPlayer spielt nur Level 200
       discoveredLevel = round.PlayerChoosed(1, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       //ThirdPlayer speilt nur Level 400
       discoveredLevel = round.PlayerChoosed(1, 400);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 400);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 400);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 400);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       //FourthPlayer spielt nur Level 300
       discoveredLevel = round.PlayerChoosed(1, 300);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 300);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 300);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 300);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       return round;
     }
@@ -270,55 +270,55 @@ namespace JeoAppardy.Tests.GameSetupTests
 
       //FirstPlayer spielt nur Level 100
       discoveredLevel = round.PlayerChoosed(1, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 100);
-      round.FirstPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
 
       //SecondPlayer spielt nur Level 200
       discoveredLevel = round.PlayerChoosed(1, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 200);
-      round.SecondPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
 
       //ThirdPlayer speilt nur Level 300
       discoveredLevel = round.PlayerChoosed(1, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 300);
-      round.ThirdPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.ThirdPlayer, discoveredLevel);
 
       //FourthPlayer spielt nur Level 400
       discoveredLevel = round.PlayerChoosed(1, 400);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(2, 400);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(3, 400);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       discoveredLevel = round.PlayerChoosed(4, 400);
-      round.FourthPlayerAnsweredCorrect(discoveredLevel);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
 
       return round;
     }
