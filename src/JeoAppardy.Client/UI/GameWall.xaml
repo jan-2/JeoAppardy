@@ -1,13 +1,15 @@
 ﻿<Page x:Class="JeoAppardy.Client.UI.GameWall"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:JeoAppardy.Client.UI"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:api="using:JeoAppardy.Client.Api"
       xmlns:iconPacks="using:MahApps.Metro.IconPacks"
       xmlns:controls="using:JeoAppardy.Client.Controls"
-      mc:Ignorable="d">
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      mc:Ignorable="d"
+      x:Name="gameWallPage">
 
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid.Resources>
@@ -19,10 +21,9 @@
                 Value="Stretch" />
       </Style>
 
-      <DataTemplate x:Key="PlayerTemplate"
-                    x:DataType="api:Player">
-        <Grid>
-          <Border Background="WhiteSmoke"
+      <ControlTemplate x:Key="PlayerControlTemplate" TargetType="ContentControl">
+        <Grid d:DataContext="{d:DesignInstance api:Player}">
+          <Border Background="{TemplateBinding Background}"
                   CornerRadius="2"
                   Margin="0 50 0 0"
                   VerticalAlignment="Stretch" />
@@ -36,14 +37,64 @@
                       Margin="5 85 5 5"
                       VerticalAlignment="Bottom">
             <TextBlock HorizontalAlignment="Center"
-                       Text="{x:Bind Name, TargetNullValue=PlayerName}"
+                       Text="{Binding Name, TargetNullValue=PlayerName}"
                        FontSize="28" />
             <TextBlock HorizontalAlignment="Center"
-                       Text="{x:Bind Points}"
+                       Text="{Binding Points}"
                        FontSize="20"
                        Margin="10 40 10 10" />
           </StackPanel>
         </Grid>
+      </ControlTemplate>
+<!--      <DataTemplate x:Key="PlayerTemplate"-->
+<!--                    x:DataType="api:Player">-->
+<!--        <Grid>-->
+<!--          <Border Background="WhiteSmoke"-->
+<!--                  CornerRadius="2"-->
+<!--                  Margin="0 50 0 0"-->
+<!--                  VerticalAlignment="Stretch" />-->
+<!--          <iconPacks:PackIconMaterial Kind="AccountCircle"-->
+<!--                                      Width="100"-->
+<!--                                      Height="100"-->
+<!--                                      Foreground="LightGray"-->
+<!--                                      Margin="10 0"-->
+<!--                                      HorizontalAlignment="Center" />-->
+<!--          <StackPanel Orientation="Vertical"-->
+<!--                      Margin="5 85 5 5"-->
+<!--                      VerticalAlignment="Bottom">-->
+<!--            <TextBlock HorizontalAlignment="Center"-->
+<!--                       Text="{x:Bind Name, TargetNullValue=PlayerName}"-->
+<!--                       FontSize="28" />-->
+<!--            <TextBlock HorizontalAlignment="Center"-->
+<!--                       Text="{x:Bind Points}"-->
+<!--                       FontSize="20"-->
+<!--                       Margin="10 40 10 10" />-->
+<!--          </StackPanel>-->
+<!--        </Grid>-->
+<!--      </DataTemplate>-->
+
+      <DataTemplate x:Key="GameLevelTemplate"
+                    x:DataType="api:DiscoveredLevel">
+        <Border BorderThickness="2"
+                BorderBrush="Brown"
+                Background="Gainsboro">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="{x:Bind Level}"
+                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
+                       FontSize="48"
+                       Margin="0 10 0 0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top" />
+
+          </Grid>
+        </Border>
       </DataTemplate>
     </Grid.Resources>
 
@@ -91,7 +142,8 @@
                          TextWrapping="Wrap"
                          TextTrimming="WordEllipsis" />
 
-              <ListView Grid.Row="1"
+              <ListView x:Name="gameLevels"
+                        Grid.Row="1"
                         SelectionMode="None"
                         IsItemClickEnabled="True"
                         FontFamily="Consolas"
@@ -101,9 +153,16 @@
                         ItemsSource="{x:Bind Level}"
                         Margin="10 5">
 
+                <interactivity:Interaction.Behaviors>
+                  <core:EventTriggerBehavior EventName="ItemClick">
+                    <core:InvokeCommandAction Command="{Binding ElementName=gameWallPage, Path=ViewModel.SetDiscoveredLevelCommand}" />
+                  </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+
                 <ListView.ItemTemplate>
                   <DataTemplate x:DataType="api:GameLevel">
-                    <Border HorizontalAlignment="Stretch"
+                    <Border x:Name="gameLevel"
+                            HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
                       <TextBlock Text="{x:Bind Title}"
                                  Margin="20"
@@ -131,44 +190,102 @@
 
       <ListView.ItemsPanel>
         <ItemsPanelTemplate>
-          <controls:UniformGrid x:Name="gameLevels" Columns="4"
-                                Rows="1" Tapped="gameLevels_Tapped"/>
+          <controls:UniformGrid Columns="4"
+                                Rows="1" />
         </ItemsPanelTemplate>
       </ListView.ItemsPanel>
     </ListView>
+
+    <!-- Ansicht für das aktuell selektierte Level -->
+    <ContentControl x:Name="level"
+                    Grid.Row="1"
+                    Margin="10 5"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    Visibility="Collapsed"
+                    Content="{Binding ElementName=gameWallPage, Path=ViewModel.DiscoveredLevel}"
+                    ContentTemplate="{StaticResource GameLevelTemplate}">
+
+      <interactivity:Interaction.Behaviors>
+        <core:DataTriggerBehavior Binding="{Binding ElementName=gameWallPage, Path=ViewModel.DiscoveredLevel}"
+                                  ComparisonCondition="NotEqual"
+                                  Value="{x:Null}">
+          <core:ChangePropertyAction TargetObject="{Binding ElementName=level}"
+                                     PropertyName="Visibility"
+                                     Value="Visible" />
+        </core:DataTriggerBehavior>
+      </interactivity:Interaction.Behaviors>
+
+    </ContentControl>
 
     <Grid Grid.Row="2"
           Margin="10 5">
       <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Center">
-        <ContentControl x:Name="firstPlayer" Width="200"
+        <ContentControl x:Name="firstPlayer"
+                        Background="WhiteSmoke"
+                        Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Content="{x:Bind ViewModel.CurrentRound.FirstPlayer}"
-                        ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" Tapped="firstPlayer_Tapped" />
-        <ContentControl x:Name="secondPlayer" Width="200"
+                        DataContext="{x:Bind ViewModel.CurrentRound.FirstPlayer}"
+                        Template="{StaticResource PlayerControlTemplate}"
+                        Margin="10">
+          <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="Tapped">
+              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
+                                        CommandParameter="{x:Bind ViewModel.CurrentRound.FirstPlayer}" />
+            </core:EventTriggerBehavior>
+          </interactivity:Interaction.Behaviors>
+        </ContentControl>
+        <ContentControl x:Name="secondPlayer"
+                        Background="WhiteSmoke"
+                        Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Content="{x:Bind ViewModel.CurrentRound.SecondPlayer}"
-                        ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" Tapped="secondPlayer_Tapped"/>
-        <ContentControl x:Name="thirdPlayer" Width="200"
+                        DataContext="{x:Bind ViewModel.CurrentRound.SecondPlayer}"
+                        Template="{StaticResource PlayerControlTemplate}"
+                        Margin="10">
+          <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="Tapped">
+              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
+                                        CommandParameter="{x:Bind ViewModel.CurrentRound.SecondPlayer}" />
+            </core:EventTriggerBehavior>
+          </interactivity:Interaction.Behaviors>
+        </ContentControl>
+        <ContentControl x:Name="thirdPlayer"
+                        Background="WhiteSmoke"
+                        Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Content="{x:Bind ViewModel.CurrentRound.ThirdPlayer}"
-                        ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" Tapped="thirdPlayer_Tapped"/>
-        <ContentControl x:Name="fourthPlayer" Width="200"
+                        DataContext="{x:Bind ViewModel.CurrentRound.ThirdPlayer}"
+                        Template="{StaticResource PlayerControlTemplate}"
+                        Margin="10">
+          <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="Tapped">
+              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
+                                        CommandParameter="{x:Bind ViewModel.CurrentRound.ThirdPlayer}" />
+            </core:EventTriggerBehavior>
+          </interactivity:Interaction.Behaviors>
+        </ContentControl>
+        <ContentControl x:Name="fourthPlayer"
+                        Background="WhiteSmoke"
+                        Width="200"
                         Height="250"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Content="{x:Bind ViewModel.CurrentRound.FourthPlayer}"
-                        ContentTemplate="{StaticResource PlayerTemplate}"
-                        Margin="10" Tapped="fourthPlayer_Tapped"/>
+                        DataContext="{x:Bind ViewModel.CurrentRound.FourthPlayer}"
+                        Template="{StaticResource PlayerControlTemplate}"
+                        Margin="10">
+          <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="Tapped">
+              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
+                                        CommandParameter="{x:Bind ViewModel.CurrentRound.FourthPlayer}" />
+            </core:EventTriggerBehavior>
+          </interactivity:Interaction.Behaviors>
+        </ContentControl>
       </StackPanel>
     </Grid>
   </Grid>
