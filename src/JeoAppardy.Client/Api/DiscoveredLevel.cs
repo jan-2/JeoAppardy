@@ -2,7 +2,7 @@
 {
   public class DiscoveredLevel
   {
-    public DiscoveredLevel(int category, int level, string type, string asset)
+    public DiscoveredLevel(GameCategory category, int level, string type, string asset)
     {
       Category = category;
       Level = level;
@@ -10,21 +10,9 @@
       Asset = asset;
     }
 
-    public int Category
-    {
-      get; private set;
-    }
-    public int Level
-    {
-      get; private set;
-    }
-    public string Type
-    {
-      get; private set;
-    }
-    public string Asset
-    {
-      get; private set;
-    }
+    public GameCategory Category { get; private set; }
+    public int Level { get; private set; }
+    public string Type { get; private set; }
+    public string Asset { get; private set; }
   }
 }

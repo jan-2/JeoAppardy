@@ -21,7 +21,7 @@ namespace JeoAppardy.Client.UI
       _gameApi = gameApi;
 
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
-        SetDiscoveredLevel,
+        args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
         args => args?.ClickedItem != null && this.ActivePlayer != null);
 
       // Player fokussieren z.B. Highlight, GameWall aktivieren
@@ -32,9 +32,9 @@ namespace JeoAppardy.Client.UI
         player => true);
     }
 
-    private void SetDiscoveredLevel(ItemClickEventArgs args)
+    private void SetDiscoveredLevel(Api.GameLevel gameLevel)
     {
-      //this.DiscoveredLevel = _currentRoundApi.PlayerChoosed(0, 0);
+      this.DiscoveredLevel = _currentRoundApi.PlayerChoosed(gameLevel.CategoryId, gameLevel.Level);
     }
 
     public string Title

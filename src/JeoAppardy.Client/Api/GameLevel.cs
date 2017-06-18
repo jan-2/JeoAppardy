@@ -2,24 +2,17 @@
 {
   public class GameLevel
   {
-    public GameLevel(string title)
+    public GameLevel(int categoryId, int level)
     {
-      Title = title;
+      CategoryId = categoryId;
+      Level = level;
     }
 
-    public string Title
-    {
-      get; private set;
-    }
+    public int CategoryId { get; }
+    public int Level { get; }
 
-    public bool HasBeenAsked
-    {
-      get; set;
-    }
+    public bool HasBeenAsked { get; set; }
 
-    public bool Solved
-    {
-      get; set;
-    }
+    public bool Solved { get; set; }
   }
 }

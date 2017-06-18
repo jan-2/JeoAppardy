@@ -81,15 +81,23 @@
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
               <RowDefinition Height="*" />
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0"
-                       Text="{x:Bind Level}"
+                       Text="{x:Bind Category.Category.Title}"
                        FontFamily="Assets/Some Time Later.otf#Some Time Later"
                        FontSize="48"
-                       Margin="0 10 0 0"
+                       Margin="5"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top" />
+            <TextBlock Grid.Row="1"
+                       Text="{x:Bind Level}"
+                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
+                       FontSize="36"
+                       Margin="5"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top" />
 
@@ -138,7 +146,7 @@
                          FontSize="28"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"
-                         Text="{x:Bind Title}"
+                         Text="{x:Bind Category.Title}"
                          TextWrapping="Wrap"
                          TextTrimming="WordEllipsis" />
 
@@ -164,7 +172,7 @@
                     <Border x:Name="gameLevel"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
-                      <TextBlock Text="{x:Bind Title}"
+                      <TextBlock Text="{x:Bind Level}"
                                  Margin="20"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
@@ -218,6 +226,7 @@
 
     </ContentControl>
 
+    <!-- Anzeige der aktuellen Player der Runde -->
     <Grid Grid.Row="2"
           Margin="10 5">
       <StackPanel Orientation="Horizontal"

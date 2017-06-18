@@ -96,7 +96,7 @@ namespace JeoAppardy.Client.Api
         .Categories[categoryId]
         .Level[answerId].HasBeenAsked = true;
 
-      return new DiscoveredLevel(category, level, "text", asset);
+      return new DiscoveredLevel(GameWall.Categories[categoryId], level, "text", asset);
     }
 
     public GameWall PlayerAnsweredCorrect(Player currentPlayer, DiscoveredLevel discoveredLevel)
@@ -129,7 +129,7 @@ namespace JeoAppardy.Client.Api
     private GameWall SetLevelAsAnwered(DiscoveredLevel discoveredLevel)
     {
       GameWall
-        .Categories[Id.AsCategoryId(discoveredLevel.Category)]
+        .Categories[Id.AsCategoryId(discoveredLevel.Category.Id)]
         .Level[Id.AsAnswerId(discoveredLevel.Level)].Solved = true;
 
       return GameWall;
@@ -138,7 +138,7 @@ namespace JeoAppardy.Client.Api
     private GameWall SetLevelAsNotAnwered(DiscoveredLevel discoveredLevel)
     {
       GameWall
-        .Categories[Id.AsCategoryId(discoveredLevel.Category)]
+        .Categories[Id.AsCategoryId(discoveredLevel.Category.Id)]
         .Level[Id.AsAnswerId(discoveredLevel.Level)].Solved = false;
 
       return GameWall;
