@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
-
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <TextBlock Margin="0,200,0,0"
                Text="JeoAPPardy"
@@ -14,6 +13,14 @@
                VerticalAlignment="Top"
                HorizontalAlignment="Center"
                Foreground="#FF8B0A0A" />
+
+    <ComboBox  Margin="0,600,0,0"
+               FontFamily="Assets/Some Time Later.otf#Some Time Later"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"
+               Foreground="#FF8B0A0A" Width="174"
+               ItemsSource="{Binding Ports}"
+               SelectedItem="{Binding SelectedPort.Value}" DisplayMemberPath="Name"/>
 
     <Button x:Name="startGame"
             Content="Start"
