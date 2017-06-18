@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Api\Answer.cs" />
     <Compile Include="Api\Answers.cs" />
+    <Compile Include="Api\AnswerType.cs" />
     <Compile Include="Api\Category.cs" />
     <Compile Include="Api\Board.cs" />
     <Compile Include="Api\DiscoveredLevel.cs" />

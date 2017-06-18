@@ -42,5 +42,14 @@ namespace JeoAppardy.Tests.GameSetupTests
       Assert.IsNotNull(_sut.FirstCategory.FirstAnswer.Description);
       Assert.AreNotEqual(String.Empty, _sut.FirstCategory.FirstAnswer.Description);
     }
+
+    [TestMethod]
+    public void It_should_get_this_answer_types()
+    {
+      Assert.AreEqual(AnswerType.Text, _sut.FirstCategory.Answers[0].Type);
+      Assert.AreEqual(AnswerType.File, _sut.FirstCategory.Answers[1].Type);
+      Assert.AreEqual(AnswerType.Image, _sut.FirstCategory.Answers[2].Type);
+      Assert.AreEqual(AnswerType.Text, _sut.FirstCategory.Answers[3].Type);
+    }
   }
 }

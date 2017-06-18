@@ -6,6 +6,8 @@ namespace JeoAppardy.Client.Api
   {
     public string Description { get; set; }
 
+    public AnswerType Type { get; set; }
+
     [JsonProperty(PropertyName = "related_question")]
     public string RelatedQuestion { get; set; }
   }
