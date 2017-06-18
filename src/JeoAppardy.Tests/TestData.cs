@@ -13,17 +13,17 @@ namespace JeoAppardy.Tests
             'answers':[
               {
                 'description': 'description 1',
-                'type': 0,
+                'type': 'text',
                 'related_question': 'question 1'
               },
               {
                 'description': 'description 2',
-                'type': 1,
+                'type': 'file',
                 'related_question': 'question 2'
               },
               {
                 'description': 'description 3',
-                'type': 2,
+                'type': 'image',
                 'related_question': 'question 3'
               },
               {
