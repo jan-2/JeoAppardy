@@ -45,8 +45,11 @@ namespace JeoAppardy.Client
     }
 
     private async void startGame_Click(object sender, RoutedEventArgs e) {
-
-      await Open(SelectedPort.Value);
+      var deviceInformation = SelectedPort.Value;
+      if (deviceInformation != null)
+      {
+        await Open(deviceInformation);
+      }
 
       var game = await SetupGame();
 
