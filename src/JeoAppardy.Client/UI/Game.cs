@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using JeoAppardy.Client.Api;
 using JeoAppardy.Client.Common;
@@ -12,9 +13,9 @@ namespace JeoAppardy.Client.UI
     private Api.Round _currentRoundApi;
     private Api.GameWall _currentGameWall;
     private Api.Player _activePlayer;
-    private ICommand _setActivePlayerCommand;
     private Api.DiscoveredLevel _discoveredLevel;
     private ICommand _setDiscoveredLevelCommand;
+    private ObservableCollection<Player> _allPlayers;
 
     public Game(Api.Game gameApi)
     {
@@ -27,9 +28,6 @@ namespace JeoAppardy.Client.UI
       // Player fokussieren z.B. Highlight, GameWall aktivieren
       // und "korrekt" "Nicht korrekt" Buttons anzeigen
       // Aktiven Player merken, er wird bei der Beantwortung eines Levels benötigt
-      this.SetActivePlayerCommand = new DelegateCommand<Api.Player>(
-        player => this.ActivePlayer = player,
-        player => true);
     }
 
     private void SetDiscoveredLevel(Api.GameLevel gameLevel)
@@ -67,16 +65,16 @@ namespace JeoAppardy.Client.UI
       set { this.Set(ref _setDiscoveredLevelCommand, value); }
     }
 
+    public ObservableCollection<Api.Player> AllPlayers
+    {
+      get { return _allPlayers; }
+      set { this.Set(ref _allPlayers, value); }
+    }
+
     public Api.Player ActivePlayer
     {
       get { return _activePlayer; }
       set { this.Set(ref _activePlayer, value); }
-    }
-
-    public ICommand SetActivePlayerCommand
-    {
-      get { return _setActivePlayerCommand; }
-      set { this.Set(ref _setActivePlayerCommand, value); }
     }
 
     public void StartFirstRound()
@@ -109,6 +107,13 @@ namespace JeoAppardy.Client.UI
       Title = currentRound.GameWall.Title;
       CurrentRound = currentRound;
       CurrentGameWall = CurrentRound.GameWall;
+      this.AllPlayers = new ObservableCollection<Player>(new[]
+      {
+        _gameApi.CurrentRound.FirstPlayer,
+        _gameApi.CurrentRound.SecondPlayer,
+        _gameApi.CurrentRound.ThirdPlayer,
+        _gameApi.CurrentRound.FourthPlayer
+      });
     }
 
     public void SetupPlayerOne(Name name)

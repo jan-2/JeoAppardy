@@ -21,9 +21,10 @@
                 Value="Stretch" />
       </Style>
 
-      <ControlTemplate x:Key="PlayerControlTemplate" TargetType="ContentControl">
-        <Grid d:DataContext="{d:DesignInstance api:Player}">
-          <Border Background="{TemplateBinding Background}"
+      <DataTemplate x:Key="PlayerTemplate"
+                    x:DataType="api:Player">
+        <Grid Margin="20">
+          <Border Background="WhiteSmoke"
                   CornerRadius="2"
                   Margin="0 50 0 0"
                   VerticalAlignment="Stretch" />
@@ -37,41 +38,15 @@
                       Margin="5 85 5 5"
                       VerticalAlignment="Bottom">
             <TextBlock HorizontalAlignment="Center"
-                       Text="{Binding Name, TargetNullValue=PlayerName}"
+                       Text="{x:Bind Name, TargetNullValue=PlayerName}"
                        FontSize="28" />
             <TextBlock HorizontalAlignment="Center"
-                       Text="{Binding Points}"
+                       Text="{x:Bind Points}"
                        FontSize="20"
                        Margin="10 40 10 10" />
           </StackPanel>
         </Grid>
-      </ControlTemplate>
-<!--      <DataTemplate x:Key="PlayerTemplate"-->
-<!--                    x:DataType="api:Player">-->
-<!--        <Grid>-->
-<!--          <Border Background="WhiteSmoke"-->
-<!--                  CornerRadius="2"-->
-<!--                  Margin="0 50 0 0"-->
-<!--                  VerticalAlignment="Stretch" />-->
-<!--          <iconPacks:PackIconMaterial Kind="AccountCircle"-->
-<!--                                      Width="100"-->
-<!--                                      Height="100"-->
-<!--                                      Foreground="LightGray"-->
-<!--                                      Margin="10 0"-->
-<!--                                      HorizontalAlignment="Center" />-->
-<!--          <StackPanel Orientation="Vertical"-->
-<!--                      Margin="5 85 5 5"-->
-<!--                      VerticalAlignment="Bottom">-->
-<!--            <TextBlock HorizontalAlignment="Center"-->
-<!--                       Text="{x:Bind Name, TargetNullValue=PlayerName}"-->
-<!--                       FontSize="28" />-->
-<!--            <TextBlock HorizontalAlignment="Center"-->
-<!--                       Text="{x:Bind Points}"-->
-<!--                       FontSize="20"-->
-<!--                       Margin="10 40 10 10" />-->
-<!--          </StackPanel>-->
-<!--        </Grid>-->
-<!--      </DataTemplate>-->
+      </DataTemplate>
 
       <DataTemplate x:Key="GameLevelTemplate"
                     x:DataType="api:DiscoveredLevel">
@@ -229,73 +204,25 @@
     <!-- Anzeige der aktuellen Player der Runde -->
     <Grid Grid.Row="2"
           Margin="10 5">
-      <StackPanel Orientation="Horizontal"
-                  HorizontalAlignment="Center">
-        <ContentControl x:Name="firstPlayer"
-                        Background="WhiteSmoke"
-                        Width="200"
-                        Height="250"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        DataContext="{x:Bind ViewModel.CurrentRound.FirstPlayer}"
-                        Template="{StaticResource PlayerControlTemplate}"
-                        Margin="10">
-          <interactivity:Interaction.Behaviors>
-            <core:EventTriggerBehavior EventName="Tapped">
-              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
-                                        CommandParameter="{x:Bind ViewModel.CurrentRound.FirstPlayer}" />
-            </core:EventTriggerBehavior>
-          </interactivity:Interaction.Behaviors>
-        </ContentControl>
-        <ContentControl x:Name="secondPlayer"
-                        Background="WhiteSmoke"
-                        Width="200"
-                        Height="250"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        DataContext="{x:Bind ViewModel.CurrentRound.SecondPlayer}"
-                        Template="{StaticResource PlayerControlTemplate}"
-                        Margin="10">
-          <interactivity:Interaction.Behaviors>
-            <core:EventTriggerBehavior EventName="Tapped">
-              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
-                                        CommandParameter="{x:Bind ViewModel.CurrentRound.SecondPlayer}" />
-            </core:EventTriggerBehavior>
-          </interactivity:Interaction.Behaviors>
-        </ContentControl>
-        <ContentControl x:Name="thirdPlayer"
-                        Background="WhiteSmoke"
-                        Width="200"
-                        Height="250"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        DataContext="{x:Bind ViewModel.CurrentRound.ThirdPlayer}"
-                        Template="{StaticResource PlayerControlTemplate}"
-                        Margin="10">
-          <interactivity:Interaction.Behaviors>
-            <core:EventTriggerBehavior EventName="Tapped">
-              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
-                                        CommandParameter="{x:Bind ViewModel.CurrentRound.ThirdPlayer}" />
-            </core:EventTriggerBehavior>
-          </interactivity:Interaction.Behaviors>
-        </ContentControl>
-        <ContentControl x:Name="fourthPlayer"
-                        Background="WhiteSmoke"
-                        Width="200"
-                        Height="250"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        DataContext="{x:Bind ViewModel.CurrentRound.FourthPlayer}"
-                        Template="{StaticResource PlayerControlTemplate}"
-                        Margin="10">
-          <interactivity:Interaction.Behaviors>
-            <core:EventTriggerBehavior EventName="Tapped">
-              <core:InvokeCommandAction Command="{x:Bind ViewModel.SetActivePlayerCommand}"
-                                        CommandParameter="{x:Bind ViewModel.CurrentRound.FourthPlayer}" />
-            </core:EventTriggerBehavior>
-          </interactivity:Interaction.Behaviors>
-        </ContentControl>
-      </StackPanel>
+
+      <ListView x:Name="players"
+                HorizontalAlignment="Center"
+                SelectionMode="Single"
+                IsItemClickEnabled="False"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                SelectedItem="{x:Bind ViewModel.ActivePlayer, Mode=TwoWay}"
+                ItemsSource="{x:Bind ViewModel.AllPlayers}"
+                ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                ItemTemplate="{StaticResource PlayerTemplate}">
+        <ListView.ItemsPanel>
+          <ItemsPanelTemplate>
+            <controls:UniformGrid Columns="4"
+                                  Rows="1" />
+          </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+      </ListView>
+      
     </Grid>
   </Grid>
 </Page>
