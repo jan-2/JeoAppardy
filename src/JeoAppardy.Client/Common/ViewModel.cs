@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace JeoAppardy.Client.Common
 {
-  public abstract class ViewModel : INotifyPropertyChanged
+  public abstract class Notifyable : INotifyPropertyChanged
   {
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -20,5 +20,9 @@ namespace JeoAppardy.Client.Common
         RaisePropertyChanged(propertyName);
       }
     }
+  }
+
+  public class ViewModel : Notifyable
+  {
   }
 }

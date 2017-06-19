@@ -23,7 +23,7 @@ namespace JeoAppardy.Client.UI
 
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
         args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
-        args => args?.ClickedItem != null && this.ActivePlayer != null);
+        args => args?.ClickedItem != null);
 
       // Player fokussieren z.B. Highlight, GameWall aktivieren
       // und "korrekt" "Nicht korrekt" Buttons anzeigen
