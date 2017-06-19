@@ -6,7 +6,6 @@ namespace JeoAppardy.Client.Api
 {
   public class Board
   {
-
     public static Board FromJson(string json)
     {
       var board = JsonConvert.DeserializeObject<Board>(json);
@@ -19,17 +18,11 @@ namespace JeoAppardy.Client.Api
       this.Categories = new List<Category>();
     }
 
-    public IList<Category> Categories
-    {
-      get; set;
-    }
+    public IList<Category> Categories { get; set; }
 
     public Category FirstCategory
     {
-
-      get {
-        return Categories.First();
-      }
+      get { return Categories.First(); }
     }
 
     public string Title { get; set; }

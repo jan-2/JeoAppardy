@@ -9,7 +9,8 @@ namespace JeoAppardy.Client.Api
     public GameWall(string title, IList<Category> categories)
     {
       Title = title;
-      Categories = categories.Select(cat => new GameCategory(cat.Title)).ToList();
+      var id = 1;
+      Categories = categories.Select(cat => new GameCategory(cat, id++)).ToList();
     }
 
     public string Title { get; private set; }

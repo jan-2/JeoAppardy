@@ -4,26 +4,24 @@ namespace JeoAppardy.Client.Api
 {
   public class GameCategory
   {
-    public GameCategory(string title)
+    public GameCategory(Category category, int id)
     {
-      Title = title;
+      Category = category;
+      Id = id;
 
-      Level = new GameLevel[] {
-        new GameLevel("100"),
-        new GameLevel("200"),
-        new GameLevel("300"),
-        new GameLevel("400")
+      Level = new GameLevel[]
+      {
+        new GameLevel(id, 100),
+        new GameLevel(id, 200),
+        new GameLevel(id, 300),
+        new GameLevel(id, 400)
       };
     }
 
-    public string Title
-    {
-      get; private set;
-    }
+    public int Id { get; }
 
-    public IList<GameLevel> Level
-    {
-      get; private set;
-    }
+    public Category Category { get; }
+
+    public IList<GameLevel> Level { get; }
   }
 }
