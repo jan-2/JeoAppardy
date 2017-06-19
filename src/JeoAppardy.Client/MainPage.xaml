@@ -15,12 +15,13 @@
                Foreground="#FF8B0A0A" />
 
     <ComboBox  Margin="0,600,0,0"
-               FontFamily="Assets/Some Time Later.otf#Some Time Later"
                VerticalAlignment="Top"
                HorizontalAlignment="Center"
-               Foreground="#FF8B0A0A" Width="174"
+               Foreground="#FF8B0A0A"
+               Width="174"
                ItemsSource="{Binding Ports}"
-               SelectedItem="{Binding SelectedPort.Value}" DisplayMemberPath="Name"/>
+               SelectedItem="{Binding SelectedPort.Value, Mode=TwoWay}"
+               DisplayMemberPath="Name" />
 
     <Button x:Name="startGame"
             Content="Start"
