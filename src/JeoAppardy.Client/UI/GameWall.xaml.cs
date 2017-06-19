@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace JeoAppardy.Client.UI
@@ -17,11 +18,14 @@ namespace JeoAppardy.Client.UI
     {
       this.ViewModel = new Game(e.Parameter as Api.Game);
       this.ViewModel.StartFirstRound();
-      if (!this.ViewModel.CurrentGameWall.AllPlayersSet)
+      this.Loaded += (sender, args) =>
       {
-        // navigate to Player Eingabe
-      }
-
+        if (!this.ViewModel.CurrentGameWall.AllPlayersSet)
+        {
+          // navigate to Player Eingabe
+          this.Frame.Navigate(typeof(PlayerEditView), this.ViewModel.CurrentRound);
+        }
+      };
       base.OnNavigatedTo(e);
     }
   }

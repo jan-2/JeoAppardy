@@ -120,6 +120,10 @@
     </Compile>
     <Compile Include="UI\Name.cs" />
     <Compile Include="Common\ViewModel.cs" />
+    <Compile Include="UI\PlayerEdit.cs" />
+    <Compile Include="UI\PlayerEditView.xaml.cs">
+      <DependentUpon>PlayerEditView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -153,6 +157,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\GameWall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\PlayerEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
