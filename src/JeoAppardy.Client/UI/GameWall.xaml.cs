@@ -7,6 +7,7 @@ namespace JeoAppardy.Client.UI
   {
     public GameWall()
     {
+      this.DataContext = this;
       this.InitializeComponent();
     }
 

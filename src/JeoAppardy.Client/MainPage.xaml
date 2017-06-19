@@ -19,8 +19,8 @@
                HorizontalAlignment="Center"
                Foreground="#FF8B0A0A"
                Width="174"
-               ItemsSource="{Binding Ports}"
-               SelectedItem="{Binding SelectedPort.Value, Mode=TwoWay}"
+               ItemsSource="{x:Bind ViewModel.Ports}"
+               SelectedItem="{x:Bind ViewModel.SelectedPort.Value, Mode=TwoWay}"
                DisplayMemberPath="Name" />
 
     <Button x:Name="startGame"
@@ -31,6 +31,6 @@
             FontSize="48"
             Width="400"
             Height="100"
-            Click="startGame_Click" />
+            Command="{x:Bind ViewModel.StartGameCommand}" />
   </Grid>
 </Page>
