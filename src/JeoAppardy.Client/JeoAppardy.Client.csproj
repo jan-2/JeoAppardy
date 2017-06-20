@@ -107,6 +107,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Buzzer\Hardware.cs" />
+    <Compile Include="Buzzer\StateEnum.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Controls\UniformGrid.cs" />
     <Compile Include="MainPage.xaml.cs">

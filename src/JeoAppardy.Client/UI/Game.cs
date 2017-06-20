@@ -1,13 +1,19 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using JeoAppardy.Client.Api;
 using JeoAppardy.Client.Common;
+using Reactive.Bindings;
 
 namespace JeoAppardy.Client.UI
 {
   public class Game : ViewModel
   {
+    private IObservable<long> _timer;
+    private bool _reset_required;
+
     private string _title;
     private Api.Game _gameApi;
     private Api.Round _currentRoundApi;
@@ -19,19 +25,50 @@ namespace JeoAppardy.Client.UI
 
     public Game(Api.Game gameApi)
     {
+      // Player fokussieren z.B. Highlight, GameWall aktivieren
+      // und "korrekt" "Nicht korrekt" Buttons anzeigen
+      // Aktiven Player merken, er wird bei der Beantwortung eines Levels benötigt
+
       _gameApi = gameApi;
 
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
         args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
         args => args?.ClickedItem != null);
 
-      // Player fokussieren z.B. Highlight, GameWall aktivieren
-      // und "korrekt" "Nicht korrekt" Buttons anzeigen
-      // Aktiven Player merken, er wird bei der Beantwortung eines Levels benötigt
+      var scheduler = UIDispatcherScheduler.Default;
+      _timer = Observable.Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(200), scheduler);
+      _timer.Subscribe(async _ =>
+      {
+        if (!Hardware.GetInstance().IsOpen)
+        {
+          return;
+        }
+
+        Hardware.Result result;
+
+        if (_reset_required)
+        {
+          result = await Hardware.GetInstance().Reset();
+          if (result.status == StateEnum.offen)
+          {
+            _reset_required = false;
+          }
+        }
+        else
+        {
+          result = await Hardware.GetInstance().GetCurrentState();
+        }
+        if (result.status != StateEnum.Undefined)
+        {
+          System.Diagnostics.Debug.WriteLine(result);
+        }
+      });
     }
 
     private void SetDiscoveredLevel(Api.GameLevel gameLevel)
     {
+      _reset_required = true;
+
       this.DiscoveredLevel = _currentRoundApi.PlayerChoosed(gameLevel.CategoryId, gameLevel.Level);
     }
 
