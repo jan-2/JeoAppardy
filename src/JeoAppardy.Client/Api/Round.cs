@@ -90,7 +90,7 @@ namespace JeoAppardy.Client.Api
     {
       var categoryId = Id.AsCategoryId(category);
       var answerId = Id.AsAnswerId(level);
-      var asset = _board.Categories[categoryId].Answers[answerId].Description;
+      var asset = _board.Categories[categoryId].Answers[answerId].Asset;
 
       GameWall
         .Categories[categoryId]

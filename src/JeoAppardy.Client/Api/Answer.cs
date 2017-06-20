@@ -4,7 +4,7 @@ namespace JeoAppardy.Client.Api
 {
   public class Answer
   {
-    public string Description { get; set; }
+    public string Asset { get; set; }
 
     public AnswerType Type { get; set; }
 

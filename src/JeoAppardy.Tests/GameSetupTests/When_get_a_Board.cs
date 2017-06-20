@@ -39,8 +39,8 @@ namespace JeoAppardy.Tests.GameSetupTests
     [TestMethod]
     public void First_answer_of_first_category_should_get_a_description()
     {
-      Assert.IsNotNull(_sut.FirstCategory.FirstAnswer.Description);
-      Assert.AreNotEqual(String.Empty, _sut.FirstCategory.FirstAnswer.Description);
+      Assert.IsNotNull(_sut.FirstCategory.FirstAnswer.Asset);
+      Assert.AreNotEqual(String.Empty, _sut.FirstCategory.FirstAnswer.Asset);
     }
 
     [TestMethod]

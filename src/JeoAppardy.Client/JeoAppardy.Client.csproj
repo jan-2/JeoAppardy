@@ -131,12 +131,12 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="Assets\boardOne.json" />
-    <Content Include="Assets\boardTwo.json" />
-    <Content Include="Assets\boardFinal.json" />
-    <Content Include="Assets\boardFour.json" />
-    <Content Include="Assets\boardThree.json" />
     <Content Include="Assets\Some Time Later.otf" />
+    <None Include="Assets\round_1\boardOne.json" />
+    <None Include="Assets\round_2\boardTwo.json" />
+    <None Include="Assets\round_3\boardThree.json" />
+    <None Include="Assets\round_4\boardFour.json" />
+    <None Include="Assets\round_final\boardFinal.json" />
     <None Include="JeoAppardy.Client_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
