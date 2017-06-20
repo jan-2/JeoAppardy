@@ -58,21 +58,21 @@ namespace JeoAppardy.Client.UI
     private async void StartGame()
     {
       var deviceInformation = SelectedPort.Value;
-      if (deviceInformation == null) {
-        // Soll das Spiel auch ohne Verbnindung starten?
-        return;
-      }
-
-      try
+      if (deviceInformation != null)
       {
-        await Hardware.GetInstance().Open(deviceInformation);
-      }
-      catch (Exception ex)
-      {
-        // Bei TimeOut evtl. noch mal wiederholen.
-        Debug.WriteLine(ex);
-        Debugger.Break();
-        throw;
+        // Soll das Spiel auch ohne Verbindung starten?
+        // Ja, das Spiel sollte auch per Hand steuerbar sein
+        try
+        {
+          await Hardware.GetInstance().Open(deviceInformation);
+        }
+        catch (Exception ex)
+        {
+          // Bei TimeOut evtl. noch mal wiederholen.
+          Debug.WriteLine(ex);
+          Debugger.Break();
+          throw;
+        }
       }
 
       var game = await SetupGame();
@@ -85,11 +85,11 @@ namespace JeoAppardy.Client.UI
       // Laden der Boards vom Dateipfad
       var installedLocation = Package.Current.InstalledLocation;
 
-      var firstBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardOne.json");
-      var secondBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardTwo.json");
-      var thirdBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardThree.json");
-      var fourthBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardFour.json");
-      var finalBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\boardFinal.json");
+      var firstBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\round_1\\boardOne.json");
+      var secondBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\round_2\\boardTwo.json");
+      var thirdBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\round_3\\boardThree.json");
+      var fourthBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\round_4\\boardFour.json");
+      var finalBoardDefinition = await GetDefinitionOf($"{installedLocation.Path}\\Assets\\round_final\\boardFinal.json");
 
       var boardOne = Api.Board.FromJson(firstBoardDefinition);
       var boardTwo = Api.Board.FromJson(secondBoardDefinition);

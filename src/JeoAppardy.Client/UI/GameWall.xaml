@@ -61,6 +61,13 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <Button Grid.Row="0"
+                    Grid.RowSpan="4"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
+              <iconPacks:PackIconFontAwesome Kind="Times" />
+            </Button>
+
             <TextBlock Grid.Row="0"
                        Text="{x:Bind Category.Category.Title}"
                        FontFamily="Assets/Some Time Later.otf#Some Time Later"
@@ -75,6 +82,16 @@
                        Margin="5"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top" />
+
+            <StackPanel Grid.Row="3"
+                        Orientation="Horizontal"
+                        Margin="20"
+                        HorizontalAlignment="Center">
+              <Button Content="Korrekt"
+                      Margin="10" />
+              <Button Content="Nicht korrekt"
+                      Margin="10" />
+            </StackPanel>
 
           </Grid>
         </Border>
@@ -222,7 +239,7 @@
           </ItemsPanelTemplate>
         </ListView.ItemsPanel>
       </ListView>
-      
+
     </Grid>
   </Grid>
 </Page>
