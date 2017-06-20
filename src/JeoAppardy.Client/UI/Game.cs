@@ -2,11 +2,14 @@
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using JeoAppardy.Client.Api;
 using JeoAppardy.Client.Buzzer;
 using JeoAppardy.Client.Common;
 using Reactive.Bindings;
+using Binding = System.ServiceModel.Channels.Binding;
 
 namespace JeoAppardy.Client.UI
 {
@@ -35,6 +38,8 @@ namespace JeoAppardy.Client.UI
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
         args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
         args => args?.ClickedItem != null);
+
+      this.DiscardLevelCommand = new DelegateCommand(() => this.DiscoveredLevel = null, () => true);
 
       var scheduler = UIDispatcherScheduler.Default;
       _timer = Observable.Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(200), scheduler);
@@ -102,6 +107,8 @@ namespace JeoAppardy.Client.UI
       get { return _setDiscoveredLevelCommand; }
       private set { this.Set(ref _setDiscoveredLevelCommand, value); }
     }
+
+    public ICommand DiscardLevelCommand { get; }
 
     public ObservableCollection<Api.Player> AllPlayers
     {

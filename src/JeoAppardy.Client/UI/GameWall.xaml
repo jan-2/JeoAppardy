@@ -63,6 +63,7 @@
 
             <Button Grid.Row="0"
                     Grid.RowSpan="4"
+                    Command="{Binding ElementName=gameWallPage, Path=ViewModel.DiscardLevelCommand}"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
               <iconPacks:PackIconFontAwesome Kind="Times" />
@@ -83,13 +84,22 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top" />
 
+            <!-- Asset Anzeige -->
+
+            <Grid Grid.Row="2">
+            </Grid>
+
             <StackPanel Grid.Row="3"
                         Orientation="Horizontal"
                         Margin="20"
                         HorizontalAlignment="Center">
               <Button Content="Korrekt"
+                      MinWidth="150"
+                      MinHeight="80"
                       Margin="10" />
               <Button Content="Nicht korrekt"
+                      MinWidth="150"
+                      MinHeight="80"
                       Margin="10" />
             </StackPanel>
 
@@ -203,11 +213,12 @@
                     HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Stretch"
                     Visibility="Collapsed"
-                    Content="{Binding ElementName=gameWallPage, Path=ViewModel.DiscoveredLevel}"
+                    DataContext="{x:Bind ViewModel.DiscoveredLevel, Mode=OneWay}"
+                    Content="{x:Bind ViewModel.DiscoveredLevel, Mode=OneWay}"
                     ContentTemplate="{StaticResource GameLevelTemplate}">
 
       <interactivity:Interaction.Behaviors>
-        <core:DataTriggerBehavior Binding="{Binding ElementName=gameWallPage, Path=ViewModel.DiscoveredLevel}"
+        <core:DataTriggerBehavior Binding="{Binding ElementName=gameWallPage, Path=ViewModel.DiscoveredLevel, Mode=OneWay}"
                                   ComparisonCondition="NotEqual"
                                   Value="{x:Null}">
           <core:ChangePropertyAction TargetObject="{Binding ElementName=level}"
