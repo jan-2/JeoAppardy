@@ -6,13 +6,14 @@ using Windows.Devices.SerialCommunication;
 using Windows.Storage.Streams;
 using Newtonsoft.Json;
 
-namespace JeoAppardy.Client
+namespace JeoAppardy.Client.Buzzer
 {
   public class Hardware
   {
     public class Result
     {
       public StateEnum status { get; set; }
+
       /// <summary>
       /// Die Nummer des Spielers der als erstes gedrückt hat (1 - 4).
       /// </summary>
@@ -22,11 +23,13 @@ namespace JeoAppardy.Client
       /// Aktueller Status.
       /// </summary>
       /// <param name="state"></param>
-      public Result(StateEnum state) {
+      public Result(StateEnum state)
+      {
         status = state;
       }
 
-      public override string ToString() {
+      public override string ToString()
+      {
         return $"{status} - Sieger: {sieger}";
       }
     }
@@ -51,16 +54,20 @@ namespace JeoAppardy.Client
 
     public bool IsOpen { get; set; }
 
-    private Hardware() {
+    private Hardware()
+    {
     }
 
-    public static Hardware GetInstance() {
-      lock (InstanceLock) {
+    public static Hardware GetInstance()
+    {
+      lock (InstanceLock)
+      {
         return _instance ?? (_instance = new Hardware());
       }
     }
 
-    public async Task<bool> Open(DeviceInformation port_name) {
+    public async Task<bool> Open(DeviceInformation port_name)
+    {
       Close();
 
       DeviceInformation device_info = await DeviceInformation.CreateFromIdAsync(port_name.Id);
@@ -90,25 +97,30 @@ namespace JeoAppardy.Client
       return IsOpen;
     }
 
-    public void Close() {
-      if (_cancellation_token_source != null) {
+    public void Close()
+    {
+      if (_cancellation_token_source != null)
+      {
         _cancellation_token_source.Cancel();
         _cancellation_token_source = null;
       }
 
-      if (_serial_device != null) {
+      if (_serial_device != null)
+      {
         _serial_device.Dispose();
         _serial_device = null;
       }
 
-      if (_data_reader_object != null) {
+      if (_data_reader_object != null)
+      {
         _data_reader_object.DetachStream();
 
         _data_reader_object.Dispose();
         _data_reader_object = null;
       }
 
-      if (_data_writer_object != null) {
+      if (_data_writer_object != null)
+      {
         _data_writer_object.DetachStream();
 
         _data_writer_object.Dispose();
@@ -118,7 +130,8 @@ namespace JeoAppardy.Client
       IsOpen = false;
     }
 
-    public async Task<Result> Reset() {
+    public async Task<Result> Reset()
+    {
       return await SendCommandAndReceiveState(CommandEnum.Reset);
     }
 
@@ -127,36 +140,44 @@ namespace JeoAppardy.Client
       return await SendCommandAndReceiveState(CommandEnum.State);
     }
 
-    private async Task<string> ReadAsync(CancellationToken cancellation_token) {
+    private async Task<string> ReadAsync(CancellationToken cancellation_token)
+    {
       uint ReadBufferLength = 1024;
       cancellation_token.ThrowIfCancellationRequested();
       _data_reader_object.InputStreamOptions = InputStreamOptions.Partial;
       var load_async_task = _data_reader_object.LoadAsync(ReadBufferLength).AsTask(cancellation_token);
       UInt32 bytes_read = await load_async_task;
-      if (bytes_read > 0) {
+      if (bytes_read > 0)
+      {
         return _data_reader_object.ReadString(bytes_read);
       }
 
       return string.Empty;
     }
 
-    private async Task<Result> SendCommandAndReceiveState(CommandEnum command) {
-      lock (SendLockObject) {
-        if (_is_locked) {
+    private async Task<Result> SendCommandAndReceiveState(CommandEnum command)
+    {
+      lock (SendLockObject)
+      {
+        if (_is_locked)
+        {
           return new Result(StateEnum.Undefined);
         }
 
         _is_locked = true;
       }
 
-      try {
-        if (!IsOpen) {
+      try
+      {
+        if (!IsOpen)
+        {
           return new Result(StateEnum.Undefined);
         }
 
         string command_as_string;
 
-        switch (command) {
+        switch (command)
+        {
           case CommandEnum.Reset:
             command_as_string = "Reset";
             break;
@@ -172,7 +193,9 @@ namespace JeoAppardy.Client
 
         var result = await ReadAsync(_cancellation_token_source.Token);
         return JsonConvert.DeserializeObject<Result>(result);
-      } finally {
+      }
+      finally
+      {
         _is_locked = false;
       }
     }

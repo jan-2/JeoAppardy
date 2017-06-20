@@ -1,4 +1,4 @@
-namespace JeoAppardy.Client
+namespace JeoAppardy.Client.Buzzer
 {
   public enum StateEnum
   {
@@ -6,10 +6,12 @@ namespace JeoAppardy.Client
     /// Konnte nicht ermittelt werden
     /// </summary>
     Undefined = 0,
+
     /// <summary>
     /// Das Spiel hat begonnen, keine Spieler hat gedrückt
     /// </summary>
     offen = 1,
+
     /// <summary>
     /// Spiel ist beendet, wenigstens ein Spieler hat gedrückt
     /// </summary>

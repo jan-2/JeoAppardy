@@ -10,6 +10,7 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using JeoAppardy.Client.Buzzer;
 using JeoAppardy.Client.Common;
 using Reactive.Bindings;
 

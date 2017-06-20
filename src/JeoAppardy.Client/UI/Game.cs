@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using JeoAppardy.Client.Api;
+using JeoAppardy.Client.Buzzer;
 using JeoAppardy.Client.Common;
 using Reactive.Bindings;
 
