@@ -43,19 +43,6 @@ namespace JeoAppardy.Client.UI
           System.Diagnostics.Debug.WriteLine($"{p.Name}, {p.Id}, {p.Kind}, {p.Properties}");
           Ports.AddOnScheduler(p);
         });
-
-      var deviceInformation = ports.FirstOrDefault();
-      SelectedPort.Value = deviceInformation;
-      try
-      {
-        await Hardware.GetInstance().Open(deviceInformation);
-      }
-      catch (Exception ex)
-      {
-        Debug.WriteLine(ex);
-        Debugger.Break();
-        throw;
-      }
     }
 
     public ReactiveCollection<DeviceInformation> Ports { get; }
@@ -70,6 +57,24 @@ namespace JeoAppardy.Client.UI
 
     private async void StartGame()
     {
+      var deviceInformation = SelectedPort.Value;
+      if (deviceInformation == null) {
+        // Soll das Spiel auch ohne Verbnindung starten?
+        return;
+      }
+
+      try
+      {
+        await Hardware.GetInstance().Open(deviceInformation);
+      }
+      catch (Exception ex)
+      {
+        // Bei TimeOut evtl. noch mal wiederholen.
+        Debug.WriteLine(ex);
+        Debugger.Break();
+        throw;
+      }
+
       var game = await SetupGame();
 
       _frame.Navigate(typeof(GameWall), game);
