@@ -14,7 +14,7 @@ namespace JeoAppardy.Client.UI
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-      this.ViewModel = new PlayerEdit(e.Parameter as Api.Round);
+      this.ViewModel = new PlayerEdit(this.Frame, e.Parameter as Game);
       base.OnNavigatedTo(e);
     }
   }

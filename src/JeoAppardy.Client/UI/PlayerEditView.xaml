@@ -25,13 +25,12 @@
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
       <TextBlock Grid.Column="0"
-                 Grid.ColumnSpan="3"
+                 Grid.ColumnSpan="2"
                  Grid.Row="0"
-                 Text="{x:Bind ViewModel.Round.GameWall.Title}"
+                 Text="{x:Bind ViewModel.Game.CurrentGameWall.Title}"
                  FontFamily="Assets/Some Time Later.otf#Some Time Later"
                  FontSize="48"
                  Margin="50"
@@ -46,12 +45,9 @@
                                   Margin="10"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center" />
-      <TextBlock Grid.Column="1"
-                 Grid.Row="1"
-                 VerticalAlignment="Center"
-                 Text="Spieler 1"
-                 Margin="10" />
-      <TextBox Grid.Column="2"
+      <TextBox Text="{Binding ViewModel.PlayerOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+               Header="Spieler 1"
+               Grid.Column="1"
                Grid.Row="1"
                VerticalAlignment="Center"
                Width="300"
@@ -66,12 +62,9 @@
                                   Margin="10"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center" />
-      <TextBlock Grid.Column="1"
-                 Grid.Row="2"
-                 VerticalAlignment="Center"
-                 Text="Spieler 2"
-                 Margin="10" />
-      <TextBox Grid.Column="2"
+      <TextBox Text="{Binding ViewModel.PlayerTwo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+               Header="Spieler 2"
+               Grid.Column="1"
                Grid.Row="2"
                VerticalAlignment="Center"
                Width="300"
@@ -86,12 +79,9 @@
                                   Margin="10"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center" />
-      <TextBlock Grid.Column="1"
-                 Grid.Row="3"
-                 VerticalAlignment="Center"
-                 Text="Spieler 3"
-                 Margin="10" />
-      <TextBox Grid.Column="2"
+      <TextBox Text="{Binding ViewModel.PlayerThree, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+               Header="Spieler 3"
+               Grid.Column="1"
                Grid.Row="3"
                VerticalAlignment="Center"
                Width="300"
@@ -106,22 +96,20 @@
                                   Margin="10"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center" />
-      <TextBlock Grid.Column="1"
-                 Grid.Row="4"
-                 VerticalAlignment="Center"
-                 Text="Spieler 4"
-                 Margin="10" />
-      <TextBox Grid.Column="2"
+      <TextBox Text="{Binding ViewModel.PlayerFour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+               Header="Spieler 4"
+               Grid.Column="1"
                Grid.Row="4"
                VerticalAlignment="Center"
                Width="300"
                Margin="10" />
 
       <Button Grid.Column="0"
-              Grid.ColumnSpan="3"
+              Grid.ColumnSpan="2"
               Grid.Row="5"
               HorizontalAlignment="Right"
-              Content="Übernehmen" />
+              Content="Übernehmen"
+              Command="{x:Bind ViewModel.CloseCommand}" />
     </Grid>
   </Grid>
 </Page>

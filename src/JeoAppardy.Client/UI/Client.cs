@@ -52,7 +52,7 @@ namespace JeoAppardy.Client.UI
     public ICommand StartGameCommand
     {
       get { return _startGameCommand; }
-      set { this.Set(ref _startGameCommand, value); }
+      private set { this.Set(ref _startGameCommand, value); }
     }
 
     private async void StartGame()

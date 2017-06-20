@@ -100,19 +100,24 @@ namespace JeoAppardy.Client.UI
     public ICommand SetDiscoveredLevelCommand
     {
       get { return _setDiscoveredLevelCommand; }
-      set { this.Set(ref _setDiscoveredLevelCommand, value); }
+      private set { this.Set(ref _setDiscoveredLevelCommand, value); }
     }
 
     public ObservableCollection<Api.Player> AllPlayers
     {
       get { return _allPlayers; }
-      set { this.Set(ref _allPlayers, value); }
+      private set { this.Set(ref _allPlayers, value); }
     }
 
     public Api.Player ActivePlayer
     {
       get { return _activePlayer; }
       set { this.Set(ref _activePlayer, value); }
+    }
+
+    public void ContinueCurrentRound()
+    {
+      SetupCurrentRound(_gameApi.CurrentRound);
     }
 
     public void StartFirstRound()
