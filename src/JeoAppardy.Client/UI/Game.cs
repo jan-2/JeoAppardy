@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml.Controls;
 using JeoAppardy.Client.Api;
 using JeoAppardy.Client.Buzzer;
@@ -25,7 +26,6 @@ namespace JeoAppardy.Client.UI
     private Api.GameWall _currentGameWall;
     private Api.Player _activePlayer;
     private Api.DiscoveredLevel _discoveredLevel;
-    private ObservableCollection<Player> _allPlayers;
 
     public Game(Api.Game gameApi)
     {
@@ -37,7 +37,15 @@ namespace JeoAppardy.Client.UI
 
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
         args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
-        args => args?.ClickedItem != null);
+        args => CanSetDiscoveredLevel(args.ClickedItem as Api.GameLevel));
+
+      this.CorrectAnswerCommand = new DelegateCommand(
+        () => CorrectAnswer(),
+        () => DiscoveredLevel != null && this.ActivePlayer != null);
+
+      this.WrongAnswerCommand = new DelegateCommand(
+        () => WrongAnswer(),
+        () => DiscoveredLevel != null && this.ActivePlayer != null);
 
       this.AssetFileLoadedCommand = new DelegateCommand<TextBlock>(
         tb => LoadAssetFileIntoTextBlock(tb),
@@ -119,6 +127,24 @@ namespace JeoAppardy.Client.UI
       this.DiscoveredLevel = _currentRoundApi.PlayerChoosed(gameLevel.CategoryId, gameLevel.Level);
     }
 
+    private bool CanSetDiscoveredLevel(Api.GameLevel gameLevel)
+    {
+      return gameLevel != null && !gameLevel.HasBeenAsked;
+    }
+
+    private void CorrectAnswer()
+    {
+      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredCorrect(this.ActivePlayer, this.DiscoveredLevel);
+      this.DiscoveredLevel = null;
+      this.ActivePlayer = null;
+    }
+
+    private void WrongAnswer()
+    {
+      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.DiscoveredLevel);
+      this.ActivePlayer = null;
+    }
+
     public string Title
     {
       get { return _title; }
@@ -140,7 +166,12 @@ namespace JeoAppardy.Client.UI
     public Api.DiscoveredLevel DiscoveredLevel
     {
       get { return _discoveredLevel; }
-      set { this.Set(ref _discoveredLevel, value); }
+      set
+      {
+        this.Set(ref _discoveredLevel, value);
+        this.CorrectAnswerCommand.RaiseCanExecuteChanged();
+        this.WrongAnswerCommand.RaiseCanExecuteChanged();
+      }
     }
 
     public ICommand SetDiscoveredLevelCommand { get; }
@@ -149,16 +180,27 @@ namespace JeoAppardy.Client.UI
 
     public ICommand DiscardLevelCommand { get; }
 
-    public ObservableCollection<Api.Player> AllPlayers
+    public DelegateCommand CorrectAnswerCommand { get; }
+
+    public DelegateCommand WrongAnswerCommand { get; }
+
+    public ObservableCollection<Api.Player> AllPlayers => new ObservableCollection<Player>(new[]
     {
-      get { return _allPlayers; }
-      private set { this.Set(ref _allPlayers, value); }
-    }
+      CurrentGameWall.FirstPlayer,
+      CurrentGameWall.SecondPlayer,
+      CurrentGameWall.ThirdPlayer,
+      CurrentGameWall.FourthPlayer
+    });
 
     public Api.Player ActivePlayer
     {
       get { return _activePlayer; }
-      set { this.Set(ref _activePlayer, value); }
+      set
+      {
+        this.Set(ref _activePlayer, value);
+        this.CorrectAnswerCommand.RaiseCanExecuteChanged();
+        this.WrongAnswerCommand.RaiseCanExecuteChanged();
+      }
     }
 
     public void ContinueCurrentRound()
@@ -196,33 +238,31 @@ namespace JeoAppardy.Client.UI
       Title = currentRound.GameWall.Title;
       CurrentRound = currentRound;
       CurrentGameWall = CurrentRound.GameWall;
-      this.AllPlayers = new ObservableCollection<Player>(new[]
-      {
-        _gameApi.CurrentRound.FirstPlayer,
-        _gameApi.CurrentRound.SecondPlayer,
-        _gameApi.CurrentRound.ThirdPlayer,
-        _gameApi.CurrentRound.FourthPlayer
-      });
+      this.RaisePropertyChanged(nameof(AllPlayers));
     }
 
     public void SetupPlayerOne(Name name)
     {
       CurrentGameWall = CurrentRound.SetFirstPlayerName(name.Value);
+      this.RaisePropertyChanged(nameof(AllPlayers));
     }
 
     public void SetupPlayerTwo(Name name)
     {
       CurrentGameWall = CurrentRound.SetSecondPlayerName(name.Value);
+      this.RaisePropertyChanged(nameof(AllPlayers));
     }
 
     public void SetupPlayerThree(Name name)
     {
       CurrentGameWall = CurrentRound.SetThirdPlayerName(name.Value);
+      this.RaisePropertyChanged(nameof(AllPlayers));
     }
 
     public void SetupPlayerFour(Name name)
     {
       CurrentGameWall = CurrentRound.SetFourthPlayerName(name.Value);
+      this.RaisePropertyChanged(nameof(AllPlayers));
     }
   }
 }

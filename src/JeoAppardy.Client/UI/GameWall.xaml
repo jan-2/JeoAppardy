@@ -44,7 +44,7 @@
                        Text="{x:Bind Name, TargetNullValue=PlayerName}"
                        FontSize="28" />
             <TextBlock HorizontalAlignment="Center"
-                       Text="{x:Bind Points}"
+                       Text="{x:Bind Points, Mode=OneWay}"
                        FontSize="20"
                        Margin="10 20 10 10" />
           </StackPanel>
@@ -167,10 +167,12 @@
                         Margin="10"
                         HorizontalAlignment="Center">
               <Button Content="Korrekt"
+                      Command="{Binding ElementName=gameWallPage, Path=ViewModel.CorrectAnswerCommand}"
                       MinWidth="150"
                       MinHeight="50"
                       Margin="10" />
               <Button Content="Nicht korrekt"
+                      Command="{Binding ElementName=gameWallPage, Path=ViewModel.WrongAnswerCommand}"
                       MinWidth="150"
                       MinHeight="50"
                       Margin="10" />
@@ -244,16 +246,26 @@
 
                 <ListView.ItemTemplate>
                   <DataTemplate x:DataType="api:GameLevel">
-                    <Border x:Name="gameLevel"
+                    <Border x:Name="gameLevelBorder"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
-                      <TextBlock Text="{x:Bind Level}"
+                      <TextBlock x:Name="gameLevelText"
+                                 Text="{x:Bind Level}"
                                  Margin="20"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
                                  FontSize="26"
                                  TextWrapping="Wrap"
                                  TextTrimming="WordEllipsis" />
+                      <interactivity:Interaction.Behaviors>
+                        <core:DataTriggerBehavior Binding="{x:Bind HasBeenAsked}"
+                                                  ComparisonCondition="Equal"
+                                                  Value="True">
+                          <core:ChangePropertyAction TargetObject="{Binding ElementName=gameLevelText}"
+                                                     PropertyName="Opacity"
+                                                     Value="0.3" />
+                        </core:DataTriggerBehavior>
+                      </interactivity:Interaction.Behaviors>
                     </Border>
                   </DataTemplate>
                 </ListView.ItemTemplate>
