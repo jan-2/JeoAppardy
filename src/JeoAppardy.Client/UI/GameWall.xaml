@@ -309,20 +309,33 @@
                 HorizontalAlignment="Center"
                 SelectionMode="Single"
                 IsItemClickEnabled="False"
+                IsHitTestVisible="False"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
                 SelectedItem="{x:Bind ViewModel.ActivePlayer, Mode=TwoWay}"
                 ItemsSource="{x:Bind ViewModel.AllPlayers}"
                 ItemContainerStyle="{StaticResource ListViewItemStyle}"
                 ItemTemplate="{StaticResource PlayerTemplate}">
+
         <ListView.ItemsPanel>
           <ItemsPanelTemplate>
             <controls:UniformGrid Columns="4"
                                   Rows="1" />
           </ItemsPanelTemplate>
         </ListView.ItemsPanel>
+
       </ListView>
 
     </Grid>
+
+    <interactivity:Interaction.Behaviors>
+      <core:DataTriggerBehavior Binding="{Binding ElementName=gameWallPage, Path=ViewModel.DiscoveredLevel, Mode=OneWay}"
+                                ComparisonCondition="NotEqual"
+                                Value="{x:Null}">
+        <core:ChangePropertyAction TargetObject="{Binding ElementName=players}"
+                                   PropertyName="IsHitTestVisible"
+                                   Value="True" />
+      </core:DataTriggerBehavior>
+    </interactivity:Interaction.Behaviors>
   </Grid>
 </Page>

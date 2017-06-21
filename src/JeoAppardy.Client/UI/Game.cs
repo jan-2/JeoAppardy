@@ -25,7 +25,6 @@ namespace JeoAppardy.Client.UI
     private Api.GameWall _currentGameWall;
     private Api.Player _activePlayer;
     private Api.DiscoveredLevel _discoveredLevel;
-    private ICommand _setDiscoveredLevelCommand;
     private ObservableCollection<Player> _allPlayers;
 
     public Game(Api.Game gameApi)
@@ -39,11 +38,18 @@ namespace JeoAppardy.Client.UI
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
         args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
         args => args?.ClickedItem != null);
+
       this.AssetFileLoadedCommand = new DelegateCommand<TextBlock>(
         tb => LoadAssetFileIntoTextBlock(tb),
         tb => tb != null);
 
-      this.DiscardLevelCommand = new DelegateCommand(() => this.DiscoveredLevel = null, () => true);
+      this.DiscardLevelCommand = new DelegateCommand(
+        () =>
+        {
+          this.DiscoveredLevel = null;
+          this.ActivePlayer = null;
+        },
+        () => true);
 
       var scheduler = UIDispatcherScheduler.Default;
       _timer = Observable.Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(100), scheduler);
@@ -77,7 +83,7 @@ namespace JeoAppardy.Client.UI
             return;
           }
           var and_the_winner_is = AllPlayers[result.sieger - 1];
-          if (!_reset_required && ActivePlayer != and_the_winner_is)
+          if (!_reset_required && ActivePlayer != and_the_winner_is && this.DiscoveredLevel != null)
           {
             ActivePlayer = and_the_winner_is;
           }
@@ -137,11 +143,7 @@ namespace JeoAppardy.Client.UI
       set { this.Set(ref _discoveredLevel, value); }
     }
 
-    public ICommand SetDiscoveredLevelCommand
-    {
-      get { return _setDiscoveredLevelCommand; }
-      private set { this.Set(ref _setDiscoveredLevelCommand, value); }
-    }
+    public ICommand SetDiscoveredLevelCommand { get; }
 
     public ICommand AssetFileLoadedCommand { get; }
 
