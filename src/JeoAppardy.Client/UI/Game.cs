@@ -42,7 +42,7 @@ namespace JeoAppardy.Client.UI
       this.DiscardLevelCommand = new DelegateCommand(() => this.DiscoveredLevel = null, () => true);
 
       var scheduler = UIDispatcherScheduler.Default;
-      _timer = Observable.Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(200), scheduler);
+      _timer = Observable.Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(100), scheduler);
       _timer.Subscribe(async _ =>
       {
         if (!Hardware.GetInstance().IsOpen)
@@ -58,22 +58,29 @@ namespace JeoAppardy.Client.UI
           if (result.status == StateEnum.offen)
           {
             _reset_required = false;
+            ActivePlayer = null;
           }
         }
         else
         {
           result = await Hardware.GetInstance().GetCurrentState();
         }
-        if (result.status != StateEnum.Undefined)
-        {
-          System.Diagnostics.Debug.WriteLine(result);
+        if (result.status == StateEnum.beendet) {
+          if (AllPlayers.Count < result.sieger) {
+            // Spieler nicht korrekt konfiguriert oder falscher Drücker verwendet
+            return;
+          }
+          var and_the_winner_is = AllPlayers[result.sieger - 1];
+          if (!_reset_required && ActivePlayer != and_the_winner_is) {
+            ActivePlayer = and_the_winner_is;
+          }
         }
       });
     }
 
-    private void SetDiscoveredLevel(Api.GameLevel gameLevel)
-    {
+    private void SetDiscoveredLevel(Api.GameLevel gameLevel) {
       _reset_required = true;
+      ActivePlayer = null;
 
       this.DiscoveredLevel = _currentRoundApi.PlayerChoosed(gameLevel.CategoryId, gameLevel.Level);
     }

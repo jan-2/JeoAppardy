@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -37,12 +38,14 @@ namespace JeoAppardy.Client.UI
     private async Task SetupHardware()
     {
       DeviceInformationCollection ports = await DeviceInformation.FindAllAsync(SerialDevice.GetDeviceSelector());
-      ports.ToList<DeviceInformation>()
+      ports.ToList()
         .ForEach(p =>
         {
-          System.Diagnostics.Debug.WriteLine($"{p.Name}, {p.Id}, {p.Kind}, {p.Properties}");
+          Debug.WriteLine($"{p.Name}, {p.Id}, {p.Kind}, {p.Properties}");
           Ports.AddOnScheduler(p);
         });
+
+      SelectedPort.Value = ports.SingleOrDefault(p => p.Name == "Jeopardy");
     }
 
     public ReactiveCollection<DeviceInformation> Ports { get; }
