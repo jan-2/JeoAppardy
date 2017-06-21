@@ -71,9 +71,10 @@
                      HorizontalAlignment="Center"
                      VerticalAlignment="Center" />
           <TextBox Grid.Row="1"
+                   IsReadOnly="True"
                    Text="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center" />
+                   VerticalAlignment="Stretch"
+                   HorizontalAlignment="Stretch" />
         </Grid>
       </DataTemplate>
 
@@ -92,8 +93,8 @@
                      VerticalAlignment="Center" />
           <Image Grid.Row="1"
                  Source="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Center" />
+                 VerticalAlignment="Stretch"
+                 HorizontalAlignment="Stretch" />
         </Grid>
       </DataTemplate>
 
