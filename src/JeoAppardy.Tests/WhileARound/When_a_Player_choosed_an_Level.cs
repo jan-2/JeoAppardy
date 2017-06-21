@@ -52,7 +52,8 @@ namespace JeoAppardy.Tests.WhileARound
     {
       var discoveredLevel = _sut.PlayerChoosed(category: 1, level: 100);
 
-      Assert.AreEqual("description 1.1", discoveredLevel.Asset);
+      Assert.IsNotNull(discoveredLevel.Answer);
+      Assert.AreEqual("description 1.1", discoveredLevel.Answer.Asset);
     }
 
     [TestMethod]

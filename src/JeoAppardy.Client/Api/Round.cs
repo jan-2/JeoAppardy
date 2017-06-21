@@ -90,13 +90,13 @@ namespace JeoAppardy.Client.Api
     {
       var categoryId = Id.AsCategoryId(category);
       var answerId = Id.AsAnswerId(level);
-      var asset = _board.Categories[categoryId].Answers[answerId].Asset;
+      var answer = _board.Categories[categoryId].Answers[answerId];
 
       GameWall
         .Categories[categoryId]
         .Level[answerId].HasBeenAsked = true;
 
-      return new DiscoveredLevel(GameWall.Categories[categoryId], level, "text", asset);
+      return new DiscoveredLevel(GameWall.Categories[categoryId], level, answer);
     }
 
     public GameWall PlayerAnsweredCorrect(Player currentPlayer, DiscoveredLevel discoveredLevel)
