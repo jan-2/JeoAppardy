@@ -32,8 +32,8 @@
                   Margin="0 50 0 0"
                   VerticalAlignment="Stretch" />
           <iconPacks:PackIconMaterial Kind="AccountCircle"
-                                      Width="100"
-                                      Height="100"
+                                      Width="90"
+                                      Height="90"
                                       Foreground="LightGray"
                                       Margin="10 0"
                                       HorizontalAlignment="Center" />
@@ -46,7 +46,7 @@
             <TextBlock HorizontalAlignment="Center"
                        Text="{x:Bind Points}"
                        FontSize="20"
-                       Margin="10 40 10 10" />
+                       Margin="10 20 10 10" />
           </StackPanel>
         </Grid>
       </DataTemplate>
@@ -123,47 +123,48 @@
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
-              <RowDefinition Height="Auto" />
               <RowDefinition Height="*" />
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Button Grid.Row="0"
-                    Grid.RowSpan="4"
+                    Grid.RowSpan="3"
                     Command="{Binding ElementName=gameWallPage, Path=ViewModel.DiscardLevelCommand}"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
               <iconPacks:PackIconFontAwesome Kind="Times" />
             </Button>
 
-            <TextBlock Grid.Row="0"
-                       Text="{x:Bind Category.Category.Title}"
-                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                       FontSize="48"
-                       Margin="5"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top" />
-            <TextBlock Grid.Row="1"
-                       Text="{x:Bind Level}"
-                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                       FontSize="36"
-                       Margin="5"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top" />
+            <Grid Grid.Row="0"
+                  Margin="5">
+              <TextBlock Text="{x:Bind Category.Category.Title}"
+                         FontFamily="Assets/Some Time Later.otf#Some Time Later"
+                         FontSize="36"
+                         Margin="10 0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center" />
+              <TextBlock Text="{x:Bind Level}"
+                         FontFamily="Assets/Some Time Later.otf#Some Time Later"
+                         FontSize="56"
+                         Foreground="#318F16"
+                         Margin="10"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
+            </Grid>
 
             <!-- Asset Anzeige -->
 
             <ContentControl x:Name="asset"
-                            Grid.Row="2"
-                            Margin="10"
+                            Grid.Row="1"
+                            Margin="5"
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Stretch"
                             Content="{x:Bind Answer, Mode=OneWay}"
                             ContentTemplateSelector="{StaticResource AnswerTemplateSelector}" />
 
-            <StackPanel Grid.Row="3"
+            <StackPanel Grid.Row="2"
                         Orientation="Horizontal"
-                        Margin="20"
+                        Margin="10"
                         HorizontalAlignment="Center">
               <Button Content="Korrekt"
                       MinWidth="150"
