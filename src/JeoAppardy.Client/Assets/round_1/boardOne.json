@@ -30,8 +30,9 @@
       "title": "Category 2",
       "answers": [
         {
-          "asset": "asset 1",
-          "related_question": "question 1"
+          "asset": "round_1/image_cat2_100.png",
+          "type":"image",
+          "related_question": "Wie wird das Bild denn nun angezeigt?"
         },
         {
           "asset": "asset 2",

@@ -8,6 +8,7 @@
       xmlns:controls="using:JeoAppardy.Client.Controls"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:ui="using:JeoAppardy.Client.UI"
       mc:Ignorable="d"
       x:Name="gameWallPage">
 
@@ -20,6 +21,8 @@
         <Setter Property="VerticalContentAlignment"
                 Value="Stretch" />
       </Style>
+
+      <ui:AssetValueConverter x:Key="AssetValueConverter" />
 
       <DataTemplate x:Key="PlayerTemplate"
                     x:DataType="api:Player">
@@ -47,6 +50,57 @@
           </StackPanel>
         </Grid>
       </DataTemplate>
+
+      <DataTemplate x:Key="AnswerTextTemplate"
+                    x:DataType="api:Answer">
+        <TextBlock Text="{x:Bind Asset}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+      </DataTemplate>
+
+      <DataTemplate x:Key="AnswerFileTemplate"
+                    x:DataType="api:Answer">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <TextBlock Grid.Row="0"
+                     Text="{x:Bind Asset}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center" />
+          <TextBox Grid.Row="1"
+                   Text="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+        </Grid>
+      </DataTemplate>
+
+      <DataTemplate x:Key="AnswerImageTemplate"
+                    x:DataType="api:Answer">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <TextBlock Grid.Row="0"
+                     Visibility="Collapsed"
+                     Text="{x:Bind Asset}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center" />
+          <Image Grid.Row="1"
+                 Source="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+        </Grid>
+      </DataTemplate>
+
+      <ui:AnswerTemplateSelector x:Key="AnswerTemplateSelector"
+                                 TextTemplate="{StaticResource AnswerTextTemplate}"
+                                 FileTemplate="{StaticResource AnswerFileTemplate}"
+                                 ImageTemplate="{StaticResource AnswerImageTemplate}" />
 
       <DataTemplate x:Key="GameLevelTemplate"
                     x:DataType="api:DiscoveredLevel">
@@ -86,8 +140,13 @@
 
             <!-- Asset Anzeige -->
 
-            <Grid Grid.Row="2">
-            </Grid>
+            <ContentControl x:Name="asset"
+                            Grid.Row="2"
+                            Margin="10"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Content="{x:Bind Answer, Mode=OneWay}"
+                            ContentTemplateSelector="{StaticResource AnswerTemplateSelector}" />
 
             <StackPanel Grid.Row="3"
                         Orientation="Horizontal"
@@ -95,11 +154,11 @@
                         HorizontalAlignment="Center">
               <Button Content="Korrekt"
                       MinWidth="150"
-                      MinHeight="80"
+                      MinHeight="50"
                       Margin="10" />
               <Button Content="Nicht korrekt"
                       MinWidth="150"
-                      MinHeight="80"
+                      MinHeight="50"
                       Margin="10" />
             </StackPanel>
 
