@@ -29,10 +29,10 @@ namespace JeoAppardy.Client.UI
         },
         () => !string.IsNullOrEmpty(PlayerOne) && !string.IsNullOrEmpty(PlayerTwo) && !string.IsNullOrEmpty(PlayerThree) && !string.IsNullOrEmpty(PlayerFour));
 
-      this.PlayerOne = this.Game.CurrentRound.FirstPlayer.Name;
-      this.PlayerTwo = this.Game.CurrentRound.SecondPlayer.Name;
-      this.PlayerThree = this.Game.CurrentRound.ThirdPlayer.Name;
-      this.PlayerFour = this.Game.CurrentRound.FourthPlayer.Name;
+      this.PlayerOne = this.Game.CurrentRound.FirstPlayer.Name ?? "Spieler 1";
+      this.PlayerTwo = this.Game.CurrentRound.SecondPlayer.Name ?? "Spieler 2";
+      this.PlayerThree = this.Game.CurrentRound.ThirdPlayer.Name ?? "Spieler 3";
+      this.PlayerFour = this.Game.CurrentRound.FourthPlayer.Name ?? "Spieler 4";
     }
 
     public Game Game { get; set; }
