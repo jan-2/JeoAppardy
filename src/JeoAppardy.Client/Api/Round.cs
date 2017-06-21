@@ -146,7 +146,7 @@ namespace JeoAppardy.Client.Api
 
     private bool AllAnswersHaveBeenAsked()
     {
-      return GameWall.Categories.Any(cat => cat.Level.Any(level => level.HasBeenAsked));
+      return GameWall.Categories.All(cat => cat.Level.Any(level => level.HasBeenAsked));
     }
 
     private void FindTheWinner()
