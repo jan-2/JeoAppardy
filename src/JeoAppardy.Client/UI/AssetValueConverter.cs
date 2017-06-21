@@ -12,7 +12,7 @@ namespace JeoAppardy.Client.UI
       var answer = value as Api.Answer;
       if (answer != null)
       {
-        var asset = answer.Asset;
+        var asset = answer.Asset.Replace(@"/", @"\");
         var installedLocation = Package.Current.InstalledLocation;
         switch (answer.Type)
         {

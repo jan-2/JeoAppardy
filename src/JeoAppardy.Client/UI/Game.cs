@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Reactive.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using JeoAppardy.Client.Api;
 using JeoAppardy.Client.Buzzer;
 using JeoAppardy.Client.Common;
 using Reactive.Bindings;
-using Binding = System.ServiceModel.Channels.Binding;
 
 namespace JeoAppardy.Client.UI
 {
@@ -38,6 +39,9 @@ namespace JeoAppardy.Client.UI
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
         args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
         args => args?.ClickedItem != null);
+      this.AssetFileLoadedCommand = new DelegateCommand<TextBlock>(
+        tb => LoadAssetFileIntoTextBlock(tb),
+        tb => tb != null);
 
       this.DiscardLevelCommand = new DelegateCommand(() => this.DiscoveredLevel = null, () => true);
 
@@ -65,20 +69,44 @@ namespace JeoAppardy.Client.UI
         {
           result = await Hardware.GetInstance().GetCurrentState();
         }
-        if (result.status == StateEnum.beendet) {
-          if (AllPlayers.Count < result.sieger) {
+        if (result.status == StateEnum.beendet)
+        {
+          if (AllPlayers.Count < result.sieger)
+          {
             // Spieler nicht korrekt konfiguriert oder falscher Drücker verwendet
             return;
           }
           var and_the_winner_is = AllPlayers[result.sieger - 1];
-          if (!_reset_required && ActivePlayer != and_the_winner_is) {
+          if (!_reset_required && ActivePlayer != and_the_winner_is)
+          {
             ActivePlayer = and_the_winner_is;
           }
         }
       });
     }
 
-    private void SetDiscoveredLevel(Api.GameLevel gameLevel) {
+    private async void LoadAssetFileIntoTextBlock(TextBlock tb)
+    {
+      tb.Text = await GetFileContent(tb.DataContext as string);
+    }
+
+    private async Task<string> GetFileContent(string assetFilePath)
+    {
+      FileInfo fInfo = new FileInfo(assetFilePath);
+      if (!fInfo.Exists)
+      {
+        return ":-(";
+      }
+      var boardDefinitionFile = await StorageFile.GetFileFromPathAsync(assetFilePath);
+      var stream = await boardDefinitionFile.OpenSequentialReadAsync();
+      using (StreamReader reader = new StreamReader(stream.AsStreamForRead(), Encoding.UTF8))
+      {
+        return await reader.ReadToEndAsync();
+      }
+    }
+
+    private void SetDiscoveredLevel(Api.GameLevel gameLevel)
+    {
       _reset_required = true;
       ActivePlayer = null;
 
@@ -114,6 +142,8 @@ namespace JeoAppardy.Client.UI
       get { return _setDiscoveredLevelCommand; }
       private set { this.Set(ref _setDiscoveredLevelCommand, value); }
     }
+
+    public ICommand AssetFileLoadedCommand { get; }
 
     public ICommand DiscardLevelCommand { get; }
 

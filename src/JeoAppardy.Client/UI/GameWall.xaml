@@ -54,6 +54,8 @@
       <DataTemplate x:Key="AnswerTextTemplate"
                     x:DataType="api:Answer">
         <TextBlock Text="{x:Bind Asset}"
+                   FontFamily="Consolas"
+                   FontSize="24"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
       </DataTemplate>
@@ -67,14 +69,24 @@
             <RowDefinition Height="*" />
           </Grid.RowDefinitions>
           <TextBlock Grid.Row="0"
+                     Visibility="Collapsed"
                      Text="{x:Bind Asset}"
                      HorizontalAlignment="Center"
                      VerticalAlignment="Center" />
-          <TextBox Grid.Row="1"
-                   IsReadOnly="True"
-                   Text="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
-                   VerticalAlignment="Stretch"
-                   HorizontalAlignment="Stretch" />
+          <TextBlock x:Name="textBox"
+                     Grid.Row="1"
+                     FontFamily="Consolas"
+                     FontSize="24"
+                     DataContext="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Center">
+            <interactivity:Interaction.Behaviors>
+              <core:EventTriggerBehavior EventName="DataContextChanged">
+                <core:InvokeCommandAction Command="{Binding ElementName=gameWallPage, Path=ViewModel.AssetFileLoadedCommand}"
+                                          CommandParameter="{Binding ElementName=textBox}" />
+              </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+          </TextBlock>
         </Grid>
       </DataTemplate>
 
