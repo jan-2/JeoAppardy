@@ -164,7 +164,7 @@ namespace JeoAppardy.Client.Api
 
     private bool AllAnswersHaveBeenAsked()
     {
-      return GameWall.Categories.All(cat => cat.Level.Any(level => level.HasBeenAsked));
+      return GameWall.Categories.SelectMany(cat => cat.Level).Any(level => level.HasBeenAsked);
     }
 
     private void FindTheWinner()
@@ -172,6 +172,18 @@ namespace JeoAppardy.Client.Api
       var allPlayer = new List<Player>() { FirstPlayer, SecondPlayer, ThirdPlayer, FourthPlayer };
 
       var winner = allPlayer.Aggregate((p1, p2) => p1.Points > p2.Points ? p1 : p2);
+
+      if (winner != null)
+      {
+        var restPoints = GameWall.Categories.SelectMany(cat => cat.Level).Where(level => !level.HasBeenAsked).Sum(level => level.Level);
+
+        allPlayer.Remove(winner);
+        var secWinner = allPlayer.Aggregate((p1, p2) => p1.Points > p2.Points ? p1 : p2);
+        if (secWinner.Points + restPoints > winner.Points)
+        {
+          winner = null;
+        }
+      }
 
       Winner = winner;
     }
