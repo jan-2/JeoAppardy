@@ -5,9 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:iconPacks="using:MahApps.Metro.IconPacks"
+      Background="#084887"
       mc:Ignorable="d">
 
-  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+  <Grid Background="Transparent">
 
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -22,12 +23,12 @@
                 Margin="10">
       <TextBlock Text="Gewinner"
                  FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                 FontSize="36"
+                 FontSize="48"
                  Margin="10"
                  VerticalAlignment="Center" />
       <TextBlock Text="{x:Bind ViewModel.GameApi.CurrentRound.GameWall.Title}"
                  FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                 FontSize="36"
+                 FontSize="48"
                  Margin="10 0"
                  VerticalAlignment="Center" />
     </StackPanel>
@@ -35,16 +36,16 @@
     <Grid Grid.Row="1"
           HorizontalAlignment="Center"
           Margin="20">
-      <Border Background="WhiteSmoke"
-              CornerRadius="2"
-              Margin="0 50 0 0"
-              VerticalAlignment="Stretch" />
+      <Border Background="#909cc2"
+                CornerRadius="10"
+                Margin="0 40 0 0"
+                VerticalAlignment="Stretch" />
       <iconPacks:PackIconMaterial Kind="AccountCircle"
-                                  Width="90"
-                                  Height="90"
-                                  Foreground="LightGray"
-                                  Margin="10 0"
-                                  HorizontalAlignment="Center" />
+                                    Width="90"
+                                    Height="90"
+                                    Foreground="LightGray"
+                                    Margin="10 0"
+                                    HorizontalAlignment="Center" />
       <StackPanel Orientation="Vertical"
                   Margin="5 85 5 5"
                   VerticalAlignment="Bottom">
@@ -71,6 +72,7 @@
             FontSize="48"
             Width="400"
             Height="100"
-            Margin="20" />
+            Margin="20"
+            Background="#909cc2"/>
   </Grid>
 </Page>
