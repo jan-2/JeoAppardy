@@ -9,179 +9,185 @@
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:ui="using:JeoAppardy.Client.UI"
+      xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
       mc:Ignorable="d"
       x:Name="gameWallPage">
 
-  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid.Resources>
-      <Style x:Key="ListViewItemStyle"
-             TargetType="ListViewItem">
-        <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Stretch" />
-      </Style>
+  <Page.Resources>
+    <Style x:Key="ListViewItemStyle"
+           TargetType="ListViewItem">
+      <Setter Property="HorizontalContentAlignment"
+              Value="Stretch" />
+      <Setter Property="VerticalContentAlignment"
+              Value="Stretch" />
+    </Style>
 
-      <ui:AssetValueConverter x:Key="AssetValueConverter" />
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityNegationConverter"
+                                          TrueValue="Collapsed"
+                                          FalseValue="Visible" />
+    <ui:AssetValueConverter x:Key="AssetValueConverter" />
 
-      <DataTemplate x:Key="PlayerTemplate"
-                    x:DataType="api:Player">
-        <Grid Margin="20">
-          <Border Background="WhiteSmoke"
-                  CornerRadius="2"
-                  Margin="0 50 0 0"
-                  VerticalAlignment="Stretch" />
-          <iconPacks:PackIconMaterial Kind="AccountCircle"
-                                      Width="90"
-                                      Height="90"
-                                      Foreground="LightGray"
-                                      Margin="10 0"
-                                      HorizontalAlignment="Center" />
-          <StackPanel Orientation="Vertical"
-                      Margin="5 85 5 5"
-                      VerticalAlignment="Bottom">
-            <TextBlock HorizontalAlignment="Center"
-                       Text="{x:Bind Name, TargetNullValue=PlayerName}"
-                       FontSize="28" />
-            <TextBlock HorizontalAlignment="Center"
-                       Text="{x:Bind Points, Mode=OneWay}"
-                       FontSize="20"
-                       Margin="10 20 10 10" />
-          </StackPanel>
-        </Grid>
-      </DataTemplate>
+    <DataTemplate x:Key="PlayerTemplate"
+                  x:DataType="api:Player">
+      <Grid Margin="20">
+        <Border Background="WhiteSmoke"
+                CornerRadius="2"
+                Margin="0 50 0 0"
+                VerticalAlignment="Stretch" />
+        <iconPacks:PackIconMaterial Kind="AccountCircle"
+                                    Width="90"
+                                    Height="90"
+                                    Foreground="LightGray"
+                                    Margin="10 0"
+                                    HorizontalAlignment="Center" />
+        <StackPanel Orientation="Vertical"
+                    Margin="5 85 5 5"
+                    VerticalAlignment="Bottom">
+          <TextBlock HorizontalAlignment="Center"
+                     Text="{x:Bind Name, TargetNullValue=PlayerName}"
+                     FontSize="28" />
+          <TextBlock HorizontalAlignment="Center"
+                     Text="{x:Bind Points, Mode=OneWay}"
+                     FontSize="20"
+                     Margin="10 20 10 10" />
+        </StackPanel>
+      </Grid>
+    </DataTemplate>
 
-      <DataTemplate x:Key="AnswerTextTemplate"
-                    x:DataType="api:Answer">
-        <TextBlock Text="{x:Bind Asset}"
-                   FontFamily="Consolas"
-                   FontSize="24"
+    <DataTemplate x:Key="AnswerTextTemplate"
+                  x:DataType="api:Answer">
+      <TextBlock Text="{x:Bind Asset}"
+                 FontFamily="Consolas"
+                 FontSize="24"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="AnswerFileTemplate"
+                  x:DataType="api:Answer">
+      <Grid HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Visibility="Collapsed"
+                   Text="{x:Bind Asset}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
-      </DataTemplate>
+        <TextBlock x:Name="textBox"
+                   Grid.Row="1"
+                   FontFamily="Consolas"
+                   FontSize="24"
+                   DataContext="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center">
+          <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="DataContextChanged">
+              <core:InvokeCommandAction Command="{Binding ElementName=gameWallPage, Path=ViewModel.AssetFileLoadedCommand}"
+                                        CommandParameter="{Binding ElementName=textBox}" />
+            </core:EventTriggerBehavior>
+          </interactivity:Interaction.Behaviors>
+        </TextBlock>
+      </Grid>
+    </DataTemplate>
 
-      <DataTemplate x:Key="AnswerFileTemplate"
-                    x:DataType="api:Answer">
-        <Grid HorizontalAlignment="Stretch"
-              VerticalAlignment="Stretch">
+    <DataTemplate x:Key="AnswerImageTemplate"
+                  x:DataType="api:Answer">
+      <Grid HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Visibility="Collapsed"
+                   Text="{x:Bind Asset}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+        <Image Grid.Row="1"
+               Source="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
+               VerticalAlignment="Stretch"
+               HorizontalAlignment="Stretch" />
+      </Grid>
+    </DataTemplate>
+
+    <ui:AnswerTemplateSelector x:Key="AnswerTemplateSelector"
+                               TextTemplate="{StaticResource AnswerTextTemplate}"
+                               FileTemplate="{StaticResource AnswerFileTemplate}"
+                               ImageTemplate="{StaticResource AnswerImageTemplate}" />
+
+    <DataTemplate x:Key="GameLevelTemplate"
+                  x:DataType="api:DiscoveredLevel">
+      <Border BorderThickness="2"
+              BorderBrush="Brown"
+              Background="Gainsboro">
+        <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-          </Grid.RowDefinitions>
-          <TextBlock Grid.Row="0"
-                     Visibility="Collapsed"
-                     Text="{x:Bind Asset}"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center" />
-          <TextBlock x:Name="textBox"
-                     Grid.Row="1"
-                     FontFamily="Consolas"
-                     FontSize="24"
-                     DataContext="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Center">
-            <interactivity:Interaction.Behaviors>
-              <core:EventTriggerBehavior EventName="DataContextChanged">
-                <core:InvokeCommandAction Command="{Binding ElementName=gameWallPage, Path=ViewModel.AssetFileLoadedCommand}"
-                                          CommandParameter="{Binding ElementName=textBox}" />
-              </core:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-          </TextBlock>
-        </Grid>
-      </DataTemplate>
-
-      <DataTemplate x:Key="AnswerImageTemplate"
-                    x:DataType="api:Answer">
-        <Grid HorizontalAlignment="Stretch"
-              VerticalAlignment="Stretch">
-          <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
           </Grid.RowDefinitions>
-          <TextBlock Grid.Row="0"
-                     Visibility="Collapsed"
-                     Text="{x:Bind Asset}"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center" />
-          <Image Grid.Row="1"
-                 Source="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
-                 VerticalAlignment="Stretch"
-                 HorizontalAlignment="Stretch" />
-        </Grid>
-      </DataTemplate>
 
-      <ui:AnswerTemplateSelector x:Key="AnswerTemplateSelector"
-                                 TextTemplate="{StaticResource AnswerTextTemplate}"
-                                 FileTemplate="{StaticResource AnswerFileTemplate}"
-                                 ImageTemplate="{StaticResource AnswerImageTemplate}" />
+          <Button Grid.Row="0"
+                  Grid.RowSpan="3"
+                  Command="{Binding ElementName=gameWallPage, Path=ViewModel.DiscardLevelCommand}"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top">
+            <iconPacks:PackIconFontAwesome Kind="Times" />
+          </Button>
 
-      <DataTemplate x:Key="GameLevelTemplate"
-                    x:DataType="api:DiscoveredLevel">
-        <Border BorderThickness="2"
-                BorderBrush="Brown"
-                Background="Gainsboro">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="*" />
-              <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Button Grid.Row="0"
-                    Grid.RowSpan="3"
-                    Command="{Binding ElementName=gameWallPage, Path=ViewModel.DiscardLevelCommand}"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top">
-              <iconPacks:PackIconFontAwesome Kind="Times" />
-            </Button>
-
-            <Grid Grid.Row="0"
-                  Margin="5">
-              <TextBlock Text="{x:Bind Category.Category.Title}"
-                         FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                         FontSize="36"
-                         Margin="10 0"
-                         HorizontalAlignment="Left"
-                         VerticalAlignment="Center" />
-              <TextBlock Text="{x:Bind Level}"
-                         FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                         FontSize="56"
-                         Foreground="#318F16"
-                         Margin="10"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center" />
-            </Grid>
-
-            <!-- Asset Anzeige -->
-
-            <ContentControl x:Name="asset"
-                            Grid.Row="1"
-                            Margin="5"
-                            HorizontalContentAlignment="Stretch"
-                            VerticalContentAlignment="Stretch"
-                            Content="{x:Bind Answer, Mode=OneWay}"
-                            ContentTemplateSelector="{StaticResource AnswerTemplateSelector}" />
-
-            <StackPanel Grid.Row="2"
-                        Orientation="Horizontal"
-                        Margin="10"
-                        HorizontalAlignment="Center">
-              <Button Content="Korrekt"
-                      Command="{Binding ElementName=gameWallPage, Path=ViewModel.CorrectAnswerCommand}"
-                      MinWidth="150"
-                      MinHeight="50"
-                      Margin="10" />
-              <Button Content="Nicht korrekt"
-                      Command="{Binding ElementName=gameWallPage, Path=ViewModel.WrongAnswerCommand}"
-                      MinWidth="150"
-                      MinHeight="50"
-                      Margin="10" />
-            </StackPanel>
-
+          <Grid Grid.Row="0"
+                Margin="5">
+            <TextBlock Text="{x:Bind Category.Category.Title}"
+                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
+                       FontSize="36"
+                       Margin="10 0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" />
+            <TextBlock Text="{x:Bind Level}"
+                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
+                       FontSize="56"
+                       Foreground="#318F16"
+                       Margin="10"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
           </Grid>
-        </Border>
-      </DataTemplate>
-    </Grid.Resources>
+
+          <!-- Asset Anzeige -->
+
+          <ContentControl x:Name="asset"
+                          Grid.Row="1"
+                          Margin="5"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          Content="{x:Bind Answer, Mode=OneWay}"
+                          ContentTemplateSelector="{StaticResource AnswerTemplateSelector}" />
+
+          <StackPanel Grid.Row="2"
+                      Orientation="Horizontal"
+                      Margin="10"
+                      HorizontalAlignment="Center">
+            <Button Content="Korrekt"
+                    Command="{Binding ElementName=gameWallPage, Path=ViewModel.CorrectAnswerCommand}"
+                    MinWidth="150"
+                    MinHeight="50"
+                    Margin="10" />
+            <Button Content="Nicht korrekt"
+                    Command="{Binding ElementName=gameWallPage, Path=ViewModel.WrongAnswerCommand}"
+                    MinWidth="150"
+                    MinHeight="50"
+                    Margin="10" />
+          </StackPanel>
+
+        </Grid>
+      </Border>
+    </DataTemplate>
+  </Page.Resources>
+
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -249,23 +255,56 @@
                     <Border x:Name="gameLevelBorder"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
-                      <TextBlock x:Name="gameLevelText"
-                                 Text="{x:Bind Level}"
-                                 Margin="20"
-                                 HorizontalAlignment="Center"
-                                 VerticalAlignment="Center"
-                                 FontSize="26"
-                                 TextWrapping="Wrap"
-                                 TextTrimming="WordEllipsis" />
+
                       <interactivity:Interaction.Behaviors>
-                        <core:DataTriggerBehavior Binding="{x:Bind HasBeenAsked}"
+                        <core:DataTriggerBehavior Binding="{Binding HasBeenAsked, Mode=OneWay}"
                                                   ComparisonCondition="Equal"
                                                   Value="True">
                           <core:ChangePropertyAction TargetObject="{Binding ElementName=gameLevelText}"
                                                      PropertyName="Opacity"
                                                      Value="0.3" />
                         </core:DataTriggerBehavior>
+                        <core:DataTriggerBehavior Binding="{Binding HasBeenAsked, Mode=OneWay}"
+                                                  ComparisonCondition="Equal"
+                                                  Value="False">
+                          <core:ChangePropertyAction TargetObject="{Binding ElementName=gameLevelText}"
+                                                     PropertyName="Opacity"
+                                                     Value="1" />
+                        </core:DataTriggerBehavior>
                       </interactivity:Interaction.Behaviors>
+
+                      <Grid>
+                        <TextBlock x:Name="gameLevelText"
+                                   Text="{x:Bind Level}"
+                                   Margin="20"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="32"
+                                   TextWrapping="Wrap"
+                                   TextTrimming="WordEllipsis" />
+
+                        <Grid Visibility="{x:Bind HasBeenAsked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Bottom"
+                              Margin="5">
+                          <iconPacks:PackIconOcticons x:Name="solvedIcon"
+                                                      Foreground="Green"
+                                                      Visibility="{x:Bind Solved, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                                      Kind="Thumbsup"
+                                                      Spin="False"
+                                                      SpinDuration="0"
+                                                      Width="36"
+                                                      Height="36" />
+                          <iconPacks:PackIconOcticons x:Name="wrongIcon"
+                                                      Foreground="OrangeRed"
+                                                      Visibility="{x:Bind Solved, Converter={StaticResource BoolToVisibilityNegationConverter}, Mode=OneWay}"
+                                                      Kind="X"
+                                                      Spin="False"
+                                                      SpinDuration="0"
+                                                      Width="36"
+                                                      Height="36" />
+                        </Grid>
+                      </Grid>
                     </Border>
                   </DataTemplate>
                 </ListView.ItemTemplate>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace JeoAppardy.Client.Api
 {
@@ -9,13 +10,13 @@ namespace JeoAppardy.Client.Api
       Category = category;
       Id = id;
 
-      Level = new GameLevel[]
+      Level = new ObservableCollection<GameLevel>(new GameLevel[]
       {
         new GameLevel(id, 100),
         new GameLevel(id, 200),
         new GameLevel(id, 300),
         new GameLevel(id, 400)
-      };
+      });
     }
 
     public int Id { get; }
