@@ -142,22 +142,21 @@
             <iconPacks:PackIconFontAwesome Kind="Times" />
           </Button>
 
-          <Grid Grid.Row="0"
-                Margin="5">
-            <TextBlock Text="{x:Bind Category.Category.Title}"
-                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                       FontSize="36"
-                       Margin="10 0"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center" />
+          <StackPanel Grid.Row="0"
+                      Orientation="Horizontal"
+                      Margin="5">
             <TextBlock Text="{x:Bind Level}"
                        FontFamily="Assets/Some Time Later.otf#Some Time Later"
                        FontSize="56"
                        Foreground="#318F16"
                        Margin="10"
-                       HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
-          </Grid>
+            <TextBlock Text="{x:Bind Category.Category.Title}"
+                       FontFamily="Assets/Some Time Later.otf#Some Time Later"
+                       FontSize="36"
+                       Margin="10 0"
+                       VerticalAlignment="Center" />
+          </StackPanel>
 
           <!-- Asset Anzeige -->
 
