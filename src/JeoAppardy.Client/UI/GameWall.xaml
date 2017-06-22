@@ -14,6 +14,18 @@
       x:Name="gameWallPage">
 
   <Page.Resources>
+    <FontFamily x:Key="AnswerTextFontFamily">Consolas</FontFamily>
+    <x:Double x:Key="AnswerTextFontSize">24d</x:Double>
+
+    <FontFamily x:Key="AnswerFileFontFamily">Consolas</FontFamily>
+    <x:Double x:Key="AnswerFileFontSize">24</x:Double>
+
+    <FontFamily x:Key="RelatedQuestionFontFamily">Consolas</FontFamily>
+    <x:Double x:Key="RelatedQuestionFontSize">24</x:Double>
+
+    <x:Double x:Key="CategoryTitleFontSize">28</x:Double>
+    <x:Double x:Key="LevelFontSize">32</x:Double>
+    
     <Style x:Key="ListViewItemStyle"
            TargetType="ListViewItem">
       <Setter Property="HorizontalContentAlignment"
@@ -61,8 +73,8 @@
     <DataTemplate x:Key="AnswerTextTemplate"
                   x:DataType="api:Answer">
       <TextBlock Text="{x:Bind Asset}"
-                 FontFamily="Consolas"
-                 FontSize="24"
+                 FontFamily="{StaticResource AnswerTextFontFamily}"
+                 FontSize="{StaticResource AnswerTextFontSize}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Center" />
     </DataTemplate>
@@ -82,8 +94,8 @@
                    VerticalAlignment="Center" />
         <TextBlock x:Name="textBox"
                    Grid.Row="1"
-                   FontFamily="Consolas"
-                   FontSize="24"
+                   FontFamily="{StaticResource AnswerFileFontFamily}"
+                   FontSize="{StaticResource AnswerFileFontSize}"
                    DataContext="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center">
@@ -194,12 +206,12 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0"
                        Text="{x:Bind Answer.RelatedQuestion}"
-                       FontFamily="Consolas"
-                       FontSize="24"
+                       FontFamily="{StaticResource RelatedQuestionFontFamily}"
+                       FontSize="{StaticResource RelatedQuestionFontSize}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
             <Button Grid.Row="1"
-                    Content="ok"
+                    Content="_Ok"
                     Command="{Binding ElementName=gameWallPage, Path=ViewModel.CloseRelatedQuestionCommand}"
                     HorizontalAlignment="Center"
                     MinWidth="150"
@@ -252,7 +264,7 @@
               <TextBlock Grid.Row="0"
                          MinHeight="80"
                          Margin="20"
-                         FontSize="28"
+                         FontSize="{StaticResource CategoryTitleFontSize}"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"
                          Text="{x:Bind Category.Title}"
@@ -306,9 +318,7 @@
                                    Margin="20"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="32"
-                                   TextWrapping="Wrap"
-                                   TextTrimming="WordEllipsis" />
+                                   FontSize="{StaticResource LevelFontSize}" />
 
                         <Grid Visibility="{x:Bind HasBeenAsked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                               HorizontalAlignment="Right"
