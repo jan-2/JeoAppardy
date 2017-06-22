@@ -137,6 +137,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\chuck-norris.gif" />
+    <Content Include="Assets\dancing.gif" />
     <Content Include="Assets\round_1\image_cat2_100.png" />
     <Content Include="Assets\Some Time Later.otf" />
     <Content Include="Assets\round_1\boardOne.json" />

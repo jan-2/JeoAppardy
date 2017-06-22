@@ -62,7 +62,7 @@
            Margin="100"
            HorizontalAlignment="Center"
            VerticalAlignment="Center"
-           Source="http://gifs.joelglovier.com/big-lebowski/dancing.gif" />
+           Source="{x:Bind ViewModel.WinnerImage}" />
 
     <Button Grid.Row="3"
             HorizontalAlignment="Center"

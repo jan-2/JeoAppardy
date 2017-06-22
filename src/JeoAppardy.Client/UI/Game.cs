@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -215,13 +216,23 @@ namespace JeoAppardy.Client.UI
 
     public DelegateCommand WrongAnswerCommand { get; }
 
-    public ObservableCollection<Api.Player> AllPlayers => new ObservableCollection<Player>(new[]
+    public ObservableCollection<Api.Player> AllPlayers
     {
-      CurrentGameWall.FirstPlayer,
-      CurrentGameWall.SecondPlayer,
-      CurrentGameWall.ThirdPlayer,
-      CurrentGameWall.FourthPlayer
-    });
+      get
+      {
+        if (CurrentGameWall == null)
+        {
+          return new ObservableCollection<Player>(Enumerable.Empty<Player>());
+        }
+        return new ObservableCollection<Player>(new[]
+        {
+          CurrentGameWall.FirstPlayer,
+          CurrentGameWall.SecondPlayer,
+          CurrentGameWall.ThirdPlayer,
+          CurrentGameWall.FourthPlayer
+        });
+      }
+    }
 
     public Api.Player ActivePlayer
     {
@@ -239,9 +250,14 @@ namespace JeoAppardy.Client.UI
       SetupCurrentRound(_gameApi.CurrentRound);
     }
 
-    public void StartNextRound(Api.Round round)
+    public Api.Round StartNextRound(Api.Round round)
     {
-      SetupCurrentRound(_gameApi.StartNextRound(round));
+      var nextRound = _gameApi.StartNextRound(round);
+      if (nextRound != null)
+      {
+        SetupCurrentRound(nextRound);
+      }
+      return nextRound;
     }
 
     public void StartFirstRound()

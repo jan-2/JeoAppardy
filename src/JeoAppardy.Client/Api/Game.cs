@@ -9,7 +9,7 @@ namespace JeoAppardy.Client.Api
     const string SECOND = "second";
     const string THIRD = "third";
     const string FOURTH = "fourth";
-    const string FINAL = "final";
+    public const string FINAL = "final";
 
     private Dictionary<string, Round> gameRounds;
     private Dictionary<string, Player> winners;
@@ -66,7 +66,7 @@ namespace JeoAppardy.Client.Api
         case FOURTH:
           return StartFinalRound();
         case FINAL:
-          return StartFirstRound();
+          return null;
       }
 
       return CurrentRound;

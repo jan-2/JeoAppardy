@@ -82,7 +82,7 @@ namespace JeoAppardy.Client.UI
       _frame.Navigate(typeof(GameWall), game);
     }
 
-    async Task<Api.Game> SetupGame()
+    public static async Task<Api.Game> SetupGame()
     {
       // Laden der Boards vom Dateipfad
       var installedLocation = Package.Current.InstalledLocation;
@@ -102,7 +102,7 @@ namespace JeoAppardy.Client.UI
       return Api.Game.SetupWithBoards(boardOne, boardTwo, boardThree, boardFour, boardFinal);
     }
 
-    async Task<string> GetDefinitionOf(string assetFilePath)
+    private static async Task<string> GetDefinitionOf(string assetFilePath)
     {
       var boardDefinitionFile = await StorageFile.GetFileFromPathAsync(assetFilePath);
 
