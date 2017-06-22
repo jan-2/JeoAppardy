@@ -172,7 +172,7 @@ namespace JeoAppardy.Client.Api
 
     private bool AnyAnswerHasBeenAsked()
     {
-      return GameWall.Categories.SelectMany(cat => cat.Level).Any(level => level.HasBeenAsked);
+      return GameWall.Categories.SelectMany(cat => cat.Level).All(level => level.HasBeenAsked);
     }
 
     private void FindTheWinner()
