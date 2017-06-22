@@ -11,6 +11,7 @@
       xmlns:ui="using:JeoAppardy.Client.UI"
       xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
       mc:Ignorable="d"
+      Background="#084887"
       x:Name="gameWallPage">
 
   <Page.Resources>
@@ -46,7 +47,7 @@
     <DataTemplate x:Key="PlayerTemplate"
                   x:DataType="api:Player">
       <Grid Margin="20">
-        <Border Background="LightSeaGreen"
+        <Border Background="#909cc2"
                 CornerRadius="10"
                 Margin="0 40 0 0"
                 VerticalAlignment="Stretch" />
@@ -136,10 +137,10 @@
 
     <DataTemplate x:Key="GameLevelTemplate"
                   x:DataType="api:DiscoveredLevel">
-      <Border BorderThickness="5"
-              CornerRadius="20"
-              BorderBrush="OrangeRed"
-              Background="BlanchedAlmond">
+      <Border BorderThickness="2"
+              CornerRadius="10"
+              BorderBrush="#f5a807"
+              Background="#f7f5fb">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -162,14 +163,15 @@
             <TextBlock Text="{x:Bind Level}"
                        FontFamily="Assets/Some Time Later.otf#Some Time Later"
                        FontSize="56"
-                       Foreground="#318F16"
+                       Foreground="#084887"
                        Margin="10"
                        VerticalAlignment="Center" />
             <TextBlock Text="{x:Bind Category.Category.Title}"
                        FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                       FontSize="36"
+                       FontSize="56"
                        Margin="10 0"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       Foreground="#084887"/>
           </StackPanel>
 
           <!-- Asset Anzeige -->
@@ -190,17 +192,19 @@
                     Command="{Binding ElementName=gameWallPage, Path=ViewModel.CorrectAnswerCommand}"
                     MinWidth="150"
                     MinHeight="50"
-                    Margin="10" />
+                    Margin="10"
+                    Background="#909cc2"/>
             <Button Content="Nicht korrekt"
                     Command="{Binding ElementName=gameWallPage, Path=ViewModel.WrongAnswerCommand}"
                     MinWidth="150"
                     MinHeight="50"
-                    Margin="10" />
+                    Margin="10"
+                    Background="#f9ab55"/>
           </StackPanel>
 
           <Grid Grid.Row="1"
                 Grid.RowSpan="2"
-                Background="BlanchedAlmond"
+                Background="#f7f5fb"
                 CornerRadius="15"
                 Visibility="{Binding ElementName=gameWallPage, Path=ViewModel.RelatedQuestion, Converter={StaticResource EmptyObjectToVisibilityConverter}}">
             <Grid.RowDefinitions>
@@ -219,7 +223,8 @@
                     HorizontalAlignment="Center"
                     MinWidth="150"
                     MinHeight="50"
-                    Margin="10" />
+                    Margin="10"
+                    Background="#909cc2"/>
           </Grid>
 
         </Grid>
@@ -227,7 +232,7 @@
     </DataTemplate>
   </Page.Resources>
 
-  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+  <Grid Background="Transparent">
 
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -238,8 +243,9 @@
     <TextBlock Grid.Row="0"
                Text="{x:Bind ViewModel.CurrentGameWall.Title}"
                FontFamily="Assets/Some Time Later.otf#Some Time Later"
-               FontSize="48"
-               Margin="0 50 0 0"
+               FontSize="70"
+               Foreground="#f58a07"
+               Margin="0 20 0 0"
                HorizontalAlignment="Center"
                VerticalAlignment="Top" />
 
@@ -250,13 +256,14 @@
               VerticalContentAlignment="Stretch"
               ItemContainerStyle="{StaticResource ListViewItemStyle}"
               ItemsSource="{x:Bind ViewModel.CurrentGameWall.Categories}"
-              Margin="10 5">
+              Margin="30 0">
       <ListView.ItemTemplate>
         <DataTemplate x:DataType="api:GameCategory">
-          <Border BorderBrush="LightGray"
+          <Border BorderBrush="#f7f5fb"
                   BorderThickness="1 1 1 1"
                   HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch">
+                  VerticalAlignment="Stretch"
+                  CornerRadius="15">
 
             <Grid>
               <Grid.RowDefinitions>
@@ -273,7 +280,9 @@
                          Text="{x:Bind Category.Title}"
                          TextAlignment="Center"
                          TextWrapping="Wrap"
-                         TextTrimming="WordEllipsis" />
+                         TextTrimming="WordEllipsis"
+                         Foreground="#f5f7fb"
+                         />
 
               <ListView x:Name="gameLevels"
                         Grid.Row="1"
@@ -321,14 +330,15 @@
                                    Margin="20"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="{StaticResource LevelFontSize}" />
+                                   FontSize="{StaticResource LevelFontSize}"
+                                   Foreground="#f5f7fb"/>
 
                         <Grid Visibility="{x:Bind HasBeenAsked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                               HorizontalAlignment="Right"
                               VerticalAlignment="Bottom"
-                              Margin="5">
+                              Margin="50 47">
                           <iconPacks:PackIconOcticons x:Name="solvedIcon"
-                                                      Foreground="Green"
+                                                      Foreground="#f7f5fb"
                                                       Visibility="{x:Bind Solved, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                                       Kind="Thumbsup"
                                                       Spin="False"
@@ -373,7 +383,7 @@
     <!-- Ansicht für das aktuell selektierte Level -->
     <ContentControl x:Name="level"
                     Grid.Row="1"
-                    Margin="10 5"
+                    Margin="60 15"
                     HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Stretch"
                     Visibility="Collapsed"

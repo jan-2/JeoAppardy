@@ -6,7 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
 
-  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+  <Grid Background="#084887">
 
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
@@ -19,7 +19,7 @@
                FontSize="300"
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
-               Foreground="#FF8B0A0A" />
+               Foreground="#f5a807" />
 
     <StackPanel Grid.Row="1"
                 Margin="0 50"
@@ -39,6 +39,7 @@
               FontSize="48"
               Width="400"
               Height="100"
+              Background="#909cc2"
               Command="{x:Bind ViewModel.StartGameCommand}" />
     </StackPanel>
 
