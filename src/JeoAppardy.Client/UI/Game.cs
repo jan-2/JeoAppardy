@@ -87,7 +87,7 @@ namespace JeoAppardy.Client.UI
             return;
           }
           var and_the_winner_is = AllPlayers[result.sieger - 1];
-          if (!_reset_required && ActivePlayer != and_the_winner_is && this.DiscoveredLevel != null)
+          if (!_reset_required && ActivePlayer != and_the_winner_is && this.DiscoveredLevel != null && this.DiscoveredLevel.PlayerCanAnswer(and_the_winner_is))
           {
             ActivePlayer = and_the_winner_is;
           }
