@@ -52,11 +52,7 @@ namespace JeoAppardy.Client.UI
         tb => tb != null);
 
       this.DiscardLevelCommand = new DelegateCommand(
-        () =>
-        {
-          this.DiscoveredLevel = null;
-          this.ActivePlayer = null;
-        },
+        () => DiscardLevel(),
         () => true);
 
       var scheduler = UIDispatcherScheduler.Default;
@@ -142,6 +138,13 @@ namespace JeoAppardy.Client.UI
     private void WrongAnswer()
     {
       this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.DiscoveredLevel);
+      this.ActivePlayer = null;
+    }
+
+    private void DiscardLevel()
+    {
+      this.CurrentGameWall = this.CurrentRound.DiscardLevel(this.DiscoveredLevel);
+      this.DiscoveredLevel = null;
       this.ActivePlayer = null;
     }
 

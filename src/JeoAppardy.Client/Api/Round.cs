@@ -118,6 +118,21 @@ namespace JeoAppardy.Client.Api
     {
       SetLevelAsNotAnwered(discoveredLevel);
 
+      GameWall.ActivePlayer = null;
+
+      return GameWall;
+    }
+
+    public GameWall DiscardLevel(DiscoveredLevel discoveredLevel)
+    {
+      SetLevelAsNotAnwered(discoveredLevel);
+
+      GameWall
+        .Categories[Id.AsCategoryId(discoveredLevel.Category.Id)]
+        .Level[Id.AsAnswerId(discoveredLevel.Level)].HasBeenAsked = false;
+
+      GameWall.ActivePlayer = null;
+
       return GameWall;
     }
 
