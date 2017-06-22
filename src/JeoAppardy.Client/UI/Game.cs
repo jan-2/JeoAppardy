@@ -152,8 +152,7 @@ namespace JeoAppardy.Client.UI
 
     private void WrongAnswer()
     {
-      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.DiscoveredLevel);
-      this.DiscoveredLevel.PlayerAnsweredNotCorrect(this.ActivePlayer);
+      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.ActivePlayer, this.DiscoveredLevel);
       this.ActivePlayer = null;
       if (this.DiscoveredLevel.AllPlayersAnsweredWrong)
       {

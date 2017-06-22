@@ -106,7 +106,7 @@ namespace JeoAppardy.Tests.WhileARound
       var gameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel1);
 
       var discoveredLevel2 = _sut.PlayerChoosed(category: 2, level: 300);
-      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel2);
+      gameWall = _sut.PlayerAnsweredNotCorrect(_sut.FirstPlayer, discoveredLevel2);
 
       var discoveredLevel3 = _sut.PlayerChoosed(category: 2, level: 300);
       gameWall = _sut.PlayerAnsweredCorrect(_sut.SecondPlayer, discoveredLevel3);
@@ -123,7 +123,7 @@ namespace JeoAppardy.Tests.WhileARound
       var gameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel1);
 
       var discoveredLevel2 = _sut.PlayerChoosed(category: 2, level: 300);
-      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel2);
+      gameWall = _sut.PlayerAnsweredNotCorrect(_sut.FirstPlayer, discoveredLevel2);
 
       gameWall = _sut.PlayerAnsweredCorrect(_sut.SecondPlayer, discoveredLevel2);
 
@@ -131,12 +131,12 @@ namespace JeoAppardy.Tests.WhileARound
       gameWall = _sut.PlayerAnsweredCorrect(_sut.SecondPlayer, discoveredLevel3);
 
       var discoveredLevel4 = _sut.PlayerChoosed(category: 4, level: 400);
-      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel4);
+      gameWall = _sut.PlayerAnsweredNotCorrect(_sut.SecondPlayer, discoveredLevel4);
 
       gameWall = _sut.PlayerAnsweredCorrect(_sut.ThirdPlayer, discoveredLevel4);
 
       var discoveredLevel5 = _sut.PlayerChoosed(category: 4, level: 300);
-      gameWall = _sut.PlayerAnsweredNotCorrect(discoveredLevel5);
+      gameWall = _sut.PlayerAnsweredNotCorrect(_sut.ThirdPlayer, discoveredLevel5);
 
       gameWall = _sut.PlayerAnsweredCorrect(_sut.FirstPlayer, discoveredLevel5);
 
