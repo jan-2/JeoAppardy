@@ -139,7 +139,7 @@ namespace JeoAppardy.Client.UI
       if (this.CurrentRound.Winner != null)
       {
         // start next round
-        _frame.Navigate(typeof(GameWall), _gameApi);
+        _frame.Navigate(typeof(WinnerView), _gameApi);
       }
     }
 

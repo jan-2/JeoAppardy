@@ -65,6 +65,8 @@ namespace JeoAppardy.Client.Api
           return StartFourthRound();
         case FOURTH:
           return StartFinalRound();
+        case FINAL:
+          return StartFirstRound();
       }
 
       return CurrentRound;
