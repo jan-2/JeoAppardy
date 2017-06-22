@@ -22,12 +22,12 @@
                 Margin="10">
       <TextBlock Text="Gewinner"
                  FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                 FontSize="36"
+                 FontSize="48"
                  Margin="10"
                  VerticalAlignment="Center" />
       <TextBlock Text="{x:Bind ViewModel.GameApi.CurrentRound.GameWall.Title}"
                  FontFamily="Assets/Some Time Later.otf#Some Time Later"
-                 FontSize="36"
+                 FontSize="48"
                  Margin="10 0"
                  VerticalAlignment="Center" />
     </StackPanel>

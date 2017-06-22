@@ -50,6 +50,10 @@ namespace JeoAppardy.Client.UI
         () => WrongAnswer(),
         () => DiscoveredLevel != null && this.ActivePlayer != null && DiscoveredLevel.PlayerCanAnswer(ActivePlayer));
 
+      this.NoOneWantAnswerCommand = new DelegateCommand(
+        () => NoOneWantAnswer(),
+        () => DiscoveredLevel != null);
+
       this.AssetFileLoadedCommand = new DelegateCommand<TextBlock>(
         tb => LoadAssetFileIntoTextBlock(tb),
         tb => tb != null);
@@ -160,6 +164,16 @@ namespace JeoAppardy.Client.UI
       }
     }
 
+    private void NoOneWantAnswer()
+    {
+      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.CurrentRound.FirstPlayer, this.DiscoveredLevel);
+      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.CurrentRound.SecondPlayer, this.DiscoveredLevel);
+      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.CurrentRound.ThirdPlayer, this.DiscoveredLevel);
+      this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.CurrentRound.FourthPlayer, this.DiscoveredLevel);
+      this.ActivePlayer = null;
+      this.RelatedQuestion = this.DiscoveredLevel.Answer;
+    }
+
     private void DiscardLevel()
     {
       this.CurrentGameWall = this.CurrentRound.DiscardLevel(this.DiscoveredLevel);
@@ -194,6 +208,7 @@ namespace JeoAppardy.Client.UI
         this.Set(ref _discoveredLevel, value);
         this.CorrectAnswerCommand.RaiseCanExecuteChanged();
         this.WrongAnswerCommand.RaiseCanExecuteChanged();
+        this.NoOneWantAnswerCommand.RaiseCanExecuteChanged();
       }
     }
 
@@ -214,6 +229,8 @@ namespace JeoAppardy.Client.UI
     public DelegateCommand CorrectAnswerCommand { get; }
 
     public DelegateCommand WrongAnswerCommand { get; }
+
+    public DelegateCommand NoOneWantAnswerCommand { get; }
 
     public ObservableCollection<Api.Player> AllPlayers
     {
@@ -241,6 +258,7 @@ namespace JeoAppardy.Client.UI
         this.Set(ref _activePlayer, value);
         this.CorrectAnswerCommand.RaiseCanExecuteChanged();
         this.WrongAnswerCommand.RaiseCanExecuteChanged();
+        this.NoOneWantAnswerCommand.RaiseCanExecuteChanged();
       }
     }
 

@@ -186,16 +186,78 @@
                       Orientation="Horizontal"
                       Margin="10"
                       HorizontalAlignment="Center">
-            <Button Content="Korrekt"
+            <Button x:Name="correctButton"
                     Command="{Binding ElementName=gameWallPage, Path=ViewModel.CorrectAnswerCommand}"
+                    Background="Gainsboro"
                     MinWidth="150"
                     MinHeight="50"
-                    Margin="10" />
-            <Button Content="Nicht korrekt"
+                    Margin="10">
+              <iconPacks:PackIconOcticons x:Name="correctIcon"
+                                          Kind="Thumbsup"
+                                          Spin="False"
+                                          SpinDuration="0"
+                                          Width="36"
+                                          Height="36" />
+              <!-- only a hack for PackIcon (cause Foreground is not changing after command is allowed) -->
+              <interactivity:Interaction.Behaviors>
+                <core:DataTriggerBehavior Binding="{Binding ElementName=correctButton, Path=IsEnabled, Mode=OneWay}"
+                                          ComparisonCondition="Equal"
+                                          Value="True">
+                  <core:ChangePropertyAction TargetObject="{Binding ElementName=correctIcon}"
+                                             PropertyName="Foreground"
+                                             Value="Green" />
+                </core:DataTriggerBehavior>
+                <core:DataTriggerBehavior Binding="{Binding ElementName=correctButton, Path=IsEnabled, Mode=OneWay}"
+                                          ComparisonCondition="Equal"
+                                          Value="False">
+                  <core:ChangePropertyAction TargetObject="{Binding ElementName=correctIcon}"
+                                             PropertyName="Foreground"
+                                             Value="{ThemeResource ButtonForegroundDisabled}" />
+                </core:DataTriggerBehavior>
+              </interactivity:Interaction.Behaviors>
+            </Button>
+            <Button x:Name="wrongButton"
                     Command="{Binding ElementName=gameWallPage, Path=ViewModel.WrongAnswerCommand}"
+                    Background="Gainsboro"
                     MinWidth="150"
                     MinHeight="50"
-                    Margin="10" />
+                    Margin="10">
+              <iconPacks:PackIconOcticons x:Name="wrongIcon"
+                                          Kind="Thumbsdown"
+                                          Spin="False"
+                                          SpinDuration="0"
+                                          Width="36"
+                                          Height="36" />
+              <!-- only a hack for PackIcon (cause Foreground is not changing after command is allowed) -->
+              <interactivity:Interaction.Behaviors>
+                <core:DataTriggerBehavior Binding="{Binding ElementName=wrongButton, Path=IsEnabled, Mode=OneWay}"
+                                          ComparisonCondition="Equal"
+                                          Value="True">
+                  <core:ChangePropertyAction TargetObject="{Binding ElementName=wrongIcon}"
+                                             PropertyName="Foreground"
+                                             Value="OrangeRed" />
+                </core:DataTriggerBehavior>
+                <core:DataTriggerBehavior Binding="{Binding ElementName=wrongButton, Path=IsEnabled, Mode=OneWay}"
+                                          ComparisonCondition="Equal"
+                                          Value="False">
+                  <core:ChangePropertyAction TargetObject="{Binding ElementName=wrongIcon}"
+                                             PropertyName="Foreground"
+                                             Value="{ThemeResource ButtonForegroundDisabled}" />
+                </core:DataTriggerBehavior>
+              </interactivity:Interaction.Behaviors>
+            </Button>
+            <Button Command="{Binding ElementName=gameWallPage, Path=ViewModel.NoOneWantAnswerCommand}"
+                    Background="Gainsboro"
+                    Foreground="DarkRed"
+                    MinWidth="150"
+                    MinHeight="50"
+                    Margin="10">
+              <iconPacks:PackIconOcticons Kind="Hubot"
+                                          Spin="False"
+                                          SpinDuration="0"
+                                          Width="36"
+                                          Height="36" />
+            </Button>
           </StackPanel>
 
           <Grid Grid.Row="1"
@@ -219,7 +281,7 @@
                     HorizontalAlignment="Center"
                     MinWidth="150"
                     MinHeight="50"
-                    Margin="10" />
+                    Margin="20" />
           </Grid>
 
         </Grid>
