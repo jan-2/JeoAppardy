@@ -41,11 +41,11 @@ namespace JeoAppardy.Client.UI
 
       this.CorrectAnswerCommand = new DelegateCommand(
         () => CorrectAnswer(),
-        () => DiscoveredLevel != null && this.ActivePlayer != null);
+        () => DiscoveredLevel != null && this.ActivePlayer != null && DiscoveredLevel.PlayerCanAnswer(ActivePlayer));
 
       this.WrongAnswerCommand = new DelegateCommand(
         () => WrongAnswer(),
-        () => DiscoveredLevel != null && this.ActivePlayer != null);
+        () => DiscoveredLevel != null && this.ActivePlayer != null && DiscoveredLevel.PlayerCanAnswer(ActivePlayer));
 
       this.AssetFileLoadedCommand = new DelegateCommand<TextBlock>(
         tb => LoadAssetFileIntoTextBlock(tb),
@@ -138,7 +138,12 @@ namespace JeoAppardy.Client.UI
     private void WrongAnswer()
     {
       this.CurrentGameWall = this.CurrentRound.PlayerAnsweredNotCorrect(this.DiscoveredLevel);
+      this.DiscoveredLevel.PlayerAnsweredNotCorrect(this.ActivePlayer);
       this.ActivePlayer = null;
+      if (this.DiscoveredLevel.AllPlayersAnsweredWrong)
+      {
+        this.DiscoveredLevel = null;
+      }
     }
 
     private void DiscardLevel()
