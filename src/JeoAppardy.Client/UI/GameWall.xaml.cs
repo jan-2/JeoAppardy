@@ -20,8 +20,10 @@ namespace JeoAppardy.Client.UI
       if (this.ViewModel == null)
       {
         var gameApi = e.Parameter as Api.Game;
-        this.ViewModel = new Game(gameApi);
-        this.ViewModel.StartFirstRound();
+        this.ViewModel = new Game(this.Frame, gameApi);
+
+        var round = gameApi.CurrentRound;
+        this.ViewModel.StartNextRound(round);
       }
       this.Loaded += (sender, args) =>
       {

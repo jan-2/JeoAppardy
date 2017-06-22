@@ -8,8 +8,9 @@ namespace JeoAppardy.Client.Api
   {
     private Board _board;
 
-    public Round(Board board)
+    public Round(string id, Board board)
     {
+      ID = id;
       _board = board;
 
       GameWall = new GameWall(board.Title, board.Categories);
@@ -19,6 +20,8 @@ namespace JeoAppardy.Client.Api
       ThirdPlayer = new Player();
       FourthPlayer = new Player();
     }
+
+    public string ID { get; }
 
     public Player FirstPlayer
     {

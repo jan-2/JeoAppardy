@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JeoAppardy.Client.Api
 {
@@ -20,11 +17,11 @@ namespace JeoAppardy.Client.Api
     public static Game SetupWithBoards(Board first, Board second, Board third, Board fourth, Board final)
     {
       var rounds = new Dictionary<string, Round> {
-        { FIRST, new Round(first) },
-        { SECOND, new Round(second) },
-        { THIRD, new Round(third) },
-        { FOURTH, new Round(fourth) },
-        { FINAL, new Round(final) }
+        { FIRST, new Round(FIRST, first) },
+        { SECOND, new Round(SECOND, second) },
+        { THIRD, new Round(THIRD, third) },
+        { FOURTH, new Round(FOURTH, fourth) },
+        { FINAL, new Round(FINAL, final) }
       };
 
       return new Game(rounds);
@@ -45,6 +42,30 @@ namespace JeoAppardy.Client.Api
     private Round SetCurrentRound(string roundName)
     {
       CurrentRound = gameRounds[roundName];
+
+      return CurrentRound;
+    }
+
+    public Round StartNextRound(Api.Round round)
+    {
+      if (round == null)
+      {
+        return StartFirstRound();
+      }
+
+      CurrentRound = round;
+
+      switch (round.ID)
+      {
+        case FIRST:
+          return StartSecondRound();
+        case SECOND:
+          return StartThirdRound();
+        case THIRD:
+          return StartFourthRound();
+        case FOURTH:
+          return StartFinalRound();
+      }
 
       return CurrentRound;
     }

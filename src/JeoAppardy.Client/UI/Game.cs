@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
-using Windows.UI.Notifications;
 using Windows.UI.Xaml.Controls;
 using JeoAppardy.Client.Api;
 using JeoAppardy.Client.Buzzer;
@@ -20,6 +19,7 @@ namespace JeoAppardy.Client.UI
     private IObservable<long> _timer;
     private bool _reset_required;
 
+    private Frame _frame;
     private string _title;
     private Api.Game _gameApi;
     private Api.Round _currentRoundApi;
@@ -28,12 +28,9 @@ namespace JeoAppardy.Client.UI
     private Api.DiscoveredLevel _discoveredLevel;
     private Api.Answer _relatedQuestion;
 
-    public Game(Api.Game gameApi)
+    public Game(Frame frame, Api.Game gameApi)
     {
-      // Player fokussieren z.B. Highlight, GameWall aktivieren
-      // und "korrekt" "Nicht korrekt" Buttons anzeigen
-      // Aktiven Player merken, er wird bei der Beantwortung eines Levels benötigt
-
+      _frame = frame;
       _gameApi = gameApi;
 
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
@@ -141,7 +138,8 @@ namespace JeoAppardy.Client.UI
 
       if (this.CurrentRound.Winner != null)
       {
-        // next round
+        // start next round
+        _frame.Navigate(typeof(GameWall), _gameApi);
       }
     }
 
@@ -239,6 +237,11 @@ namespace JeoAppardy.Client.UI
     public void ContinueCurrentRound()
     {
       SetupCurrentRound(_gameApi.CurrentRound);
+    }
+
+    public void StartNextRound(Api.Round round)
+    {
+      SetupCurrentRound(_gameApi.StartNextRound(round));
     }
 
     public void StartFirstRound()

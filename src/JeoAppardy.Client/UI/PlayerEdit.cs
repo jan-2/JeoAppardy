@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using JeoAppardy.Client.Common;
 
 namespace JeoAppardy.Client.UI
@@ -29,10 +28,10 @@ namespace JeoAppardy.Client.UI
         },
         () => !string.IsNullOrEmpty(PlayerOne) && !string.IsNullOrEmpty(PlayerTwo) && !string.IsNullOrEmpty(PlayerThree) && !string.IsNullOrEmpty(PlayerFour));
 
-      this.PlayerOne = this.Game.CurrentRound.FirstPlayer.Name ?? "Spieler 1";
-      this.PlayerTwo = this.Game.CurrentRound.SecondPlayer.Name ?? "Spieler 2";
-      this.PlayerThree = this.Game.CurrentRound.ThirdPlayer.Name ?? "Spieler 3";
-      this.PlayerFour = this.Game.CurrentRound.FourthPlayer.Name ?? "Spieler 4";
+      this.PlayerOne = this.Game.CurrentRound.FirstPlayer.Name ?? $"Spieler 1 {this.Game.CurrentGameWall.Title}";
+      this.PlayerTwo = this.Game.CurrentRound.SecondPlayer.Name ?? $"Spieler 2 {this.Game.CurrentGameWall.Title}";
+      this.PlayerThree = this.Game.CurrentRound.ThirdPlayer.Name ?? $"Spieler 3 {this.Game.CurrentGameWall.Title}";
+      this.PlayerFour = this.Game.CurrentRound.FourthPlayer.Name ?? $"Spieler 4 {this.Game.CurrentGameWall.Title}";
     }
 
     public Game Game { get; set; }
