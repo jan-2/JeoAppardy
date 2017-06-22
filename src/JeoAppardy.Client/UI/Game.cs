@@ -26,6 +26,7 @@ namespace JeoAppardy.Client.UI
     private Api.GameWall _currentGameWall;
     private Api.Player _activePlayer;
     private Api.DiscoveredLevel _discoveredLevel;
+    private Api.Answer _relatedQuestion;
 
     public Game(Api.Game gameApi)
     {
@@ -38,6 +39,10 @@ namespace JeoAppardy.Client.UI
       this.SetDiscoveredLevelCommand = new DelegateCommand<ItemClickEventArgs>(
         args => SetDiscoveredLevel(args.ClickedItem as Api.GameLevel),
         args => CanSetDiscoveredLevel(args.ClickedItem as Api.GameLevel));
+
+      this.CloseRelatedQuestionCommand = new DelegateCommand(
+        () => CloseRelatedQuestion(),
+        () => true);
 
       this.CorrectAnswerCommand = new DelegateCommand(
         () => CorrectAnswer(),
@@ -128,11 +133,22 @@ namespace JeoAppardy.Client.UI
       return gameLevel != null && !gameLevel.HasBeenAsked;
     }
 
+    private void CloseRelatedQuestion()
+    {
+      this.RelatedQuestion = null;
+      this.DiscoveredLevel = null;
+      this.ActivePlayer = null;
+
+      if (this.CurrentRound.Winner != null)
+      {
+        // next round
+      }
+    }
+
     private void CorrectAnswer()
     {
       this.CurrentGameWall = this.CurrentRound.PlayerAnsweredCorrect(this.ActivePlayer, this.DiscoveredLevel);
-      this.DiscoveredLevel = null;
-      this.ActivePlayer = null;
+      this.RelatedQuestion = this.DiscoveredLevel.Answer;
     }
 
     private void WrongAnswer()
@@ -142,13 +158,14 @@ namespace JeoAppardy.Client.UI
       this.ActivePlayer = null;
       if (this.DiscoveredLevel.AllPlayersAnsweredWrong)
       {
-        this.DiscoveredLevel = null;
+        this.RelatedQuestion = this.DiscoveredLevel.Answer;
       }
     }
 
     private void DiscardLevel()
     {
       this.CurrentGameWall = this.CurrentRound.DiscardLevel(this.DiscoveredLevel);
+      this.RelatedQuestion = null;
       this.DiscoveredLevel = null;
       this.ActivePlayer = null;
     }
@@ -182,11 +199,19 @@ namespace JeoAppardy.Client.UI
       }
     }
 
+    public Api.Answer RelatedQuestion
+    {
+      get { return _relatedQuestion; }
+      set { this.Set(ref _relatedQuestion, value); }
+    }
+
     public ICommand SetDiscoveredLevelCommand { get; }
 
     public ICommand AssetFileLoadedCommand { get; }
 
     public ICommand DiscardLevelCommand { get; }
+
+    public DelegateCommand CloseRelatedQuestionCommand { get; }
 
     public DelegateCommand CorrectAnswerCommand { get; }
 

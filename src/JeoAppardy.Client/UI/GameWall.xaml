@@ -26,6 +26,9 @@
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityNegationConverter"
                                           TrueValue="Collapsed"
                                           FalseValue="Visible" />
+    <converters:EmptyObjectToObjectConverter x:Key="EmptyObjectToVisibilityConverter"
+                                             EmptyValue="Collapsed"
+                                             NotEmptyValue="Visible" />
     <ui:AssetValueConverter x:Key="AssetValueConverter" />
 
     <DataTemplate x:Key="PlayerTemplate"
@@ -182,6 +185,29 @@
                     Margin="10" />
           </StackPanel>
 
+          <Grid Grid.Row="1"
+                Grid.RowSpan="2"
+                Background="LightSalmon"
+                Visibility="{Binding ElementName=gameWallPage, Path=ViewModel.RelatedQuestion, Converter={StaticResource EmptyObjectToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       Text="{x:Bind Answer.RelatedQuestion}"
+                       FontFamily="Consolas"
+                       FontSize="24"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <Button Grid.Row="1"
+                    Content="ok"
+                    Command="{Binding ElementName=gameWallPage, Path=ViewModel.CloseRelatedQuestionCommand}"
+                    HorizontalAlignment="Center"
+                    MinWidth="150"
+                    MinHeight="50"
+                    Margin="10" />
+          </Grid>
+
         </Grid>
       </Border>
     </DataTemplate>
@@ -225,11 +251,13 @@
               </Grid.RowDefinitions>
 
               <TextBlock Grid.Row="0"
+                         MinHeight="80"
                          Margin="20"
                          FontSize="28"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"
                          Text="{x:Bind Category.Title}"
+                         TextAlignment="Center"
                          TextWrapping="Wrap"
                          TextTrimming="WordEllipsis" />
 
