@@ -42,7 +42,16 @@ namespace JeoAppardy.Tests.WhileARound
       round.SetSecondPlayerName("Player 2");
       round.SetThirdPlayerName("Player 3");
       round.SetFourthPlayerName("Player 4");
+      return round;
+    }
 
+    private Round SetupSecondRound(Game game)
+    {
+      var round = game.StartSecondRound();
+      round.SetFirstPlayerName("Spieler 1");
+      round.SetSecondPlayerName("Spieler 2");
+      round.SetThirdPlayerName("Spieler 3");
+      round.SetFourthPlayerName("Spieler 4");
       return round;
     }
 
@@ -105,6 +114,74 @@ namespace JeoAppardy.Tests.WhileARound
       return round;
     }
 
+    private Round PlaySecondRoundTilLastLevel(Round round)
+    {
+      DiscoveredLevel discoveredLevel;
+
+      //FirstPlayer gewinnt alle Level der ersten Kategorie
+      discoveredLevel = round.PlayerChoosed(1, 100);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(1, 200);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(1, 300);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(1, 400);
+      round.PlayerAnsweredCorrect(round.FirstPlayer, discoveredLevel);
+
+      //SecondPlayer gewinnt alle Level der zweiten Kategorie, außer 300 und 400. 300 und 400 gewinnt niemand
+      discoveredLevel = round.PlayerChoosed(2, 100);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(2, 200);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(2, 300);
+      round.PlayerAnsweredNotCorrect(round.FirstPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.SecondPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.ThirdPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.FourthPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(2, 400);
+      round.PlayerAnsweredNotCorrect(round.FirstPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.SecondPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.ThirdPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.FourthPlayer, discoveredLevel);
+
+      //SecondPlayer gewinnt alle Level der dritten Kategorie.
+      discoveredLevel = round.PlayerChoosed(3, 100);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(3, 200);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(3, 300);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(3, 400);
+      round.PlayerAnsweredCorrect(round.SecondPlayer, discoveredLevel);
+
+      //FourthPlayer gewinnt alle Level der vierten Kategorie außer level 400. 400 gewinnt niemand
+      discoveredLevel = round.PlayerChoosed(4, 100);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(4, 200);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(4, 300);
+      round.PlayerAnsweredCorrect(round.FourthPlayer, discoveredLevel);
+
+      discoveredLevel = round.PlayerChoosed(4, 400);
+      round.PlayerAnsweredNotCorrect(round.FirstPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.SecondPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.ThirdPlayer, discoveredLevel);
+      round.PlayerAnsweredNotCorrect(round.FourthPlayer, discoveredLevel);
+
+      return round;
+    }
+
     [TestMethod]
     public void FourthPlayer_should_be_the_winner()
     {
@@ -119,6 +196,16 @@ namespace JeoAppardy.Tests.WhileARound
       _sut = PlayTheRoundTilLastLevel(_sut);
 
       Assert.AreEqual(1600, _sut.Winner.Points);
+    }
+
+    [TestMethod]
+    public void SecondPlayer_should_be_the_winner()
+    {
+      _sut = SetupSecondRound(_game);
+      _sut = PlaySecondRoundTilLastLevel(_sut);
+
+      Assert.IsNotNull(_sut.Winner);
+      Assert.AreEqual("Spieler 2", _sut.Winner.Name);
     }
   }
 }

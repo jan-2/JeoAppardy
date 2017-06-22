@@ -111,17 +111,25 @@ namespace JeoAppardy.Client.Api
       currentPlayer.Points += discoveredLevel.Level;
       GameWall.ActivePlayer.Points = currentPlayer.Points;
 
-      if (AllAnswersHaveBeenAsked())
+      if (AnyAnswerHasBeenAsked())
+      {
         FindTheWinner();
+      }
 
       return GameWall;
     }
 
-    public GameWall PlayerAnsweredNotCorrect(DiscoveredLevel discoveredLevel)
+    public GameWall PlayerAnsweredNotCorrect(Player currentPlayer, DiscoveredLevel discoveredLevel)
     {
       SetLevelAsNotAnwered(discoveredLevel);
+      discoveredLevel.PlayerAnsweredNotCorrect(currentPlayer);
 
       GameWall.ActivePlayer = null;
+
+      if (discoveredLevel.AllPlayersAnsweredWrong && AnyAnswerHasBeenAsked())
+      {
+        FindTheWinner();
+      }
 
       return GameWall;
     }
@@ -162,7 +170,7 @@ namespace JeoAppardy.Client.Api
       return GameWall;
     }
 
-    private bool AllAnswersHaveBeenAsked()
+    private bool AnyAnswerHasBeenAsked()
     {
       return GameWall.Categories.SelectMany(cat => cat.Level).Any(level => level.HasBeenAsked);
     }
