@@ -499,6 +499,13 @@
                                    PropertyName="IsHitTestVisible"
                                    Value="True" />
       </core:DataTriggerBehavior>
+      <core:DataTriggerBehavior Binding="{Binding ElementName=gameWallPage, Path=ViewModel.DiscoveredLevel, Mode=OneWay}"
+                                ComparisonCondition="Equal"
+                                Value="{x:Null}">
+        <core:ChangePropertyAction TargetObject="{Binding ElementName=players}"
+                                   PropertyName="IsHitTestVisible"
+                                   Value="False" />
+      </core:DataTriggerBehavior>
     </interactivity:Interaction.Behaviors>
   </Grid>
 </Page>
