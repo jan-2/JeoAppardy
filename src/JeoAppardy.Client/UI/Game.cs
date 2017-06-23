@@ -132,7 +132,7 @@ namespace JeoAppardy.Client.UI
 
     private bool CanSetDiscoveredLevel(Api.GameLevel gameLevel)
     {
-      return gameLevel != null && !gameLevel.HasBeenAsked;
+      return gameLevel != null && !gameLevel.HasBeenAsked && this.DiscoveredLevel == null;
     }
 
     private void CloseRelatedQuestion()
@@ -206,6 +206,7 @@ namespace JeoAppardy.Client.UI
       set
       {
         this.Set(ref _discoveredLevel, value);
+        this.SetDiscoveredLevelCommand.RaiseCanExecuteChanged();
         this.CorrectAnswerCommand.RaiseCanExecuteChanged();
         this.WrongAnswerCommand.RaiseCanExecuteChanged();
         this.NoOneWantAnswerCommand.RaiseCanExecuteChanged();
@@ -218,7 +219,7 @@ namespace JeoAppardy.Client.UI
       set { this.Set(ref _relatedQuestion, value); }
     }
 
-    public ICommand SetDiscoveredLevelCommand { get; }
+    public DelegateCommand<ItemClickEventArgs> SetDiscoveredLevelCommand { get; }
 
     public ICommand AssetFileLoadedCommand { get; }
 
