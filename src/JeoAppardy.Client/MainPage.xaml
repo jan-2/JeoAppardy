@@ -31,7 +31,7 @@
                  Width="180"
                  ItemsSource="{x:Bind ViewModel.Ports}"
                  SelectedItem="{x:Bind ViewModel.SelectedPort.Value, Mode=TwoWay}"
-                 DisplayMemberPath="Name" />
+                 DisplayMemberPath="Name" Visibility="Collapsed"/>
 
       <Button x:Name="startGame"
               Content="Start"

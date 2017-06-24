@@ -19,7 +19,6 @@ namespace JeoAppardy.Client.UI
   public class Game : ViewModel
   {
     private IObservable<long> _timer;
-    private bool _reset_required;
 
     private Frame _frame;
     private string _title;
@@ -67,44 +66,6 @@ namespace JeoAppardy.Client.UI
         () => DiscardLevel(),
         () => true);
 
-      var scheduler = UIDispatcherScheduler.Default;
-      _timer = Observable.Timer(TimeSpan.Zero, TimeSpan.FromMilliseconds(100), scheduler);
-      _timer.Subscribe(async _ =>
-      {
-        if (!Hardware.GetInstance().IsOpen)
-        {
-          return;
-        }
-
-        Hardware.Result result;
-
-        if (_reset_required)
-        {
-          result = await Hardware.GetInstance().Reset();
-          if (result.status == StateEnum.offen)
-          {
-            _reset_required = false;
-            ActivePlayer = null;
-          }
-        }
-        else
-        {
-          result = await Hardware.GetInstance().GetCurrentState();
-        }
-        if (result.status == StateEnum.beendet)
-        {
-          if (AllPlayers.Count < result.sieger)
-          {
-            // Spieler nicht korrekt konfiguriert oder falscher Drücker verwendet
-            return;
-          }
-          var and_the_winner_is = AllPlayers[result.sieger - 1];
-          if (!_reset_required && ActivePlayer != and_the_winner_is && this.DiscoveredLevel != null && this.DiscoveredLevel.PlayerCanAnswer(and_the_winner_is))
-          {
-            ActivePlayer = and_the_winner_is;
-          }
-        }
-      });
     }
 
     private async void LoadAssetFileIntoTextBlock(TextBlock tb)
@@ -146,7 +107,6 @@ namespace JeoAppardy.Client.UI
 
     private void SetDiscoveredLevel(Api.GameLevel gameLevel)
     {
-      _reset_required = true;
       ActivePlayer = null;
 
       this.DiscoveredLevel = _currentRoundApi.PlayerChoosed(gameLevel.CategoryId, gameLevel.Level);
