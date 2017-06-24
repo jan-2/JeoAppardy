@@ -483,7 +483,7 @@
                 IsHitTestVisible="False"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
-                SelectedItem="{x:Bind ViewModel.ActivePlayer, Mode=TwoWay}"
+                SelectedItem="{Binding ElementName=gameWallPage, Path=ViewModel.ActivePlayer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 ItemsSource="{x:Bind ViewModel.AllPlayers}"
                 ItemContainerStyle="{StaticResource ListViewItemStyle}"
                 ItemTemplate="{StaticResource PlayerTemplate}">
