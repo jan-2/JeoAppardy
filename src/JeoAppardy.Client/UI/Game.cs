@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using JeoAppardy.Client.Api;
 using JeoAppardy.Client.Buzzer;
 using JeoAppardy.Client.Common;
@@ -57,6 +58,10 @@ namespace JeoAppardy.Client.UI
       this.AssetFileLoadedCommand = new DelegateCommand<TextBlock>(
         tb => LoadAssetFileIntoTextBlock(tb),
         tb => tb != null);
+
+      this.AssetImageLoadedCommand = new DelegateCommand<Image>(
+        img => LoadAssetFileIntoImage(img),
+        img => img != null);
 
       this.DiscardLevelCommand = new DelegateCommand(
         () => DiscardLevel(),
@@ -109,17 +114,34 @@ namespace JeoAppardy.Client.UI
 
     private async Task<string> GetFileContent(string assetFilePath)
     {
-      FileInfo fInfo = new FileInfo(assetFilePath);
-      if (!fInfo.Exists)
+      var file = await StorageFile.GetFileFromPathAsync(assetFilePath);
+      if (file == null)
       {
         return ":-(";
       }
-      var boardDefinitionFile = await StorageFile.GetFileFromPathAsync(assetFilePath);
-      var stream = await boardDefinitionFile.OpenSequentialReadAsync();
+      var stream = await file.OpenSequentialReadAsync();
       using (StreamReader reader = new StreamReader(stream.AsStreamForRead(), Encoding.UTF8))
       {
         return await reader.ReadToEndAsync();
       }
+    }
+
+    private async void LoadAssetFileIntoImage(Image img)
+    {
+      img.Source = null;
+      var file = await StorageFile.GetFileFromPathAsync(img.DataContext as string);
+      if (file != null)
+      {
+        img.Source = await LoadImage(file);
+      }
+    }
+
+    private static async Task<BitmapImage> LoadImage(StorageFile file)
+    {
+      var bitmapImage = new BitmapImage();
+      var stream = await file.OpenAsync(FileAccessMode.Read);
+      bitmapImage.SetSource(stream);
+      return bitmapImage;
     }
 
     private void SetDiscoveredLevel(Api.GameLevel gameLevel)
@@ -222,6 +244,8 @@ namespace JeoAppardy.Client.UI
     public DelegateCommand<ItemClickEventArgs> SetDiscoveredLevelCommand { get; }
 
     public ICommand AssetFileLoadedCommand { get; }
+
+    public ICommand AssetImageLoadedCommand { get; }
 
     public ICommand DiscardLevelCommand { get; }
 

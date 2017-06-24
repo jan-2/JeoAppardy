@@ -4,6 +4,7 @@
       xmlns:local="using:JeoAppardy.Client"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:iconPacks="using:MahApps.Metro.IconPacks"
       mc:Ignorable="d">
 
   <Grid Background="#084887">
@@ -41,8 +42,31 @@
               Height="100"
               Background="#909cc2"
               Command="{x:Bind ViewModel.StartGameCommand}" />
+
     </StackPanel>
 
+    <StackPanel Grid.Row="0"
+                Grid.RowSpan="2"
+                Margin="20"
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom">
+      <Button Tapped="ButtonSettingsOnTapped"
+              Background="Transparent"
+              Foreground="#f5f7fb"
+              VerticalAlignment="Center">
+        <iconPacks:PackIconFontAwesome Kind="FolderOpen"
+                                       Spin="False"
+                                       SpinDuration="0"
+                                       Width="24"
+                                       Height="24" />
+      </Button>
+      <TextBlock Margin="10 0"
+                 TextWrapping="NoWrap"
+                 VerticalAlignment="Center"
+                 Foreground="#f5f7fb"
+                 Text="{Binding ViewModel.Settings.AssetsRoundPath, Mode=OneWay, TargetNullValue='Need to select Assets folder'}" />
+    </StackPanel>
   </Grid>
 
 </Page>

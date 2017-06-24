@@ -18,6 +18,10 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>JeoAppardy.Client_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>12E144798E34767A883CB699B17E8757F60510CF</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -118,6 +122,7 @@
     <Compile Include="UI\AnswerTemplateSelector.cs" />
     <Compile Include="UI\AssetValueConverter.cs" />
     <Compile Include="UI\Client.cs" />
+    <Compile Include="UI\ClientSettings.cs" />
     <Compile Include="UI\Game.cs" />
     <Compile Include="UI\GameWall.xaml.cs">
       <DependentUpon>GameWall.xaml</DependentUpon>

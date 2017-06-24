@@ -13,13 +13,13 @@ namespace JeoAppardy.Client.UI
       if (answer != null)
       {
         var asset = answer.Asset.Replace(@"/", @"\");
-        var installedLocation = Package.Current.InstalledLocation;
+        var installedLocation = ClientSettings.Instance.AssetsRoundPath;
         switch (answer.Type)
         {
           case AnswerType.File:
-            return $"{installedLocation.Path}\\Assets\\{asset}";
+            return $"{installedLocation}\\{asset}";
           case AnswerType.Image:
-            return $"{installedLocation.Path}\\Assets\\{asset}";
+            return $"{installedLocation}\\{asset}";
           case AnswerType.Text:
           default:
             return asset;

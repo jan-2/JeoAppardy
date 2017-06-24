@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeoAppardy.Client", "JeoAppardy.Client\JeoAppardy.Client.csproj", "{0C184FEA-DD7D-42C6-8907-04817BABE01D}"
 EndProject
@@ -37,6 +37,8 @@ Global
 		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Debug|x86.Build.0 = Debug|x86
 		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Debug|x86.Deploy.0 = Debug|x86
 		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Release|Any CPU.ActiveCfg = Release|x86
+		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Release|Any CPU.Build.0 = Release|x86
+		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Release|Any CPU.Deploy.0 = Release|x86
 		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Release|ARM.ActiveCfg = Release|ARM
 		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Release|ARM.Build.0 = Release|ARM
 		{0C184FEA-DD7D-42C6-8907-04817BABE01D}.Release|ARM.Deploy.0 = Release|ARM

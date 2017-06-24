@@ -124,10 +124,18 @@
                    Text="{x:Bind Asset}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
-        <Image Grid.Row="1"
-               Source="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
+        <Image x:Name="image"
+               Grid.Row="1"
+               DataContext="{Binding Converter={StaticResource AssetValueConverter}, Mode=OneWay}"
                VerticalAlignment="Stretch"
-               HorizontalAlignment="Stretch" />
+               HorizontalAlignment="Stretch">
+          <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="DataContextChanged">
+              <core:InvokeCommandAction Command="{Binding ElementName=gameWallPage, Path=ViewModel.AssetImageLoadedCommand}"
+                                        CommandParameter="{Binding ElementName=image}" />
+            </core:EventTriggerBehavior>
+          </interactivity:Interaction.Behaviors>
+        </Image>
       </Grid>
     </DataTemplate>
 
