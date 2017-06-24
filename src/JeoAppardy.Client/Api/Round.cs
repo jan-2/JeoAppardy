@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace JeoAppardy.Client.Api
@@ -47,10 +48,16 @@ namespace JeoAppardy.Client.Api
       private set;
     }
 
-    public Player Winner
+    public ObservableCollection<Player> AllWinner
     {
       get;
       private set;
+    }
+
+    public Player Winner
+    {
+      get;
+      set;
     }
 
     public GameWall SetFirstPlayerName(string playerName)
@@ -185,12 +192,16 @@ namespace JeoAppardy.Client.Api
       {
         var restPoints = GameWall.Categories.SelectMany(cat => cat.Level).Where(level => !level.HasBeenAsked).Sum(level => level.Level);
 
-        allPlayer.Remove(winner);
-        var secWinner = allPlayer.Aggregate((p1, p2) => p1.Points > p2.Points ? p1 : p2);
+        var secWinner = allPlayer.Where(p => !Equals(p, winner)).Aggregate((p1, p2) => p1.Points > p2.Points ? p1 : p2);
         if (secWinner.Points + restPoints > winner.Points)
         {
           winner = null;
         }
+      }
+
+      if (winner != null)
+      {
+        AllWinner = new ObservableCollection<Player>(allPlayer.FindAll(p => p.Points == winner.Points));
       }
 
       Winner = winner;

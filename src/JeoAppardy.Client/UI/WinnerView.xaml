@@ -5,8 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:iconPacks="using:MahApps.Metro.IconPacks"
+      xmlns:controls="using:JeoAppardy.Client.Controls"
+      xmlns:api="using:JeoAppardy.Client.Api"
       Background="#084887"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      x:Name="winnerPage">
 
   <Grid Background="Transparent">
 
@@ -36,27 +39,61 @@
     <Grid Grid.Row="1"
           HorizontalAlignment="Center"
           Margin="20">
-      <Border Background="#909cc2"
-                CornerRadius="10"
-                Margin="0 40 0 0"
-                VerticalAlignment="Stretch" />
-      <iconPacks:PackIconMaterial Kind="AccountCircle"
-                                    Width="90"
-                                    Height="90"
-                                    Foreground="LightGray"
-                                    Margin="10 0"
-                                    HorizontalAlignment="Center" />
-      <StackPanel Orientation="Vertical"
-                  Margin="5 85 5 5"
-                  VerticalAlignment="Bottom">
-        <TextBlock HorizontalAlignment="Center"
-                   Text="{x:Bind ViewModel.GameApi.CurrentRound.Winner.Name, TargetNullValue=PlayerName}"
-                   FontSize="28" />
-        <TextBlock HorizontalAlignment="Center"
-                   Text="{x:Bind ViewModel.GameApi.CurrentRound.Winner.Points, Mode=OneWay}"
-                   FontSize="20"
-                   Margin="10 20 10 10" />
-      </StackPanel>
+      <ListView x:Name="winners"
+                SelectionMode="Single"
+                IsItemClickEnabled="False"
+                HorizontalAlignment="Center"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                SelectedItem="{Binding ElementName=winnerPage, Path=ViewModel.RealWinner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{x:Bind ViewModel.GameApi.CurrentRound.AllWinner}">
+
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="api:Player">
+            <Grid Margin="20">
+              <Border Background="#909cc2"
+                      CornerRadius="10"
+                      Margin="0 40 0 0"
+                      VerticalAlignment="Stretch" />
+              <iconPacks:PackIconMaterial Kind="AccountCircle"
+                                          Width="90"
+                                          Height="90"
+                                          Foreground="LightGray"
+                                          Margin="10 0"
+                                          HorizontalAlignment="Center" />
+              <StackPanel Orientation="Vertical"
+                          Margin="5 85 5 5"
+                          VerticalAlignment="Bottom">
+                <TextBlock HorizontalAlignment="Center"
+                           Text="{x:Bind Name, TargetNullValue=PlayerName}"
+                           FontSize="28" />
+                <TextBlock HorizontalAlignment="Center"
+                           Text="{x:Bind Points, Mode=OneWay}"
+                           FontSize="20"
+                           Margin="10 20 10 10" />
+              </StackPanel>
+            </Grid>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+
+        <ListView.ItemContainerStyle>
+          <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Stretch" />
+          </Style>
+        </ListView.ItemContainerStyle>
+
+        <ListView.ItemsPanel>
+          <ItemsPanelTemplate>
+            <controls:UniformGrid Columns="{Binding ElementName=winnerPage, Path=ViewModel.GameApi.CurrentRound.AllWinner.Count, Mode=OneWay}"
+                                  Rows="1" />
+          </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+
+      </ListView>
+
     </Grid>
 
     <Image Grid.Row="2"
@@ -73,6 +110,6 @@
             Width="400"
             Height="100"
             Margin="20"
-            Background="#909cc2"/>
+            Background="#909cc2" />
   </Grid>
 </Page>
