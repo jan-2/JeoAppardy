@@ -21,7 +21,7 @@ namespace JeoAppardy.Client
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-      this.ViewModel = new UI.Client(this.Frame, e.Parameter);
+      this.ViewModel = new UI.Client(this.Frame);
       base.OnNavigatedTo(e);
     }
 

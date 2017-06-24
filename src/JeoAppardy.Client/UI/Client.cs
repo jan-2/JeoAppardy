@@ -21,7 +21,7 @@ namespace JeoAppardy.Client.UI
     private ICommand _startGameCommand;
     private ClientSettings _settings;
 
-    public Client(Frame frame, object parameter)
+    public Client(Frame frame)
     {
       _frame = frame;
 

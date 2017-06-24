@@ -24,8 +24,10 @@ namespace JeoAppardy.Client.UI
         var nextRound = this.ViewModel.StartNextRound(gameApi.CurrentRound);
         if (nextRound == null)
         {
-          gameApi = await Client.SetupGame();
-          this.Frame.Navigate(typeof(GameWall), gameApi);
+          // go to main page
+          this.Frame.Navigate(typeof(MainPage), null);
+          //gameApi = await Client.SetupGame();
+          //this.Frame.Navigate(typeof(GameWall), gameApi);
         }
       }
 
